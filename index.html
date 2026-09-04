@@ -6,300 +6,70 @@
 <meta charset="UTF-8">
 
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
 >
 
 <title>Hello</title>
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
 body{
 
-    min-height:100vh;
+  margin:0;
 
-    display:flex;
+  min-height:100vh;
 
-    justify-content:center;
+  display:flex;
 
-    align-items:center;
+  justify-content:center;
 
-    background:
-        radial-gradient(
-            circle at top,
-            #1e293b,
-            #0f172a 50%,
-            #020617
-        );
+  align-items:center;
 
-    font-family:
-        Arial,
-        sans-serif;
+  background:
+    linear-gradient(
+      135deg,
+      #07111f,
+      #111827
+    );
 
-    color:white;
+  font-family:Arial;
 
-}
-
-.container{
-
-    text-align:center;
+  color:white;
 
 }
 
+.box{
 
-/* HELLO */
-
-.hello{
-
-    font-size:64px;
-
-    font-weight:900;
-
-    letter-spacing:5px;
-
-    margin-bottom:25px;
-
-    cursor:pointer;
+  text-align:center;
 
 }
 
-.hello span{
+h1{
 
-    display:inline-block;
+  font-size:42px;
 
-    animation:
-        float 1.5s
-        ease-in-out
-        infinite;
+  margin-bottom:25px;
 
 }
 
-.hello span:nth-child(1){
-    animation-delay:0s;
-}
+button{
 
-.hello span:nth-child(2){
-    animation-delay:.1s;
-}
+  padding:15px 35px;
 
-.hello span:nth-child(3){
-    animation-delay:.2s;
-}
+  border:none;
 
-.hello span:nth-child(4){
-    animation-delay:.3s;
-}
+  border-radius:12px;
 
-.hello span:nth-child(5){
-    animation-delay:.4s;
-}
+  background:#2563eb;
 
-.wave{
+  color:white;
 
-    margin-left:10px;
+  font-size:17px;
 
-    animation:
-        wave 1.3s
-        ease-in-out
-        infinite !important;
+  font-weight:bold;
 
-    transform-origin:
-        70% 70%;
-
-}
-
-
-/* BUTTON */
-
-.open-btn{
-
-    display:inline-flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    padding:
-        14px
-        32px;
-
-    border-radius:50px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #38bdf8,
-            #8b5cf6
-        );
-
-    color:white;
-
-    text-decoration:none;
-
-    font-size:16px;
-
-    font-weight:700;
-
-    box-shadow:
-        0 10px 30px
-        rgba(56,189,248,.25);
-
-    transition:.3s;
-
-}
-
-.open-btn:hover{
-
-    transform:
-        translateY(-3px)
-        scale(1.03);
-
-    box-shadow:
-        0 15px 40px
-        rgba(139,92,246,.4);
-
-}
-
-
-/* LINE */
-
-.line{
-
-    width:180px;
-
-    height:3px;
-
-    margin:
-        0 auto
-        25px;
-
-    border-radius:50px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #38bdf8,
-            #a78bfa,
-            #38bdf8,
-            transparent
-        );
-
-    background-size:200% 100%;
-
-    animation:
-        lineMove 2s
-        linear
-        infinite;
-
-}
-
-
-/* ANIMATIONS */
-
-@keyframes float{
-
-    0%,
-    100%{
-
-        transform:
-            translateY(0);
-
-    }
-
-    50%{
-
-        transform:
-            translateY(-12px);
-
-    }
-
-}
-
-
-@keyframes wave{
-
-    0%,
-    100%{
-
-        transform:
-            rotate(0deg);
-
-    }
-
-    20%{
-
-        transform:
-            rotate(20deg);
-
-    }
-
-    40%{
-
-        transform:
-            rotate(-15deg);
-
-    }
-
-    60%{
-
-        transform:
-            rotate(20deg);
-
-    }
-
-    80%{
-
-        transform:
-            rotate(-5deg);
-
-    }
-
-}
-
-
-@keyframes lineMove{
-
-    0%{
-
-        background-position:
-            0% 50%;
-
-    }
-
-    100%{
-
-        background-position:
-            200% 50%;
-
-    }
-
-}
-
-
-/* MOBILE */
-
-@media(max-width:500px){
-
-    .hello{
-
-        font-size:45px;
-
-    }
-
-    .open-btn{
-
-        padding:
-            13px
-            27px;
-
-    }
+  cursor:pointer;
 
 }
 
@@ -307,59 +77,19 @@ body{
 
 </head>
 
-
 <body>
 
+<div class="box">
 
-<div class="container">
+  <h1>HELLO 👋</h1>
 
-
-    <!-- HELLO -->
-
-    <a
-        href="cod.html"
-        style="
-            text-decoration:none;
-            color:inherit;
-        "
-    >
-
-        <div class="hello">
-
-            <span>H</span>
-            <span>E</span>
-            <span>L</span>
-            <span>L</span>
-            <span>O</span>
-
-            <span class="wave">
-                👋
-            </span>
-
-        </div>
-
-    </a>
-
-
-    <!-- ANIMATED LINE -->
-
-    <div class="line"></div>
-
-
-    <!-- OPEN BUTTON -->
-
-    <a
-        href="cod.html"
-        class="open-btn"
-    >
-
-        🚀 Open
-
-    </a>
-
+  <button
+    onclick="location.href='cod.html'"
+  >
+    Open
+  </button>
 
 </div>
-
 
 </body>
 
