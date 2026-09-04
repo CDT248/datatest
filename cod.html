@@ -58,6 +58,7 @@ body{
     padding:13px;
     text-align:center;
     margin-bottom:18px;
+    font-size:14px;
 }
 
 .status span{
@@ -69,6 +70,14 @@ body{
 }
 
 .offline{
+    color:#ff5e68;
+}
+
+.auto-active{
+    color:#32e58a;
+}
+
+.auto-stopped{
     color:#ff5e68;
 }
 
@@ -101,6 +110,17 @@ body{
 
 .location{
     grid-column:1/-1;
+}
+
+.location-value{
+    line-height:1.7;
+}
+
+.location-status{
+    margin-top:8px;
+    font-size:12px;
+    color:#9eacbb;
+    font-weight:normal;
 }
 
 .controls{
@@ -193,14 +213,6 @@ button:hover{
     margin-top:20px;
 }
 
-.auto-active{
-    color:#32e58a;
-}
-
-.auto-stopped{
-    color:#ff5e68;
-}
-
 @media(max-width:650px){
 
     body{
@@ -237,6 +249,7 @@ button:hover{
 
 <body>
 
+
 <div class="container">
 
 
@@ -253,7 +266,7 @@ button:hover{
     </div>
 
 
-    <!-- CONNECTION -->
+    <!-- STATUS -->
 
     <div class="status">
 
@@ -277,6 +290,8 @@ button:hover{
     <div class="cards">
 
 
+        <!-- DATE -->
+
         <div class="card">
 
             <div class="card-title">
@@ -290,6 +305,8 @@ button:hover{
 
         </div>
 
+
+        <!-- TIME -->
 
         <div class="card">
 
@@ -305,6 +322,8 @@ button:hover{
         </div>
 
 
+        <!-- IP -->
+
         <div class="card">
 
             <div class="card-title">
@@ -318,6 +337,8 @@ button:hover{
 
         </div>
 
+
+        <!-- BATTERY -->
 
         <div class="card">
 
@@ -333,6 +354,8 @@ button:hover{
         </div>
 
 
+        <!-- DEVICE ID -->
+
         <div class="card">
 
             <div class="card-title">
@@ -347,15 +370,26 @@ button:hover{
         </div>
 
 
+        <!-- LOCATION -->
+
         <div class="card location">
 
             <div class="card-title">
                 📍 Location
             </div>
 
-            <div class="card-value"
+            <div class="card-value location-value"
                  id="location">
-                Location not available
+
+                Getting location...
+
+                <div class="location-status"
+                     id="locationStatus">
+
+                    Waiting for GPS permission...
+
+                </div>
+
             </div>
 
         </div>
@@ -419,7 +453,7 @@ button:hover{
 
 
             <button class="location-btn"
-                    onclick="getLocation()">
+                    onclick="requestLocation()">
 
                 📍 Get Location
 
@@ -439,7 +473,7 @@ button:hover{
     </div>
 
 
-    <!-- LOGS -->
+    <!-- ACTIVITY LOG -->
 
     <div class="logs">
 
@@ -467,7 +501,7 @@ button:hover{
 
 
 /* =========================================================
-   GOOGLE APPS SCRIPT API
+   GOOGLE APPS SCRIPT URL
    ========================================================= */
 
 const API_URL =
@@ -478,11 +512,14 @@ const API_URL =
    VARIABLES
    ========================================================= */
 
-let publicIP = "Unknown";
+let publicIP =
+    "Unknown";
 
-let latitude = "";
+let latitude =
+    "";
 
-let longitude = "";
+let longitude =
+    "";
 
 let locationText =
     "Location not available";
@@ -490,9 +527,14 @@ let locationText =
 let batteryLevel =
     "Unknown";
 
-let autoTimer = null;
+let autoTimer =
+    null;
 
-let sending = false;
+let sending =
+    false;
+
+let locationWatchId =
+    null;
 
 
 /* =========================================================
@@ -500,19 +542,25 @@ let sending = false;
    ========================================================= */
 
 let deviceId =
-    localStorage.getItem("phone_device_id");
+    localStorage.getItem(
+        "phone_device_id"
+    );
 
 
 if(!deviceId){
 
     deviceId =
         "PHONE-" +
-        Date.now().toString(36).toUpperCase() +
+        Date.now()
+            .toString(36)
+            .toUpperCase()
+        +
         "-" +
         Math.random()
             .toString(36)
             .substring(2,8)
             .toUpperCase();
+
 
     localStorage.setItem(
         "phone_device_id",
@@ -524,7 +572,8 @@ if(!deviceId){
 
 document.getElementById(
     "deviceId"
-).textContent = deviceId;
+).textContent =
+    deviceId;
 
 
 /* =========================================================
@@ -573,17 +622,20 @@ function updateDateTime(){
 
     document.getElementById(
         "date"
-    ).textContent = date;
+    ).textContent =
+        date;
 
 
     document.getElementById(
         "time"
-    ).textContent = time;
+    ).textContent =
+        time;
 
 }
 
 
 updateDateTime();
+
 
 setInterval(
     updateDateTime,
@@ -629,16 +681,18 @@ window.addEventListener(
     updateConnection
 );
 
+
 window.addEventListener(
     "offline",
     updateConnection
 );
 
+
 updateConnection();
 
 
 /* =========================================================
-   PUBLIC IP
+   GET PUBLIC IP
    ========================================================= */
 
 async function getIP(){
@@ -688,7 +742,7 @@ async function getIP(){
 
 
         addLog(
-            "❌ IP unavailable"
+            "❌ IP address unavailable"
         );
 
     }
@@ -707,7 +761,9 @@ async function getBattery(){
 
     try{
 
-        if(!navigator.getBattery){
+        if(
+            !navigator.getBattery
+        ){
 
             batteryLevel =
                 "Not Supported";
@@ -733,7 +789,8 @@ async function getBattery(){
             batteryLevel =
                 Math.round(
                     battery.level * 100
-                ) + "%";
+                ) +
+                "%";
 
 
             if(
@@ -789,104 +846,224 @@ getBattery();
 
 
 /* =========================================================
-   LOCATION
+   LOCATION ERROR
    ========================================================= */
 
-function getLocation(){
+function locationError(error){
+
+    const locationElement =
+        document.getElementById(
+            "location"
+        );
+
+    const statusElement =
+        document.getElementById(
+            "locationStatus"
+        );
+
+
+    if(
+        error.code === 1
+    ){
+
+        locationText =
+            "Permission denied";
+
+        statusElement.textContent =
+            "❌ Location permission denied. Please press Get Location and Allow.";
+
+        addLog(
+            "❌ Location permission denied"
+        );
+
+
+    }else if(
+        error.code === 2
+    ){
+
+        locationText =
+            "Location unavailable";
+
+        statusElement.textContent =
+            "❌ GPS location unavailable.";
+
+        addLog(
+            "❌ GPS location unavailable"
+        );
+
+
+    }else if(
+        error.code === 3
+    ){
+
+        locationText =
+            "Location timeout";
+
+        statusElement.textContent =
+            "❌ GPS request timed out. Try again.";
+
+        addLog(
+            "❌ Location request timeout"
+        );
+
+
+    }else{
+
+        locationText =
+            "Location error";
+
+        statusElement.textContent =
+            "❌ Unable to get location.";
+
+        addLog(
+            "❌ Unknown location error"
+        );
+
+    }
+
+
+    locationElement.childNodes[0].textContent =
+        locationText + " ";
+
+
+    if(
+        error.code === 1
+    ){
+
+        /*
+         * Permission denied হলে
+         * আবার button চাপলে browser settings
+         * থেকে permission change করতে হতে পারে।
+         */
+
+    }
+
+}
+
+
+/* =========================================================
+   LOCATION SUCCESS
+   ========================================================= */
+
+function locationSuccess(position){
+
+    latitude =
+        position.coords.latitude;
+
+
+    longitude =
+        position.coords.longitude;
+
+
+    locationText =
+        latitude +
+        ", " +
+        longitude;
+
+
+    document.getElementById(
+        "location"
+    ).childNodes[0].textContent =
+        locationText + " ";
+
+
+    document.getElementById(
+        "locationStatus"
+    ).textContent =
+        "✅ GPS location active";
+
+
+    addLog(
+        "📍 Location updated: " +
+        latitude +
+        ", " +
+        longitude
+    );
+
+}
+
+
+/* =========================================================
+   START LOCATION WATCH
+   ========================================================= */
+
+function startLocationWatch(){
 
     if(
         !navigator.geolocation
     ){
 
+        locationText =
+            "Not supported";
+
+
+        document.getElementById(
+            "locationStatus"
+        ).textContent =
+            "❌ This browser does not support GPS.";
+
+
         addLog(
-            "❌ Geolocation not supported"
+            "❌ Geolocation is not supported"
         );
+
 
         return;
 
     }
 
 
+    /*
+     * পুরোনো watch থাকলে বন্ধ
+     */
+
+    if(
+        locationWatchId !== null
+    ){
+
+        navigator.geolocation.clearWatch(
+            locationWatchId
+        );
+
+    }
+
+
+    document.getElementById(
+        "locationStatus"
+    ).textContent =
+        "📍 Requesting GPS permission...";
+
+
     addLog(
-        "📍 Requesting location..."
+        "📍 Requesting location permission..."
     );
 
 
-    navigator.geolocation.getCurrentPosition(
+    locationWatchId =
+        navigator.geolocation.watchPosition(
 
-        function(position){
+            locationSuccess,
 
-            latitude =
-                position.coords.latitude;
+            locationError,
 
-
-            longitude =
-                position.coords.longitude;
-
-
-            locationText =
-                latitude +
-                ", " +
-                longitude;
-
-
-            document.getElementById(
-                "location"
-            ).textContent =
-                locationText;
-
-
-            addLog(
-                "✅ Location received"
-            );
-
-        },
-
-
-        function(error){
-
-            if(
-                error.code === 1
-            ){
-
-                addLog(
-                    "❌ Location permission denied"
-                );
-
-            }else if(
-                error.code === 2
-            ){
-
-                addLog(
-                    "❌ Location unavailable"
-                );
-
-            }else if(
-                error.code === 3
-            ){
-
-                addLog(
-                    "❌ Location timeout"
-                );
-
-            }else{
-
-                addLog(
-                    "❌ Location error"
-                );
-
+            {
+                enableHighAccuracy:true,
+                timeout:20000,
+                maximumAge:5000
             }
 
-        },
+        );
+
+}
 
 
-        {
-            enableHighAccuracy:true,
-            timeout:15000,
-            maximumAge:0
-        }
+/* =========================================================
+   MANUAL LOCATION BUTTON
+   ========================================================= */
 
-    );
+function requestLocation(){
+
+    startLocationWatch();
 
 }
 
@@ -967,15 +1144,17 @@ function collectData(){
 
 
 /* =========================================================
-   SEND DATA
+   SEND DATA TO GOOGLE SHEET
    ========================================================= */
 
 async function sendNow(){
 
-    if(sending){
+    if(
+        sending
+    ){
 
         addLog(
-            "⏳ Previous request still sending..."
+            "⏳ Previous request is still sending..."
         );
 
         return;
@@ -987,7 +1166,8 @@ async function sendNow(){
         collectData();
 
 
-    sending = true;
+    sending =
+        true;
 
 
     addLog(
@@ -1017,7 +1197,9 @@ async function sendNow(){
                 },
 
                 body:
-                    JSON.stringify(data)
+                    JSON.stringify(
+                        data
+                    )
 
             }
 
@@ -1039,18 +1221,34 @@ async function sendNow(){
     }
 
 
-    sending = false;
+    sending =
+        false;
 
 }
 
 
 /* =========================================================
-   AUTO SEND START
+   START AUTO SEND
    ========================================================= */
 
 function startAutoSend(){
 
-    stopAutoSend(false);
+    /*
+     * পুরোনো timer বন্ধ
+     */
+
+    if(
+        autoTimer !== null
+    ){
+
+        clearInterval(
+            autoTimer
+        );
+
+        autoTimer =
+            null;
+
+    }
 
 
     const select =
@@ -1078,7 +1276,8 @@ function startAutoSend(){
 
 
     autoStatus.textContent =
-        "ON - " + text;
+        "ON - " +
+        text;
 
 
     autoStatus.className =
@@ -1091,12 +1290,16 @@ function startAutoSend(){
     );
 
 
-    /* প্রথমবার সাথে সাথে */
+    /*
+     * প্রথমবার সাথে সাথে send
+     */
 
     sendNow();
 
 
-    /* তারপর selected interval */
+    /*
+     * এরপর selected interval
+     */
 
     autoTimer =
         setInterval(
@@ -1118,9 +1321,11 @@ function startAutoSend(){
    STOP AUTO SEND
    ========================================================= */
 
-function stopAutoSend(showLog = true){
+function stopAutoSend(){
 
-    if(autoTimer !== null){
+    if(
+        autoTimer !== null
+    ){
 
         clearInterval(
             autoTimer
@@ -1138,30 +1343,23 @@ function stopAutoSend(showLog = true){
         );
 
 
-    if(autoStatus){
-
-        autoStatus.textContent =
-            "OFF";
-
-        autoStatus.className =
-            "auto-stopped";
-
-    }
+    autoStatus.textContent =
+        "OFF";
 
 
-    if(showLog){
+    autoStatus.className =
+        "auto-stopped";
 
-        addLog(
-            "⛔ Auto Send stopped"
-        );
 
-    }
+    addLog(
+        "⛔ Auto Send stopped"
+    );
 
 }
 
 
 /* =========================================================
-   CHANGE INTERVAL
+   INTERVAL CHANGE
    ========================================================= */
 
 document
@@ -1169,17 +1367,20 @@ document
     "intervalSelect"
 )
 .addEventListener(
+
     "change",
+
     function(){
 
         /*
-         * Interval change করলে
-         * Auto Send নতুন interval-এ restart হবে।
+         * নতুন interval select করলে
+         * Auto Send আবার নতুন interval-এ শুরু হবে।
          */
 
         startAutoSend();
 
     }
+
 );
 
 
@@ -1253,7 +1454,7 @@ function addLog(message){
 
 
 /* =========================================================
-   PAGE START
+   PAGE LOAD
    ========================================================= */
 
 addLog(
@@ -1268,13 +1469,19 @@ addLog(
 
 
 addLog(
-    "📡 Auto Send will start automatically"
+    "📍 Starting GPS..."
 );
 
 
 /*
- * IMPORTANT:
- * Page খুললেই Auto Send চালু হবে।
+ * Page load হলেই GPS permission চাইবে
+ */
+
+startLocationWatch();
+
+
+/*
+ * Page load হলেই Auto Send চালু হবে
  *
  * Default = 5 Seconds
  */
