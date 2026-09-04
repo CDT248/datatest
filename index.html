@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Phone Data Monitor</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#0f172a;
+    color:#fff;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:500px;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#94a3b8;
+    margin-bottom:25px;
+}
+
+.status{
+    padding:14px;
+    border-radius:12px;
+    text-align:center;
+    background:#334155;
+    margin-bottom:20px;
+}
+
+.status.online{
+    background:#064e3b;
+}
+
+.status.offline{
+    background:#7f1d1d;
+}
+
+.data-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.item{
+    background:#0f172a;
+    border-radius:12px;
+    padding:14px;
+}
+
+.label{
+    font-size:12px;
+    color:#94a3b8;
+    margin-bottom:5px;
+}
+
+.value{
+    font-size:15px;
+    word-break:break-word;
+}
+
+.last-send{
+    text-align:center;
+    color:#94a3b8;
+    font-size:13px;
+    margin-top:20px;
+}
+
+.permission{
+    margin-top:20px;
+    padding:12px;
+    background:#422006;
+    border-radius:10px;
+    color:#fde68a;
+    font-size:13px;
+    line-height:1.5;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>📱 Phone Monitor</h1>
+
+<div class="subtitle">
+Device information monitor
+</div>
+
+<div id="status" class="status">
+Connecting...
+</div>
+
+<div class="data-box">
+
+<div class="item">
+<div class="label">Device ID</div>
+<div id="deviceId" class="value">Loading...</div>
+</div>
+
+<div class="item">
+<div class="label">IP Address</div>
+<div id="ip" class="value">Loading...</div>
+</div>
+
+<div class="item">
+<div class="label">Battery</div>
+<div id="battery" class="value">Loading...</div>
+</div>
+
+<div class="item">
+<div class="label">Network</div>
+<div id="network" class="value">Loading...</div>
+</div>
+
+<div class="item">
+<div class="label">Browser</div>
+<div id="browser" class="value">Loading...</div>
+</div>
+
+<div class="item">
+<div class="label">Last Send</div>
+<div id="time" class="value">Loading...</div>
+</div>
+
+</div>
+
+<div class="permission">
+Location এবং অন্যান্য sensitive information browser permission ছাড়া নেওয়া হবে না।
+এই Web App শুধু browser থেকে পাওয়া তথ্যই পাঠাবে।
+</div>
+
+<div id="lastSend" class="last-send">
+Waiting for first upload...
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/*************************************************
+ * GOOGLE APPS SCRIPT API
+ *************************************************/
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbzFJbVAZxXgj1EdOo5LvIvBzJmyUDk4gE3f5GtG60Ayfaod1qbRRAKWCebOe_sxsKvJ/exec";
+
+
+/*************************************************
+ * DEVICE ID
+ *************************************************/
+
+function getDeviceId(){
+
+    let id = localStorage.getItem("phone_device_id");
+
+    if(!id){
+
+        id =
+            "PHONE-" +
+            Date.now().toString(36) +
+            "-" +
+            Math.random()
+                .toString(36)
+                .substring(2,8)
+                .toUpperCase();
+
+        localStorage.setItem(
+            "phone_device_id",
+            id
+        );
+    }
+
+    return id;
+}
+
+
+/*************************************************
+ * BROWSER
+ *************************************************/
+
+function getBrowser(){
+
+    const ua = navigator.userAgent;
+
+    if(ua.includes("Edg/")){
+        return "Microsoft Edge";
+    }
+
+    if(ua.includes("Chrome/")){
+        return "Google Chrome";
+    }
+
+    if(ua.includes("Firefox/")){
+        return "Mozilla Firefox";
+    }
+
+    if(ua.includes("Safari/") &&
+       !ua.includes("Chrome/")){
+        return "Safari";
+    }
+
+    return "Unknown Browser";
+}
+
+
+/*************************************************
+ * IP ADDRESS
+ *************************************************/
+
+async function getIP(){
+
+    try{
+
+        const response =
+            await fetch(
+                "https://api.ipify.org?format=json"
+            );
+
+        const data =
+            await response.json();
+
+        return data.ip || "";
+
+    }catch(error){
+
+        return "";
+
+    }
+
+}
+
+
+/*************************************************
+ * BATTERY
+ *************************************************/
+
+async function getBattery(){
+
+    try{
+
+        if(
+            "getBattery" in navigator
+        ){
+
+            const battery =
+                await navigator.getBattery();
+
+            return Math.round(
+                battery.level * 100
+            ) + "%";
+
+        }
+
+    }catch(error){}
+
+    return "Unavailable";
+
+}
+
+
+/*************************************************
+ * NETWORK
+ *************************************************/
+
+function getNetwork(){
+
+    if(
+        navigator.onLine
+    ){
+        return "Online";
+    }
+
+    return "Offline";
+
+}
+
+
+/*************************************************
+ * UPDATE SCREEN
+ *************************************************/
+
+function updateScreen(
+    deviceId,
+    ip,
+    battery,
+    network,
+    browser
+){
+
+    document.getElementById(
+        "deviceId"
+    ).textContent = deviceId;
+
+    document.getElementById(
+        "ip"
+    ).textContent =
+        ip || "Unavailable";
+
+    document.getElementById(
+        "battery"
+    ).textContent =
+        battery;
+
+    document.getElementById(
+        "network"
+    ).textContent =
+        network;
+
+    document.getElementById(
+        "browser"
+    ).textContent =
+        browser;
+
+}
+
+
+/*************************************************
+ * SEND DATA TO GOOGLE SHEET
+ *************************************************/
+
+async function sendData(){
+
+    try{
+
+        const deviceId =
+            getDeviceId();
+
+        const ip =
+            await getIP();
+
+        const battery =
+            await getBattery();
+
+        const network =
+            getNetwork();
+
+        const browser =
+            getBrowser();
+
+        const now =
+            new Date();
+
+        const time =
+            now.toISOString();
+
+
+        updateScreen(
+            deviceId,
+            ip,
+            battery,
+            network,
+            browser
+        );
+
+
+        const data = {
+
+            time: time,
+
+            deviceId: deviceId,
+
+            ip: ip,
+
+            battery: battery,
+
+            online: network,
+
+            browser: browser,
+
+            userAgent:
+                navigator.userAgent
+
+        };
+
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                        "text/plain;charset=utf-8"
+                    },
+
+                    body:
+                        JSON.stringify(data)
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if(result.success){
+
+            document.getElementById(
+                "status"
+            ).textContent =
+                "✓ Data sent successfully";
+
+            document.getElementById(
+                "status"
+            ).className =
+                "status online";
+
+
+            document.getElementById(
+                "time"
+            ).textContent =
+                now.toLocaleTimeString();
+
+
+            document.getElementById(
+                "lastSend"
+            ).textContent =
+                "Last uploaded: " +
+                now.toLocaleString();
+
+        }else{
+
+            throw new Error(
+                result.message ||
+                "Upload failed"
+            );
+
+        }
+
+
+    }catch(error){
+
+        console.error(error);
+
+        document.getElementById(
+            "status"
+        ).textContent =
+            "✕ Upload failed";
+
+        document.getElementById(
+            "status"
+        ).className =
+            "status offline";
+
+        document.getElementById(
+            "lastSend"
+        ).textContent =
+            "Error: " +
+            error.message;
+
+    }
+
+}
+
+
+/*************************************************
+ * ONLINE / OFFLINE
+ *************************************************/
+
+window.addEventListener(
+    "online",
+    function(){
+
+        document.getElementById(
+            "network"
+        ).textContent =
+            "Online";
+
+        sendData();
+
+    }
+);
+
+
+window.addEventListener(
+    "offline",
+    function(){
+
+        document.getElementById(
+            "network"
+        ).textContent =
+            "Offline";
+
+    }
+);
+
+
+/*************************************************
+ * START
+ *************************************************/
+
+sendData();
+
+
+/*************************************************
+ * AUTO SEND
+ *
+ * Every 10 seconds
+ *************************************************/
+
+setInterval(
+    sendData,
+    10000
+);
+
+</script>
+
+</body>
+</html>
