@@ -1,170 +1,952 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Phone Data Monitor</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Phone Monitor</title>
 
 <style>
 
+/* =========================================
+   RESET
+========================================= */
+
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
+
+
+/* =========================================
+   BODY
+========================================= */
 
 body{
-    font-family:Arial, sans-serif;
-    background:#0f172a;
-    color:#fff;
+
     min-height:100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #1e293b 0%,
+            #0f172a 45%,
+            #020617 100%
+        );
+
+    color:#ffffff;
+
     display:flex;
-    align-items:center;
+
     justify-content:center;
+
+    align-items:center;
+
     padding:20px;
+
 }
+
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
 
 .container{
+
     width:100%;
-    max-width:500px;
+
+    max-width:520px;
+
 }
+
+
+/* =========================================
+   MAIN CARD
+========================================= */
 
 .card{
-    background:#1e293b;
-    border-radius:20px;
-    padding:25px;
-    box-shadow:0 15px 40px rgba(0,0,0,.35);
+
+    width:100%;
+
+    padding:28px;
+
+    border-radius:24px;
+
+    background:
+        rgba(30,41,59,.88);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.45);
+
+    backdrop-filter:
+        blur(18px);
+
 }
 
-h1{
+
+/* =========================================
+   HELLO CLICK AREA
+========================================= */
+
+.hello-animation{
+
+    width:100%;
+
+    display:block;
+
     text-align:center;
-    margin-bottom:8px;
+
+    text-decoration:none;
+
+    color:inherit;
+
+    cursor:pointer;
+
+    padding-top:5px;
+
+    margin-bottom:25px;
+
 }
+
+
+/* =========================================
+   HELLO TEXT
+========================================= */
+
+.hello-text{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:4px;
+
+    font-size:48px;
+
+    font-weight:900;
+
+    letter-spacing:2px;
+
+}
+
+
+/* =========================================
+   HELLO LETTER ANIMATION
+========================================= */
+
+.hello-text span:not(.wave){
+
+    display:inline-block;
+
+    animation:
+        helloFloat
+        1.8s
+        ease-in-out
+        infinite;
+
+}
+
+
+.hello-text span:nth-child(1){
+    animation-delay:0s;
+}
+
+
+.hello-text span:nth-child(2){
+    animation-delay:.12s;
+}
+
+
+.hello-text span:nth-child(3){
+    animation-delay:.24s;
+}
+
+
+.hello-text span:nth-child(4){
+    animation-delay:.36s;
+}
+
+
+.hello-text span:nth-child(5){
+    animation-delay:.48s;
+}
+
+
+/* =========================================
+   HAND ANIMATION
+========================================= */
+
+.wave{
+
+    display:inline-block;
+
+    margin-left:8px;
+
+    animation:
+        waveHand
+        1.5s
+        ease-in-out
+        infinite;
+
+    transform-origin:
+        70% 70%;
+
+}
+
+
+/* =========================================
+   ANIMATED LINE
+========================================= */
+
+.hello-line{
+
+    width:190px;
+
+    height:3px;
+
+    margin:
+        10px
+        auto
+        9px;
+
+    border-radius:50px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #38bdf8,
+            #a78bfa,
+            #38bdf8,
+            transparent
+        );
+
+    background-size:
+        200% 100%;
+
+    animation:
+        lineMove
+        2s
+        linear
+        infinite;
+
+}
+
+
+/* =========================================
+   LIVE TEXT
+========================================= */
+
+.hello-live{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:7px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    color:#94a3b8;
+
+}
+
+
+/* =========================================
+   LIVE DOT
+========================================= */
+
+.live-dot{
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    box-shadow:
+        0 0 12px
+        #22c55e;
+
+    animation:
+        livePulse
+        1s
+        infinite;
+
+}
+
+
+/* =========================================
+   TITLE
+========================================= */
+
+.title{
+
+    text-align:center;
+
+    font-size:24px;
+
+    font-weight:800;
+
+    margin-bottom:7px;
+
+}
+
 
 .subtitle{
+
     text-align:center;
+
     color:#94a3b8;
+
+    font-size:14px;
+
     margin-bottom:25px;
+
 }
+
+
+/* =========================================
+   STATUS
+========================================= */
 
 .status{
+
+    width:100%;
+
     padding:14px;
-    border-radius:12px;
+
+    border-radius:14px;
+
     text-align:center;
-    background:#334155;
+
+    font-size:14px;
+
+    font-weight:700;
+
     margin-bottom:20px;
+
+    background:#334155;
+
+    color:#cbd5e1;
+
+    transition:.3s;
+
 }
+
 
 .status.online{
-    background:#064e3b;
+
+    background:
+        rgba(6,78,59,.8);
+
+    color:#6ee7b7;
+
+    border:
+        1px solid
+        rgba(52,211,153,.2);
+
 }
+
 
 .status.offline{
-    background:#7f1d1d;
+
+    background:
+        rgba(127,29,29,.8);
+
+    color:#fca5a5;
+
+    border:
+        1px solid
+        rgba(248,113,113,.2);
+
 }
+
+
+/* =========================================
+   DATA GRID
+========================================= */
 
 .data-box{
+
     display:grid;
-    grid-template-columns:1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
+
     gap:12px;
+
 }
+
+
+/* =========================================
+   DATA ITEM
+========================================= */
 
 .item{
-    background:#0f172a;
-    border-radius:12px;
-    padding:14px;
+
+    min-width:0;
+
+    background:
+        rgba(15,23,42,.8);
+
+    border:
+        1px solid
+        rgba(255,255,255,.05);
+
+    border-radius:15px;
+
+    padding:15px;
+
+    transition:.25s;
+
 }
+
+
+.item:hover{
+
+    transform:translateY(-2px);
+
+    border-color:
+        rgba(56,189,248,.25);
+
+}
+
+
+/* =========================================
+   LABEL
+========================================= */
 
 .label{
-    font-size:12px;
-    color:#94a3b8;
-    margin-bottom:5px;
+
+    font-size:11px;
+
+    color:#64748b;
+
+    text-transform:uppercase;
+
+    letter-spacing:.7px;
+
+    margin-bottom:7px;
+
 }
+
+
+/* =========================================
+   VALUE
+========================================= */
 
 .value{
-    font-size:15px;
-    word-break:break-word;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#e2e8f0;
+
+    word-break:
+        break-word;
+
 }
+
+
+/* =========================================
+   LAST SEND
+========================================= */
 
 .last-send{
+
     text-align:center;
-    color:#94a3b8;
-    font-size:13px;
+
+    color:#64748b;
+
+    font-size:12px;
+
     margin-top:20px;
+
+    line-height:1.5;
+
 }
 
+
+/* =========================================
+   INFORMATION BOX
+========================================= */
+
 .permission{
-    margin-top:20px;
-    padding:12px;
-    background:#422006;
-    border-radius:10px;
-    color:#fde68a;
-    font-size:13px;
+
+    margin-top:18px;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    background:
+        rgba(66,32,6,.45);
+
+    border:
+        1px solid
+        rgba(245,158,11,.12);
+
+    color:#fcd34d;
+
+    font-size:12px;
+
     line-height:1.5;
+
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes helloFloat{
+
+    0%,
+    100%{
+
+        transform:
+            translateY(0);
+
+    }
+
+    50%{
+
+        transform:
+            translateY(-10px);
+
+    }
+
+}
+
+
+@keyframes waveHand{
+
+    0%,
+    100%{
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    20%{
+
+        transform:
+            rotate(18deg);
+
+    }
+
+    40%{
+
+        transform:
+            rotate(-12deg);
+
+    }
+
+    60%{
+
+        transform:
+            rotate(18deg);
+
+    }
+
+    80%{
+
+        transform:
+            rotate(-5deg);
+
+    }
+
+}
+
+
+@keyframes lineMove{
+
+    0%{
+
+        background-position:
+            0% 50%;
+
+    }
+
+    100%{
+
+        background-position:
+            200% 50%;
+
+    }
+
+}
+
+
+@keyframes livePulse{
+
+    0%{
+
+        transform:
+            scale(1);
+
+        opacity:1;
+
+    }
+
+    50%{
+
+        transform:
+            scale(1.7);
+
+        opacity:.4;
+
+    }
+
+    100%{
+
+        transform:
+            scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:500px){
+
+    body{
+
+        padding:12px;
+
+        align-items:
+            flex-start;
+
+        padding-top:25px;
+
+    }
+
+
+    .card{
+
+        padding:20px;
+
+        border-radius:20px;
+
+    }
+
+
+    .hello-text{
+
+        font-size:39px;
+
+    }
+
+
+    .title{
+
+        font-size:21px;
+
+    }
+
+
+    .data-box{
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap:9px;
+
+    }
+
+
+    .item{
+
+        padding:12px;
+
+    }
+
+
+    .value{
+
+        font-size:13px;
+
+    }
+
+}
+
+
+@media(max-width:350px){
+
+    .hello-text{
+
+        font-size:32px;
+
+    }
+
+
+    .data-box{
+
+        grid-template-columns:
+            1fr;
+
+    }
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
+
 
 <div class="card">
 
-<h1>📱 Phone Monitor</h1>
+
+<!-- =====================================
+     HELLO
+     CLICK → cod.html
+====================================== -->
+
+<a
+    href="cod.html"
+    class="hello-animation"
+    title="Open COD"
+>
+
+    <div class="hello-text">
+
+        <span>H</span>
+
+        <span>E</span>
+
+        <span>L</span>
+
+        <span>L</span>
+
+        <span>O</span>
+
+        <span class="wave">👋</span>
+
+    </div>
+
+
+    <div class="hello-line"></div>
+
+
+    <div class="hello-live">
+
+        <span class="live-dot"></span>
+
+        LIVE
+
+    </div>
+
+</a>
+
+
+<!-- =====================================
+     TITLE
+====================================== -->
+
+<div class="title">
+
+    📱 Phone Monitor
+
+</div>
+
 
 <div class="subtitle">
-Device information monitor
+
+    Live device information
+
 </div>
 
-<div id="status" class="status">
-Connecting...
+
+<!-- =====================================
+     STATUS
+====================================== -->
+
+<div
+    id="status"
+    class="status"
+>
+
+    Connecting...
+
 </div>
+
+
+<!-- =====================================
+     DATA
+====================================== -->
 
 <div class="data-box">
 
-<div class="item">
-<div class="label">Device ID</div>
-<div id="deviceId" class="value">Loading...</div>
+
+    <div class="item">
+
+        <div class="label">
+            Device ID
+        </div>
+
+        <div
+            id="deviceId"
+            class="value"
+        >
+            Loading...
+        </div>
+
+    </div>
+
+
+    <div class="item">
+
+        <div class="label">
+            IP Address
+        </div>
+
+        <div
+            id="ip"
+            class="value"
+        >
+            Loading...
+        </div>
+
+    </div>
+
+
+    <div class="item">
+
+        <div class="label">
+            Battery
+        </div>
+
+        <div
+            id="battery"
+            class="value"
+        >
+            Loading...
+        </div>
+
+    </div>
+
+
+    <div class="item">
+
+        <div class="label">
+            Network
+        </div>
+
+        <div
+            id="network"
+            class="value"
+        >
+            Loading...
+        </div>
+
+    </div>
+
+
+    <div class="item">
+
+        <div class="label">
+            Browser
+        </div>
+
+        <div
+            id="browser"
+            class="value"
+        >
+            Loading...
+        </div>
+
+    </div>
+
+
+    <div class="item">
+
+        <div class="label">
+            Last Send
+        </div>
+
+        <div
+            id="time"
+            class="value"
+        >
+            Waiting...
+        </div>
+
+    </div>
+
+
 </div>
 
-<div class="item">
-<div class="label">IP Address</div>
-<div id="ip" class="value">Loading...</div>
-</div>
 
-<div class="item">
-<div class="label">Battery</div>
-<div id="battery" class="value">Loading...</div>
-</div>
-
-<div class="item">
-<div class="label">Network</div>
-<div id="network" class="value">Loading...</div>
-</div>
-
-<div class="item">
-<div class="label">Browser</div>
-<div id="browser" class="value">Loading...</div>
-</div>
-
-<div class="item">
-<div class="label">Last Send</div>
-<div id="time" class="value">Loading...</div>
-</div>
-
-</div>
+<!-- =====================================
+     INFO
+====================================== -->
 
 <div class="permission">
-Location এবং অন্যান্য sensitive information browser permission ছাড়া নেওয়া হবে না।
-এই Web App শুধু browser থেকে পাওয়া তথ্যই পাঠাবে।
+
+    ℹ️ Browser security-এর কারণে শুধু browser
+    থেকে পাওয়া তথ্যই সংগ্রহ করা হবে।
+    Location বা sensitive information
+    permission ছাড়া নেওয়া হবে না।
+
 </div>
 
-<div id="lastSend" class="last-send">
-Waiting for first upload...
+
+<!-- =====================================
+     LAST UPLOAD
+====================================== -->
+
+<div
+    id="lastSend"
+    class="last-send"
+>
+
+    Waiting for first upload...
+
 </div>
+
 
 </div>
 
@@ -187,7 +969,11 @@ const API_URL =
 
 function getDeviceId(){
 
-    let id = localStorage.getItem("phone_device_id");
+    let id =
+        localStorage.getItem(
+            "phone_device_id"
+        );
+
 
     if(!id){
 
@@ -200,13 +986,17 @@ function getDeviceId(){
                 .substring(2,8)
                 .toUpperCase();
 
+
         localStorage.setItem(
             "phone_device_id",
             id
         );
+
     }
 
+
     return id;
+
 }
 
 
@@ -216,31 +1006,54 @@ function getDeviceId(){
 
 function getBrowser(){
 
-    const ua = navigator.userAgent;
+    const ua =
+        navigator.userAgent;
 
-    if(ua.includes("Edg/")){
+
+    if(
+        ua.includes("Edg/")
+    ){
+
         return "Microsoft Edge";
+
     }
 
-    if(ua.includes("Chrome/")){
+
+    if(
+        ua.includes("Chrome/")
+    ){
+
         return "Google Chrome";
+
     }
 
-    if(ua.includes("Firefox/")){
+
+    if(
+        ua.includes("Firefox/")
+    ){
+
         return "Mozilla Firefox";
+
     }
 
-    if(ua.includes("Safari/") &&
-       !ua.includes("Chrome/")){
+
+    if(
+        ua.includes("Safari/") &&
+        !ua.includes("Chrome/")
+    ){
+
         return "Safari";
+
     }
+
 
     return "Unknown Browser";
+
 }
 
 
 /*************************************************
- * IP ADDRESS
+ * IP
  *************************************************/
 
 async function getIP(){
@@ -252,12 +1065,21 @@ async function getIP(){
                 "https://api.ipify.org?format=json"
             );
 
+
         const data =
             await response.json();
 
+
         return data.ip || "";
 
-    }catch(error){
+    }
+
+    catch(error){
+
+        console.log(
+            "IP Error:",
+            error
+        );
 
         return "";
 
@@ -281,13 +1103,24 @@ async function getBattery(){
             const battery =
                 await navigator.getBattery();
 
+
             return Math.round(
                 battery.level * 100
             ) + "%";
 
         }
 
-    }catch(error){}
+    }
+
+    catch(error){
+
+        console.log(
+            "Battery Error:",
+            error
+        );
+
+    }
+
 
     return "Unavailable";
 
@@ -300,47 +1133,50 @@ async function getBattery(){
 
 function getNetwork(){
 
-    if(
-        navigator.onLine
-    ){
-        return "Online";
-    }
-
-    return "Offline";
+    return navigator.onLine
+        ? "Online"
+        : "Offline";
 
 }
 
 
 /*************************************************
- * UPDATE SCREEN
+ * SCREEN UPDATE
  *************************************************/
 
 function updateScreen(
+
     deviceId,
     ip,
     battery,
     network,
     browser
+
 ){
 
     document.getElementById(
         "deviceId"
-    ).textContent = deviceId;
+    ).textContent =
+        deviceId;
+
 
     document.getElementById(
         "ip"
     ).textContent =
         ip || "Unavailable";
 
+
     document.getElementById(
         "battery"
     ).textContent =
         battery;
 
+
     document.getElementById(
         "network"
     ).textContent =
         network;
+
 
     document.getElementById(
         "browser"
@@ -351,7 +1187,7 @@ function updateScreen(
 
 
 /*************************************************
- * SEND DATA TO GOOGLE SHEET
+ * SEND DATA
  *************************************************/
 
 async function sendData(){
@@ -361,47 +1197,69 @@ async function sendData(){
         const deviceId =
             getDeviceId();
 
+
         const ip =
             await getIP();
+
 
         const battery =
             await getBattery();
 
+
         const network =
             getNetwork();
+
 
         const browser =
             getBrowser();
 
+
         const now =
             new Date();
+
 
         const time =
             now.toISOString();
 
 
+        /*
+         * Update screen
+         */
+
         updateScreen(
+
             deviceId,
             ip,
             battery,
             network,
             browser
+
         );
 
 
+        /*
+         * Data object
+         */
+
         const data = {
 
-            time: time,
+            time:
+                time,
 
-            deviceId: deviceId,
+            deviceId:
+                deviceId,
 
-            ip: ip,
+            ip:
+                ip,
 
-            battery: battery,
+            battery:
+                battery,
 
-            online: network,
+            online:
+                network,
 
-            browser: browser,
+            browser:
+                browser,
 
             userAgent:
                 navigator.userAgent
@@ -409,20 +1267,32 @@ async function sendData(){
         };
 
 
+        /*
+         * Send to Apps Script
+         */
+
         const response =
             await fetch(
+
                 API_URL,
+
                 {
-                    method:"POST",
+
+                    method:
+                        "POST",
 
                     headers:{
+
                         "Content-Type":
-                        "text/plain;charset=utf-8"
+                            "text/plain;charset=utf-8"
+
                     },
 
                     body:
                         JSON.stringify(data)
+
                 }
+
             );
 
 
@@ -430,16 +1300,25 @@ async function sendData(){
             await response.json();
 
 
-        if(result.success){
+        /*
+         * Success
+         */
 
-            document.getElementById(
-                "status"
-            ).textContent =
+        if(
+            result.success
+        ){
+
+            const status =
+                document.getElementById(
+                    "status"
+                );
+
+
+            status.textContent =
                 "✓ Data sent successfully";
 
-            document.getElementById(
-                "status"
-            ).className =
+
+            status.className =
                 "status online";
 
 
@@ -455,29 +1334,42 @@ async function sendData(){
                 "Last uploaded: " +
                 now.toLocaleString();
 
-        }else{
+        }
+
+        else{
 
             throw new Error(
+
                 result.message ||
                 "Upload failed"
+
             );
 
         }
 
+    }
 
-    }catch(error){
+    catch(error){
 
-        console.error(error);
+        console.error(
+            "Send Error:",
+            error
+        );
 
-        document.getElementById(
-            "status"
-        ).textContent =
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+
+        status.textContent =
             "✕ Upload failed";
 
-        document.getElementById(
-            "status"
-        ).className =
+
+        status.className =
             "status offline";
+
 
         document.getElementById(
             "lastSend"
@@ -491,7 +1383,7 @@ async function sendData(){
 
 
 /*************************************************
- * ONLINE / OFFLINE
+ * ONLINE
  *************************************************/
 
 window.addEventListener(
@@ -503,11 +1395,16 @@ window.addEventListener(
         ).textContent =
             "Online";
 
+
         sendData();
 
     }
 );
 
+
+/*************************************************
+ * OFFLINE
+ *************************************************/
 
 window.addEventListener(
     "offline",
@@ -518,12 +1415,26 @@ window.addEventListener(
         ).textContent =
             "Offline";
 
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+
+        status.textContent =
+            "Offline";
+
+
+        status.className =
+            "status offline";
+
     }
 );
 
 
 /*************************************************
- * START
+ * FIRST SEND
  *************************************************/
 
 sendData();
@@ -536,11 +1447,16 @@ sendData();
  *************************************************/
 
 setInterval(
+
     sendData,
+
     10000
+
 );
 
 </script>
 
+
 </body>
+
 </html>
