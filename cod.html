@@ -10,7 +10,7 @@
   content="width=device-width, initial-scale=1.0"
 >
 
-<title>Phone Information</title>
+<title>Device Data</title>
 
 <style>
 
@@ -21,177 +21,96 @@
 }
 
 body{
-
-  min-height:100vh;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  background:
-    linear-gradient(
-      135deg,
-      #020617,
-      #0f172a,
-      #111827
-    );
-
+  font-family:Arial,sans-serif;
+  background:#0f172a;
   color:white;
-
   padding:20px;
-
 }
 
 .container{
-
-  width:100%;
-
-  max-width:950px;
-
+  max-width:700px;
   margin:auto;
-
 }
 
 .card{
-
-  background:
-    rgba(255,255,255,.06);
-
-  border:
-    1px solid rgba(255,255,255,.1);
-
-  border-radius:22px;
-
-  padding:25px;
-
-  backdrop-filter:
-    blur(20px);
-
-  box-shadow:
-    0 20px 60px
-    rgba(0,0,0,.45);
-
+  background:#1e293b;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
 
 h1{
-
   text-align:center;
-
-  font-size:28px;
-
-  margin-bottom:8px;
-
-}
-
-.subtitle{
-
-  text-align:center;
-
-  color:#94a3b8;
-
-  margin-bottom:25px;
-
+  margin-bottom:20px;
 }
 
 button{
-
   width:100%;
-
   padding:15px;
-
   border:0;
-
   border-radius:12px;
-
-  background:#16a34a;
-
+  background:#22c55e;
   color:white;
-
-  font-size:17px;
-
+  font-size:16px;
   font-weight:bold;
-
   cursor:pointer;
-
+  margin-top:10px;
 }
 
-button.stop{
-
-  background:#dc2626;
-
+button:disabled{
+  background:#475569;
 }
 
 .status{
-
-  text-align:center;
-
-  margin-top:18px;
-
-  color:#22c55e;
-
-  font-weight:bold;
-
+  margin-top:15px;
+  padding:12px;
+  border-radius:10px;
+  background:#0f172a;
+  word-break:break-word;
 }
 
-.counter{
-
-  text-align:center;
-
-  color:#94a3b8;
-
-  margin:10px 0 22px;
-
-}
-
-.grid{
-
+.data{
   display:grid;
-
-  grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(220px,1fr)
-    );
-
-  gap:12px;
-
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:15px;
 }
 
 .item{
-
-  padding:15px;
-
-  border-radius:13px;
-
-  background:
-    rgba(255,255,255,.045);
-
-  border:
-    1px solid
-    rgba(255,255,255,.08);
-
+  background:#0f172a;
+  padding:12px;
+  border-radius:10px;
+  overflow:hidden;
 }
 
 .label{
-
   color:#94a3b8;
-
-  font-size:11px;
-
-  font-weight:bold;
-
-  margin-bottom:7px;
-
+  font-size:12px;
+  margin-bottom:5px;
 }
 
 .value{
-
-  color:#f8fafc;
-
   font-size:14px;
-
   word-break:break-word;
+}
+
+.count{
+  text-align:center;
+  font-size:28px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+@media(max-width:600px){
+
+  .data{
+    grid-template-columns:1fr;
+  }
+
+  body{
+    padding:10px;
+  }
 
 }
 
@@ -202,259 +121,205 @@ button.stop{
 
 <body>
 
-
 <div class="container">
 
-<div class="card">
+  <div class="card">
 
-<h1>📱 Phone Information</h1>
+    <h1>📱 Device Data</h1>
 
-<div class="subtitle">
-Device information and location
-</div>
+    <button id="startBtn" onclick="startSystem()">
+      Allow & Start
+    </button>
 
+    <button
+      id="testBtn"
+      onclick="sendTest()"
+      disabled
+    >
+      TEST SEND
+    </button>
 
-<button
-  id="startBtn"
-  onclick="startTracking()"
->
-Allow & Start
-</button>
+    <div class="status" id="status">
+      System stopped
+    </div>
 
+    <div class="count">
+      <span id="count">0</span>
+    </div>
 
-<div
-  class="status"
-  id="status"
->
-Waiting...
-</div>
+    <div style="text-align:center;color:#94a3b8;">
+      Data Sent
+    </div>
 
-
-<div class="counter">
-
-Updates:
-<span id="counter">0</span>
-
-</div>
+  </div>
 
 
-<div class="grid">
+  <div class="card">
 
+    <h2>Device Information</h2>
 
-<div class="item">
-<div class="label">DATE & TIME</div>
-<div class="value" id="dateTime">-</div>
-</div>
+    <div class="data">
 
+      <div class="item">
+        <div class="label">IP Address</div>
+        <div class="value" id="ip">Loading...</div>
+      </div>
 
-<div class="item">
-<div class="label">LATITUDE</div>
-<div class="value" id="latitude">-</div>
-</div>
+      <div class="item">
+        <div class="label">Device</div>
+        <div class="value" id="device">-</div>
+      </div>
 
+      <div class="item">
+        <div class="label">OS</div>
+        <div class="value" id="os">-</div>
+      </div>
 
-<div class="item">
-<div class="label">LONGITUDE</div>
-<div class="value" id="longitude">-</div>
-</div>
+      <div class="item">
+        <div class="label">Browser</div>
+        <div class="value" id="browser">-</div>
+      </div>
 
+      <div class="item">
+        <div class="label">Battery</div>
+        <div class="value" id="battery">-</div>
+      </div>
 
-<div class="item">
-<div class="label">ACCURACY</div>
-<div class="value" id="accuracy">-</div>
-</div>
+      <div class="item">
+        <div class="label">Online</div>
+        <div class="value" id="online">-</div>
+      </div>
 
+      <div class="item">
+        <div class="label">Network</div>
+        <div class="value" id="network">-</div>
+      </div>
 
-<div class="item">
-<div class="label">GOOGLE MAPS</div>
-<div class="value" id="maps">-</div>
-</div>
+      <div class="item">
+        <div class="label">Screen</div>
+        <div class="value" id="screen">-</div>
+      </div>
 
+      <div class="item">
+        <div class="label">Language</div>
+        <div class="value" id="language">-</div>
+      </div>
 
-<div class="item">
-<div class="label">PUBLIC IP</div>
-<div class="value" id="ip">-</div>
-</div>
+      <div class="item">
+        <div class="label">Timezone</div>
+        <div class="value" id="timezone">-</div>
+      </div>
 
+      <div class="item">
+        <div class="label">Latitude</div>
+        <div class="value" id="latitude">Waiting...</div>
+      </div>
 
-<div class="item">
-<div class="label">DEVICE</div>
-<div class="value" id="device">-</div>
-</div>
+      <div class="item">
+        <div class="label">Longitude</div>
+        <div class="value" id="longitude">Waiting...</div>
+      </div>
 
+    </div>
 
-<div class="item">
-<div class="label">OPERATING SYSTEM</div>
-<div class="value" id="os">-</div>
-</div>
-
-
-<div class="item">
-<div class="label">BROWSER</div>
-<div class="value" id="browser">-</div>
-</div>
-
-
-<div class="item">
-<div class="label">BATTERY</div>
-<div class="value" id="battery">-</div>
-</div>
-
-
-<div class="item">
-<div class="label">ONLINE</div>
-<div class="value" id="online">-</div>
-</div>
-
-
-<div class="item">
-<div class="label">NETWORK TYPE</div>
-<div class="value" id="networkType">-</div>
-</div>
-
-
-<div class="item">
-<div class="label">NETWORK SPEED</div>
-<div class="value" id="networkSpeed">-</div>
-</div>
-
-
-<div class="item">
-<div class="label">NETWORK RTT</div>
-<div class="value" id="networkRtt">-</div>
-</div>
-
-
-<div class="item">
-<div class="label">SCREEN</div>
-<div class="value" id="screen">-</div>
-</div>
-
-
-<div class="item">
-<div class="label">LANGUAGE</div>
-<div class="value" id="language">-</div>
-</div>
-
-
-<div class="item">
-<div class="label">TIMEZONE</div>
-<div class="value" id="timezone">-</div>
-</div>
-
-
-<div class="item">
-<div class="label">PLATFORM</div>
-<div class="value" id="platform">-</div>
-</div>
-
-
-<div class="item">
-<div class="label">USER AGENT</div>
-<div class="value" id="userAgent">-</div>
-</div>
-
-
-</div>
-
-</div>
+  </div>
 
 </div>
 
 
 <script>
 
-
-// =====================================================
-// YOUR NEW APPS SCRIPT WEB APP
-// =====================================================
-
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbzFJbVAZxXgj1EdOo5LvIvBzJmyUDk4gE3f5GtG60Ayfaod1qbRRAKWCebOe_sxsKvJ/exec";
 
 
-// =====================================================
-// VARIABLES
-// =====================================================
-
-let tracking = false;
-
-let timer = null;
-
-let locationWatch = null;
-
-let count = 0;
-
-let ipAddress = "";
-
-let battery = null;
-
 let locationData = {
-
   latitude:"",
   longitude:"",
   accuracy:""
-
 };
 
+let publicIP = "";
 
-// =====================================================
-// VALUE
-// =====================================================
+let batteryLevel = "";
 
-function setValue(id,value){
+let sendCount = 0;
 
-  const el =
-    document.getElementById(id);
+let running = false;
 
-  if(el){
+let intervalID = null;
 
-    el.textContent =
-      value !== undefined &&
-      value !== null &&
-      value !== ""
-      ? value
-      : "-";
+
+// ===============================
+// PUBLIC IP
+// ===============================
+
+async function getIP(){
+
+  try{
+
+    const response =
+      await fetch("https://api.ipify.org?format=json");
+
+    const data = await response.json();
+
+    publicIP = data.ip || "";
+
+    document.getElementById("ip").textContent =
+      publicIP || "Unavailable";
+
+  }catch(error){
+
+    publicIP = "";
+
+    document.getElementById("ip").textContent =
+      "Unavailable";
 
   }
 
 }
 
 
-// =====================================================
+// ===============================
 // DEVICE
-// =====================================================
+// ===============================
 
 function getDevice(){
 
-  const ua =
-    navigator.userAgent || "";
+  const ua = navigator.userAgent.toLowerCase();
 
-  if(/iPhone/i.test(ua))
-    return "iPhone";
-
-  if(/iPad/i.test(ua))
-    return "iPad";
-
-  if(/Android/i.test(ua))
+  if(/android/.test(ua)){
     return "Android";
+  }
 
-  if(/Windows Phone/i.test(ua))
-    return "Windows Phone";
+  if(/iphone/.test(ua)){
+    return "iPhone";
+  }
+
+  if(/ipad/.test(ua)){
+    return "iPad";
+  }
+
+  if(/windows/.test(ua)){
+    return "Windows PC";
+  }
+
+  if(/macintosh/.test(ua)){
+    return "Mac";
+  }
 
   return "Unknown";
 
 }
 
 
-// =====================================================
+// ===============================
 // OS
-// =====================================================
+// ===============================
 
 function getOS(){
 
-  const ua =
-    navigator.userAgent || "";
+  const ua = navigator.userAgent;
 
   if(/Android/i.test(ua))
     return "Android";
@@ -465,7 +330,7 @@ function getOS(){
   if(/Windows/i.test(ua))
     return "Windows";
 
-  if(/Mac OS X/i.test(ua))
+  if(/Mac OS/i.test(ua))
     return "macOS";
 
   if(/Linux/i.test(ua))
@@ -476,34 +341,24 @@ function getOS(){
 }
 
 
-// =====================================================
+// ===============================
 // BROWSER
-// =====================================================
+// ===============================
 
 function getBrowser(){
 
-  const ua =
-    navigator.userAgent || "";
+  const ua = navigator.userAgent;
 
   if(/Edg/i.test(ua))
-    return "Edge";
+    return "Microsoft Edge";
 
-  if(/OPR/i.test(ua))
-    return "Opera";
-
-  if(
-    /Chrome/i.test(ua) &&
-    !/Edg/i.test(ua)
-  )
+  if(/Chrome/i.test(ua) && !/Edg/i.test(ua))
     return "Chrome";
 
   if(/Firefox/i.test(ua))
     return "Firefox";
 
-  if(
-    /Safari/i.test(ua) &&
-    !/Chrome/i.test(ua)
-  )
+  if(/Safari/i.test(ua) && !/Chrome/i.test(ua))
     return "Safari";
 
   return "Unknown";
@@ -511,9 +366,9 @@ function getBrowser(){
 }
 
 
-// =====================================================
+// ===============================
 // NETWORK
-// =====================================================
+// ===============================
 
 function getNetwork(){
 
@@ -522,340 +377,162 @@ function getNetwork(){
     navigator.mozConnection ||
     navigator.webkitConnection;
 
-
   if(!connection){
 
     return {
-
-      type:"Not supported",
-
-      speed:"Not supported",
-
-      rtt:"Not supported"
-
+      type:"",
+      speed:"",
+      rtt:""
     };
 
   }
 
-
   return {
 
     type:
-      connection.effectiveType ||
-      connection.type ||
-      "Unknown",
+      connection.effectiveType || "",
 
     speed:
-      connection.downlink !== undefined
-      ? connection.downlink + " Mbps"
-      : "Unknown",
+      connection.downlink
+        ? connection.downlink + " Mbps"
+        : "",
 
     rtt:
-      connection.rtt !== undefined
-      ? connection.rtt + " ms"
-      : "Unknown"
+      connection.rtt
+        ? connection.rtt + " ms"
+        : ""
 
   };
 
 }
 
 
-// =====================================================
-// BATTERY
-// =====================================================
-
-async function getBatteryAPI(){
-
-  try{
-
-    if(
-      "getBattery" in navigator
-    ){
-
-      battery =
-        await navigator.getBattery();
-
-    }
-
-  }
-
-  catch(error){
-
-    battery = null;
-
-  }
-
-}
-
-
-function batteryValue(){
-
-  if(!battery)
-    return "Not supported";
-
-
-  return (
-
-    Math.round(
-      battery.level * 100
-    )
-
-    + "%"
-
-    +
-
-    (
-      battery.charging
-      ? " Charging"
-      : ""
-    )
-
-  );
-
-}
-
-
-// =====================================================
-// IP
-// =====================================================
-
-async function getIP(){
-
-  try{
-
-    const response =
-      await fetch(
-        "https://api.ipify.org?format=json",
-        {
-          cache:"no-store"
-        }
-      );
-
-
-    const result =
-      await response.json();
-
-
-    ipAddress =
-      result.ip || "";
-
-
-    setValue(
-      "ip",
-      ipAddress
-    );
-
-  }
-
-  catch(error){
-
-    ipAddress = "";
-
-    setValue(
-      "ip",
-      "Unavailable"
-    );
-
-  }
-
-}
-
-
-// =====================================================
+// ===============================
 // LOCATION
-// =====================================================
+// ===============================
 
 function startLocation(){
 
   if(!navigator.geolocation){
 
-    setValue(
-      "latitude",
-      "Not supported"
-    );
+    document.getElementById("status").textContent =
+      "Geolocation is not supported.";
 
     return;
 
   }
 
 
-  locationWatch =
-    navigator.geolocation.watchPosition(
+  navigator.geolocation.watchPosition(
 
-      function(position){
+    function(position){
 
-        locationData.latitude =
-          position.coords.latitude;
+      locationData.latitude =
+        position.coords.latitude;
 
-        locationData.longitude =
-          position.coords.longitude;
+      locationData.longitude =
+        position.coords.longitude;
 
-        locationData.accuracy =
-          position.coords.accuracy;
-
-
-        setValue(
-          "latitude",
-          locationData.latitude
-        );
+      locationData.accuracy =
+        position.coords.accuracy;
 
 
-        setValue(
-          "longitude",
-          locationData.longitude
-        );
+      document.getElementById("latitude").textContent =
+        position.coords.latitude;
 
+      document.getElementById("longitude").textContent =
+        position.coords.longitude;
 
-        setValue(
-          "accuracy",
-          locationData.accuracy +
-          " meters"
-        );
+    },
 
+    function(error){
 
-        setValue(
+      document.getElementById("latitude").textContent =
+        "Permission denied";
 
-          "maps",
+      document.getElementById("longitude").textContent =
+        "Permission denied";
 
-          "https://www.google.com/maps?q=" +
+    },
 
-          locationData.latitude +
+    {
+      enableHighAccuracy:true,
+      maximumAge:0,
+      timeout:10000
+    }
 
-          "," +
-
-          locationData.longitude
-
-        );
-
-      },
-
-
-      function(error){
-
-        if(error.code === 1){
-
-          setValue(
-            "latitude",
-            "Permission denied"
-          );
-
-        }
-        else{
-
-          setValue(
-            "latitude",
-            "Location unavailable"
-          );
-
-        }
-
-      },
-
-
-      {
-
-        enableHighAccuracy:true,
-
-        maximumAge:1000,
-
-        timeout:10000
-
-      }
-
-    );
-
-}
-
-
-// =====================================================
-// DEVICE INFO
-// =====================================================
-
-function showInfo(){
-
-  setValue(
-    "device",
-    getDevice()
-  );
-
-
-  setValue(
-    "os",
-    getOS()
-  );
-
-
-  setValue(
-    "browser",
-    getBrowser()
-  );
-
-
-  setValue(
-
-    "screen",
-
-    screen.width +
-    " × " +
-    screen.height
-
-  );
-
-
-  setValue(
-    "language",
-    navigator.language
-  );
-
-
-  setValue(
-
-    "timezone",
-
-    Intl.DateTimeFormat()
-      .resolvedOptions()
-      .timeZone
-
-  );
-
-
-  setValue(
-    "platform",
-    navigator.platform
-  );
-
-
-  setValue(
-    "userAgent",
-    navigator.userAgent
   );
 
 }
 
 
-// =====================================================
-// CREATE DATA
-// =====================================================
+// ===============================
+// BATTERY
+// ===============================
 
-function makeData(){
+async function getBattery(){
 
-  const network =
-    getNetwork();
+  try{
+
+    if(navigator.getBattery){
+
+      const battery =
+        await navigator.getBattery();
+
+      batteryLevel =
+        Math.round(battery.level * 100) + "%";
+
+      document.getElementById("battery").textContent =
+        batteryLevel;
 
 
-  const maps =
+      battery.addEventListener(
+        "levelchange",
+        function(){
 
-    locationData.latitude !== "" &&
-    locationData.longitude !== ""
+          batteryLevel =
+            Math.round(battery.level * 100) + "%";
+
+          document.getElementById("battery").textContent =
+            batteryLevel;
+
+        }
+      );
+
+    }
+
+  }catch(error){
+
+    batteryLevel = "";
+
+    document.getElementById("battery").textContent =
+      "Unavailable";
+
+  }
+
+}
+
+
+// ===============================
+// COLLECT DATA
+// ===============================
+
+function collectData(){
+
+  const network = getNetwork();
+
+  const date =
+    new Date();
+
+  const mapsLink =
+    locationData.latitude &&
+    locationData.longitude
 
     ?
 
     "https://www.google.com/maps?q=" +
-
     locationData.latitude +
-
     "," +
-
     locationData.longitude
 
     :
@@ -866,7 +543,7 @@ function makeData(){
   return {
 
     dateTime:
-      new Date().toLocaleString(),
+      date.toISOString(),
 
     latitude:
       locationData.latitude,
@@ -878,10 +555,10 @@ function makeData(){
       locationData.accuracy,
 
     mapsLink:
-      maps,
+      mapsLink,
 
     ip:
-      ipAddress,
+      publicIP,
 
     device:
       getDevice(),
@@ -893,12 +570,12 @@ function makeData(){
       getBrowser(),
 
     battery:
-      batteryValue(),
+      batteryLevel,
 
     online:
       navigator.onLine
-      ? "Online"
-      : "Offline",
+        ? "Online"
+        : "Offline",
 
     networkType:
       network.type,
@@ -910,9 +587,9 @@ function makeData(){
       network.rtt,
 
     screen:
-      screen.width +
-      " × " +
-      screen.height,
+      window.screen.width +
+      " x " +
+      window.screen.height,
 
     language:
       navigator.language,
@@ -933,57 +610,45 @@ function makeData(){
 }
 
 
-// =====================================================
-// SEND
-// =====================================================
+// ===============================
+// SEND TO GOOGLE SHEET
+// ===============================
 
 async function sendData(){
 
-  if(!tracking)
+  if(!running)
     return;
 
 
   const data =
-    makeData();
-
-
-  setValue(
-    "dateTime",
-    data.dateTime
-  );
-
-
-  setValue(
-    "battery",
-    data.battery
-  );
-
-
-  setValue(
-    "online",
-    data.online
-  );
-
-
-  setValue(
-    "networkType",
-    data.networkType
-  );
-
-
-  setValue(
-    "networkSpeed",
-    data.networkSpeed
-  );
-
-
-  setValue(
-    "networkRtt",
-    data.networkRtt
-  );
+    collectData();
 
 
   try{
+
+    /*
+      URLSearchParams ব্যবহার করছি।
+
+      এতে Apps Script-এর
+      e.parameter
+      দিয়ে data পাওয়া যাবে।
+    */
+
+    const params =
+      new URLSearchParams();
+
+
+    Object.keys(data).forEach(
+      function(key){
+
+        params.append(
+          key,
+          data[key] ?? ""
+        );
+
+      }
+    );
+
 
     await fetch(
 
@@ -996,191 +661,204 @@ async function sendData(){
         mode:"no-cors",
 
         headers:{
-
           "Content-Type":
-            "text/plain;charset=utf-8"
-
+            "application/x-www-form-urlencoded;charset=UTF-8"
         },
 
-        body:
-          JSON.stringify(data)
+        body:params.toString()
 
       }
 
     );
 
 
-    count++;
+    sendCount++;
+
+    document.getElementById("count").textContent =
+      sendCount;
+
+    document.getElementById("status").textContent =
+      "✅ Data sent — " +
+      new Date().toLocaleTimeString();
 
 
-    setValue(
-      "counter",
-      count
-    );
+  }catch(error){
 
-
-    document.getElementById(
-      "status"
-    ).textContent =
-      "● Sending data every 2 seconds";
-
-  }
-
-  catch(error){
-
-    document.getElementById(
-      "status"
-    ).textContent =
-      "⚠ Sending failed";
-
-    console.error(error);
+    document.getElementById("status").textContent =
+      "❌ Send error: " +
+      error.message;
 
   }
 
 }
 
 
-// =====================================================
-// START
-// =====================================================
+// ===============================
+// TEST SEND
+// ===============================
 
-async function startTracking(){
+async function sendTest(){
 
-  if(tracking)
-    return;
-
-
-  tracking = true;
+  document.getElementById("status").textContent =
+    "Sending test...";
 
 
-  const button =
-    document.getElementById(
-      "startBtn"
+  const data =
+    collectData();
+
+
+  data.device =
+    "TEST - " + data.device;
+
+
+  try{
+
+    const params =
+      new URLSearchParams();
+
+
+    Object.keys(data).forEach(
+      function(key){
+
+        params.append(
+          key,
+          data[key] ?? ""
+        );
+
+      }
     );
 
 
-  button.textContent =
-    "Stop";
+    await fetch(
+
+      SCRIPT_URL,
+
+      {
+
+        method:"POST",
+
+        mode:"no-cors",
+
+        headers:{
+          "Content-Type":
+            "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+
+        body:params.toString()
+
+      }
+
+    );
 
 
-  button.classList.add(
-    "stop"
-  );
+    document.getElementById("status").textContent =
+      "✅ TEST SEND completed. Check Google Sheet.";
+
+  }catch(error){
+
+    document.getElementById("status").textContent =
+      "❌ TEST ERROR: " +
+      error.message;
+
+  }
+
+}
 
 
-  button.onclick =
-    stopTracking;
+// ===============================
+// START
+// ===============================
+
+async function startSystem(){
+
+  if(running)
+    return;
 
 
-  document.getElementById(
-    "status"
-  ).textContent =
+  running = true;
+
+
+  document.getElementById("startBtn").disabled =
+    true;
+
+
+  document.getElementById("testBtn").disabled =
+    false;
+
+
+  document.getElementById("status").textContent =
     "Starting...";
 
 
-  showInfo();
+  document.getElementById("device").textContent =
+    getDevice();
 
+  document.getElementById("os").textContent =
+    getOS();
 
-  await getBatteryAPI();
+  document.getElementById("browser").textContent =
+    getBrowser();
+
+  document.getElementById("online").textContent =
+    navigator.onLine
+      ? "Online"
+      : "Offline";
+
+  document.getElementById("screen").textContent =
+    window.screen.width +
+    " x " +
+    window.screen.height;
+
+  document.getElementById("language").textContent =
+    navigator.language;
+
+  document.getElementById("timezone").textContent =
+    Intl.DateTimeFormat()
+      .resolvedOptions()
+      .timeZone;
 
 
   await getIP();
 
+  await getBattery();
 
   startLocation();
 
 
-  // First data
+  /*
+    প্রথম data সঙ্গে সঙ্গে send হবে
+  */
+
   await sendData();
 
 
-  // Every 2 seconds
-  timer =
+  /*
+    এরপর প্রতি 2 second
+  */
+
+  intervalID =
     setInterval(
       sendData,
       2000
     );
 
-}
 
-
-// =====================================================
-// STOP
-// =====================================================
-
-function stopTracking(){
-
-  tracking = false;
-
-
-  if(timer){
-
-    clearInterval(timer);
-
-    timer = null;
-
-  }
-
-
-  if(locationWatch !== null){
-
-    navigator.geolocation.clearWatch(
-      locationWatch
-    );
-
-    locationWatch = null;
-
-  }
-
-
-  const button =
-    document.getElementById(
-      "startBtn"
-    );
-
-
-  button.textContent =
-    "Allow & Start";
-
-
-  button.classList.remove(
-    "stop"
-  );
-
-
-  button.onclick =
-    startTracking;
-
-
-  document.getElementById(
-    "status"
-  ).textContent =
-    "Stopped";
+  document.getElementById("status").textContent =
+    "🟢 System running — sending every 2 seconds.";
 
 }
 
 
-// =====================================================
-// INITIAL
-// =====================================================
-
-showInfo();
-
-getBatteryAPI();
-
-
-// =====================================================
-// ONLINE
-// =====================================================
+// ===============================
+// ONLINE / OFFLINE
+// ===============================
 
 window.addEventListener(
   "online",
   function(){
 
-    setValue(
-      "online",
-      "Online"
-    );
+    document.getElementById("online").textContent =
+      "Online";
 
   }
 );
@@ -1190,10 +868,8 @@ window.addEventListener(
   "offline",
   function(){
 
-    setValue(
-      "online",
-      "Offline"
-    );
+    document.getElementById("online").textContent =
+      "Offline";
 
   }
 );
