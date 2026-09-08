@@ -5,207 +5,307 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Device Data Collector</title>
 
 <style>
 
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#020617;
-    color:#fff;
-    min-height:100vh;
-    padding:20px;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a,
+      #111827,
+      #020617
+    );
+
+  color:#fff;
+
+  min-height:100vh;
+
+  padding:20px;
+
 }
 
 .container{
-    width:100%;
-    max-width:900px;
-    margin:auto;
-    background:#0f172a;
-    border:1px solid #1e293b;
-    border-radius:22px;
-    padding:25px;
-    box-shadow:0 20px 60px rgba(0,0,0,.45);
+
+  width:100%;
+  max-width:1100px;
+
+  margin:auto;
+
+}
+
+.card{
+
+  background:
+    rgba(255,255,255,0.06);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.10);
+
+  border-radius:18px;
+
+  padding:20px;
+
+  margin-bottom:18px;
+
+  backdrop-filter:
+    blur(12px);
+
+  box-shadow:
+    0 15px 40px
+    rgba(0,0,0,0.25);
+
 }
 
 h1{
-    text-align:center;
-    font-size:28px;
-    margin-bottom:7px;
+
+  font-size:28px;
+
+  margin-bottom:8px;
+
 }
 
 .subtitle{
-    text-align:center;
-    color:#94a3b8;
-    margin-bottom:25px;
-}
 
-.status-box{
-    background:#020617;
-    border:1px solid #1e293b;
-    border-radius:16px;
-    padding:18px;
-    margin-bottom:20px;
-}
+  color:#94a3b8;
 
-.status-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    padding:11px 0;
-    border-bottom:1px solid #1e293b;
-}
+  margin-bottom:18px;
 
-.status-row:last-child{
-    border-bottom:none;
-}
-
-.label{
-    color:#94a3b8;
-}
-
-.value{
-    text-align:right;
-    font-weight:bold;
-    word-break:break-word;
-}
-
-.success{
-    color:#22c55e;
-}
-
-.error{
-    color:#ef4444;
-}
-
-.warning{
-    color:#facc15;
 }
 
 .controls{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-bottom:20px;
-}
 
-select,
-button{
-    width:100%;
-    min-height:48px;
-    border:none;
-    border-radius:11px;
-    padding:12px 15px;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-}
+  display:flex;
 
-select{
-    background:#1e293b;
-    color:#fff;
-    border:1px solid #334155;
+  flex-wrap:wrap;
+
+  gap:10px;
+
+  align-items:center;
+
 }
 
 button{
-    color:#fff;
+
+  border:0;
+
+  padding:12px 18px;
+
+  border-radius:10px;
+
+  cursor:pointer;
+
+  font-size:14px;
+
+  font-weight:bold;
+
 }
 
 .start{
-    background:#16a34a;
+
+  background:#22c55e;
+  color:#fff;
+
 }
 
 .stop{
-    background:#dc2626;
+
+  background:#ef4444;
+  color:#fff;
+
 }
 
 .test{
-    background:#2563eb;
-    grid-column:1/-1;
+
+  background:#3b82f6;
+  color:#fff;
+
 }
 
-.data-title{
-    font-size:19px;
-    margin:25px 0 12px;
+select{
+
+  padding:12px;
+
+  border-radius:10px;
+
+  border:1px solid #334155;
+
+  background:#0f172a;
+
+  color:#fff;
+
 }
 
-.data-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+.status{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(150px,1fr)
+    );
+
+  gap:10px;
+
+  margin-top:18px;
+
 }
 
-.data-card{
-    background:#020617;
-    border:1px solid #1e293b;
-    border-radius:12px;
-    padding:13px;
-    min-width:0;
+.stat{
+
+  background:
+    rgba(255,255,255,0.05);
+
+  border-radius:12px;
+
+  padding:14px;
+
 }
 
-.data-card .name{
-    color:#64748b;
-    font-size:12px;
-    margin-bottom:6px;
+.stat-title{
+
+  font-size:12px;
+
+  color:#94a3b8;
+
+  margin-bottom:5px;
+
 }
 
-.data-card .data{
-    font-size:14px;
-    font-weight:bold;
-    word-break:break-word;
+.stat-value{
+
+  font-size:18px;
+
+  font-weight:bold;
+
 }
 
-.info{
-    margin-top:22px;
-    padding:15px;
-    border-radius:14px;
-    background:#020617;
-    border:1px solid #1e293b;
-    color:#94a3b8;
-    line-height:1.7;
-    font-size:13px;
+.grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(230px,1fr)
+    );
+
+  gap:12px;
+
 }
 
-.map-link{
-    color:#60a5fa;
-    text-decoration:none;
+.item{
+
+  background:
+    rgba(255,255,255,0.05);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.06);
+
+  border-radius:12px;
+
+  padding:13px;
+
+  overflow:hidden;
+
+}
+
+.label{
+
+  color:#94a3b8;
+
+  font-size:12px;
+
+  margin-bottom:5px;
+
+}
+
+.value{
+
+  font-size:14px;
+
+  word-break:break-word;
+
+}
+
+a{
+
+  color:#60a5fa;
+
+  text-decoration:none;
+
+}
+
+.log{
+
+  background:#020617;
+
+  border-radius:10px;
+
+  padding:12px;
+
+  max-height:180px;
+
+  overflow:auto;
+
+  font-size:12px;
+
+  line-height:1.6;
+
+}
+
+.success{
+  color:#4ade80;
+}
+
+.error{
+  color:#f87171;
+}
+
+.warning{
+  color:#facc15;
 }
 
 @media(max-width:600px){
 
-    body{
-        padding:10px;
-    }
+  body{
+    padding:10px;
+  }
 
-    .container{
-        padding:16px;
-    }
+  h1{
+    font-size:22px;
+  }
 
-    .controls{
-        grid-template-columns:1fr;
-    }
+  .controls{
+    flex-direction:column;
+    align-items:stretch;
+  }
 
-    .test{
-        grid-column:auto;
-    }
-
-    .data-grid{
-        grid-template-columns:1fr;
-    }
-
-    h1{
-        font-size:23px;
-    }
+  button,
+  select{
+    width:100%;
+  }
 
 }
 
@@ -217,2060 +317,2216 @@ button{
 
 <div class="container">
 
-<h1>📱 Device Data Collector</h1>
 
-<div class="subtitle">
-Automatic Device, Network & Location Information
-</div>
+<!-- HEADER -->
 
+<div class="card">
 
-<!-- STATUS -->
+  <h1>
+    📱 Device Data Collector
+  </h1>
 
-<div class="status-box">
-
-<div class="status-row">
-<span class="label">System</span>
-<span class="value success" id="systemStatus">
-Starting...
-</span>
-</div>
-
-<div class="status-row">
-<span class="label">Interval</span>
-<span class="value" id="intervalDisplay">
-2 Seconds
-</span>
-</div>
-
-<div class="status-row">
-<span class="label">Countdown</span>
-<span class="value" id="countdown">
---
-</span>
-</div>
-
-<div class="status-row">
-<span class="label">Sent</span>
-<span class="value" id="sent">
-0
-</span>
-</div>
-
-<div class="status-row">
-<span class="label">Location</span>
-<span class="value" id="locationStatus">
-Checking...
-</span>
-</div>
-
-<div class="status-row">
-<span class="label">Public IP</span>
-<span class="value" id="ipStatus">
-Checking...
-</span>
-</div>
-
-</div>
+  <div class="subtitle">
+    Device, Network & Location Information
+  </div>
 
 
-<!-- CONTROLS -->
+  <div class="controls">
 
-<div class="controls">
-
-<select id="intervalSelect">
-
-<option value="1">
-1 Second
-</option>
-
-<option value="2" selected>
-2 Seconds
-</option>
-
-<option value="3">
-3 Seconds
-</option>
-
-<option value="4">
-4 Seconds
-</option>
-
-<option value="5">
-5 Seconds
-</option>
-
-<option value="6">
-6 Seconds
-</option>
-
-<option value="60">
-1 Minute
-</option>
-
-</select>
+    <button
+      class="start"
+      onclick="startCollector()"
+    >
+      START
+    </button>
 
 
-<button class="start"
-        onclick="startSystem()">
-▶ START
-</button>
+    <button
+      class="stop"
+      onclick="stopCollector()"
+    >
+      STOP
+    </button>
 
 
-<button class="stop"
-        onclick="stopSystem()">
-■ STOP
-</button>
+    <button
+      class="test"
+      onclick="testSend()"
+    >
+      TEST SEND
+    </button>
 
 
-<button class="test"
-        onclick="sendData()">
-📤 TEST SEND
-</button>
+    <select
+      id="intervalSelect"
+      onchange="changeInterval()"
+    >
+
+      <option value="1000">
+        1 Second
+      </option>
+
+      <option value="2000" selected>
+        2 Seconds
+      </option>
+
+      <option value="3000">
+        3 Seconds
+      </option>
+
+      <option value="4000">
+        4 Seconds
+      </option>
+
+      <option value="5000">
+        5 Seconds
+      </option>
+
+      <option value="6000">
+        6 Seconds
+      </option>
+
+      <option value="60000">
+        1 Minute
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <div class="status">
+
+    <div class="stat">
+
+      <div class="stat-title">
+        STATUS
+      </div>
+
+      <div
+        class="stat-value"
+        id="status"
+      >
+        Starting...
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-title">
+        COUNTDOWN
+      </div>
+
+      <div
+        class="stat-value"
+        id="countdown"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-title">
+        SENT
+      </div>
+
+      <div
+        class="stat-value"
+        id="sentCount"
+      >
+        0
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
 
 
 <!-- DEVICE -->
 
-<div class="data-title">
-📱 Device Information
-</div>
+<div class="card">
 
-<div class="data-grid">
+  <h2>
+    📱 Device
+  </h2>
 
-<div class="data-card">
-<div class="name">DEVICE MODEL</div>
-<div class="data" id="deviceModel">--</div>
-</div>
+  <br>
 
-<div class="data-card">
-<div class="name">DEVICE BRAND</div>
-<div class="data" id="deviceBrand">--</div>
-</div>
+  <div class="grid">
 
-<div class="data-card">
-<div class="name">DEVICE TYPE</div>
-<div class="data" id="deviceType">--</div>
-</div>
+    <div class="item">
+      <div class="label">Device Model</div>
+      <div class="value" id="deviceModel">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">OPERATING SYSTEM</div>
-<div class="data" id="os">--</div>
-</div>
+    <div class="item">
+      <div class="label">Device Brand</div>
+      <div class="value" id="deviceBrand">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">BROWSER</div>
-<div class="data" id="browser">--</div>
-</div>
+    <div class="item">
+      <div class="label">Device Type</div>
+      <div class="value" id="deviceType">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">PLATFORM</div>
-<div class="data" id="platform">--</div>
-</div>
+    <div class="item">
+      <div class="label">OS</div>
+      <div class="value" id="os">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">RAM / DEVICE MEMORY</div>
-<div class="data" id="ram">--</div>
-</div>
+    <div class="item">
+      <div class="label">Browser</div>
+      <div class="value" id="browser">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">CPU CORES</div>
-<div class="data" id="cpu">--</div>
-</div>
+    <div class="item">
+      <div class="label">Platform</div>
+      <div class="value" id="platform">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">TOUCH POINTS</div>
-<div class="data" id="touch">--</div>
-</div>
+    <div class="item">
+      <div class="label">RAM / Device Memory</div>
+      <div class="value" id="ram">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">COOKIES</div>
-<div class="data" id="cookies">--</div>
-</div>
+    <div class="item">
+      <div class="label">CPU Cores</div>
+      <div class="value" id="cpu">-</div>
+    </div>
 
-</div>
+    <div class="item">
+      <div class="label">Touch Points</div>
+      <div class="value" id="touch">-</div>
+    </div>
 
-
-<!-- LOCATION -->
-
-<div class="data-title">
-📍 Location Information
-</div>
-
-<div class="data-grid">
-
-<div class="data-card">
-<div class="name">LATITUDE</div>
-<div class="data" id="latitude">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">LONGITUDE</div>
-<div class="data" id="longitude">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">ACCURACY</div>
-<div class="data" id="accuracy">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">GOOGLE MAPS</div>
-<div class="data" id="maps">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">ALTITUDE</div>
-<div class="data" id="altitude">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">HEADING</div>
-<div class="data" id="heading">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">SPEED</div>
-<div class="data" id="gpsSpeed">--</div>
-</div>
+  </div>
 
 </div>
 
 
 <!-- NETWORK -->
 
-<div class="data-title">
-🌐 Network Information
+<div class="card">
+
+  <h2>
+    🌐 Network
+  </h2>
+
+  <br>
+
+  <div class="grid">
+
+    <div class="item">
+      <div class="label">Public IP</div>
+      <div class="value" id="ip">Loading...</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Online</div>
+      <div class="value" id="online">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Network Type</div>
+      <div class="value" id="network">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Effective Type</div>
+      <div class="value" id="effectiveType">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Download Speed</div>
+      <div class="value" id="speed">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">RTT</div>
+      <div class="value" id="rtt">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Save Data</div>
+      <div class="value" id="saveData">-</div>
+    </div>
+
+  </div>
+
 </div>
 
-<div class="data-grid">
 
-<div class="data-card">
-<div class="name">PUBLIC IP</div>
-<div class="data" id="ip">--</div>
-</div>
+<!-- LOCATION -->
 
-<div class="data-card">
-<div class="name">ONLINE STATUS</div>
-<div class="data" id="online">--</div>
-</div>
+<div class="card">
 
-<div class="data-card">
-<div class="name">NETWORK TYPE</div>
-<div class="data" id="networkType">--</div>
-</div>
+  <h2>
+    📍 Location
+  </h2>
 
-<div class="data-card">
-<div class="name">EFFECTIVE TYPE</div>
-<div class="data" id="effectiveType">--</div>
-</div>
+  <br>
 
-<div class="data-card">
-<div class="name">DOWNLOAD SPEED</div>
-<div class="data" id="networkSpeed">--</div>
-</div>
+  <div class="grid">
 
-<div class="data-card">
-<div class="name">NETWORK RTT</div>
-<div class="data" id="networkRTT">--</div>
-</div>
+    <div class="item">
+      <div class="label">Latitude</div>
+      <div class="value" id="latitude">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">SAVE DATA</div>
-<div class="data" id="saveData">--</div>
-</div>
+    <div class="item">
+      <div class="label">Longitude</div>
+      <div class="value" id="longitude">-</div>
+    </div>
 
-</div>
+    <div class="item">
+      <div class="label">Accuracy</div>
+      <div class="value" id="accuracy">-</div>
+    </div>
 
+    <div class="item">
+      <div class="label">Altitude</div>
+      <div class="value" id="altitude">-</div>
+    </div>
 
-<!-- HARDWARE -->
+    <div class="item">
+      <div class="label">Heading</div>
+      <div class="value" id="heading">-</div>
+    </div>
 
-<div class="data-title">
-🖥️ Hardware & Screen
-</div>
+    <div class="item">
+      <div class="label">GPS Speed</div>
+      <div class="value" id="gpsSpeed">-</div>
+    </div>
 
-<div class="data-grid">
+    <div class="item">
+      <div class="label">Google Maps</div>
+      <div class="value" id="maps">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">SCREEN</div>
-<div class="data" id="screen">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">AVAILABLE SCREEN</div>
-<div class="data" id="availableScreen">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">PIXEL RATIO</div>
-<div class="data" id="pixelRatio">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">ORIENTATION</div>
-<div class="data" id="orientation">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">COLOR DEPTH</div>
-<div class="data" id="colorDepth">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">MAX TOUCH POINTS</div>
-<div class="data" id="maxTouch">--</div>
-</div>
+  </div>
 
 </div>
 
 
 <!-- BATTERY -->
 
-<div class="data-title">
-🔋 Battery
+<div class="card">
+
+  <h2>
+    🔋 Battery
+  </h2>
+
+  <br>
+
+  <div class="grid">
+
+    <div class="item">
+      <div class="label">Battery</div>
+      <div class="value" id="battery">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Charging</div>
+      <div class="value" id="charging">-</div>
+    </div>
+
+  </div>
+
 </div>
 
-<div class="data-grid">
 
-<div class="data-card">
-<div class="name">BATTERY LEVEL</div>
-<div class="data" id="battery">--</div>
-</div>
+<!-- SCREEN -->
 
-<div class="data-card">
-<div class="name">CHARGING</div>
-<div class="data" id="charging">--</div>
-</div>
+<div class="card">
+
+  <h2>
+    🖥 Screen
+  </h2>
+
+  <br>
+
+  <div class="grid">
+
+    <div class="item">
+      <div class="label">Screen</div>
+      <div class="value" id="screen">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Available Screen</div>
+      <div class="value" id="availableScreen">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Pixel Ratio</div>
+      <div class="value" id="pixelRatio">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Orientation</div>
+      <div class="value" id="orientation">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Color Depth</div>
+      <div class="value" id="colorDepth">-</div>
+    </div>
+
+  </div>
 
 </div>
 
 
 <!-- STORAGE -->
 
-<div class="data-title">
-💾 Browser Storage
-</div>
+<div class="card">
 
-<div class="data-grid">
+  <h2>
+    💾 Browser Storage
+  </h2>
 
-<div class="data-card">
-<div class="name">STORAGE QUOTA</div>
-<div class="data" id="storageQuota">Checking...</div>
-</div>
+  <br>
 
-<div class="data-card">
-<div class="name">STORAGE USED</div>
-<div class="data" id="storageUsed">Checking...</div>
-</div>
+  <div class="grid">
 
-<div class="data-card">
-<div class="name">STORAGE FREE ESTIMATE</div>
-<div class="data" id="storageFree">Checking...</div>
-</div>
+    <div class="item">
+      <div class="label">Storage Quota</div>
+      <div class="value" id="storageQuota">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Storage Used</div>
+      <div class="value" id="storageUsed">-</div>
+    </div>
+
+    <div class="item">
+      <div class="label">Storage Free Estimate</div>
+      <div class="value" id="storageFree">-</div>
+    </div>
+
+  </div>
 
 </div>
 
 
 <!-- BROWSER -->
 
-<div class="data-title">
-🌍 Browser Information
-</div>
+<div class="card">
 
-<div class="data-grid">
+  <h2>
+    🌐 Browser Information
+  </h2>
 
-<div class="data-card">
-<div class="name">LANGUAGE</div>
-<div class="data" id="language">--</div>
-</div>
+  <br>
 
-<div class="data-card">
-<div class="name">TIMEZONE</div>
-<div class="data" id="timezone">--</div>
-</div>
+  <div class="grid">
 
-<div class="data-card">
-<div class="name">USER AGENT</div>
-<div class="data" id="userAgent">--</div>
-</div>
+    <div class="item">
+      <div class="label">Language</div>
+      <div class="value" id="language">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">PDF VIEWER</div>
-<div class="data" id="pdfViewer">--</div>
-</div>
+    <div class="item">
+      <div class="label">Timezone</div>
+      <div class="value" id="timezone">-</div>
+    </div>
 
-</div>
+    <div class="item">
+      <div class="label">Cookies</div>
+      <div class="value" id="cookies">-</div>
+    </div>
 
+    <div class="item">
+      <div class="label">PDF Viewer</div>
+      <div class="value" id="pdfViewer">-</div>
+    </div>
 
-<!-- GPU -->
+    <div class="item">
+      <div class="label">Camera</div>
+      <div class="value" id="camera">-</div>
+    </div>
 
-<div class="data-title">
-🎮 Graphics
-</div>
+    <div class="item">
+      <div class="label">Microphone</div>
+      <div class="value" id="microphone">-</div>
+    </div>
 
-<div class="data-grid">
+    <div class="item">
+      <div class="label">WebGL Vendor</div>
+      <div class="value" id="webglVendor">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">WEBGL VENDOR</div>
-<div class="data" id="webglVendor">--</div>
-</div>
+    <div class="item">
+      <div class="label">WebGL Renderer</div>
+      <div class="value" id="webglRenderer">-</div>
+    </div>
 
-<div class="data-card">
-<div class="name">WEBGL RENDERER</div>
-<div class="data" id="webglRenderer">--</div>
-</div>
-
-</div>
-
-
-<!-- API SUPPORT -->
-
-<div class="data-title">
-🔧 Browser API Support
-</div>
-
-<div class="data-grid">
-
-<div class="data-card">
-<div class="name">GEOLOCATION</div>
-<div class="data" id="geoSupport">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">BATTERY API</div>
-<div class="data" id="batterySupport">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">CAMERA</div>
-<div class="data" id="cameraSupport">--</div>
-</div>
-
-<div class="data-card">
-<div class="name">MICROPHONE</div>
-<div class="data" id="microphoneSupport">--</div>
-</div>
+  </div>
 
 </div>
 
 
-<div class="info">
+<!-- USER AGENT -->
 
-<b>Collected information:</b><br>
+<div class="card">
 
-Device Model, Brand, Type, OS, Browser, RAM, CPU Cores,
-Touch Support, Public IP, GPS Location, Accuracy,
-Google Maps, Altitude, GPS Speed, Network Type,
-Download Speed, RTT, Battery, Screen, Pixel Ratio,
-Browser Storage, Language, Timezone, Platform,
-WebGL GPU and available browser capabilities.
+  <h2>
+    🔎 User Agent
+  </h2>
 
-<br><br>
+  <br>
 
-⚠️ Browser security prevents websites from reading
-IMEI, SIM number, Wi-Fi password, private files and
-the actual C:/D: drive storage capacity.
+  <div class="item">
+
+    <div
+      class="value"
+      id="userAgent"
+    >
+      -
+    </div>
+
+  </div>
 
 </div>
+
+
+<!-- LOG -->
+
+<div class="card">
+
+  <h2>
+    📋 Send Log
+  </h2>
+
+  <br>
+
+  <div
+    class="log"
+    id="log"
+  >
+    System starting...
+  </div>
+
+</div>
+
 
 </div>
 
 
 <script>
 
-/* =====================================================
-   GOOGLE APPS SCRIPT
-===================================================== */
 
-const SCRIPT_URL =
+/*******************************************************
+ * GOOGLE APPS SCRIPT URL
+ *******************************************************/
+
+const API_URL =
 "https://script.google.com/macros/s/AKfycbzFJbVAZxXgj1EdOo5LvIvBzJmyUDk4gE3f5GtG60Ayfaod1qbRRAKWCebOe_sxsKvJ/exec";
 
 
-/* =====================================================
-   VARIABLES
-===================================================== */
-
-let intervalSeconds = 2;
+/*******************************************************
+ * VARIABLES
+ *******************************************************/
 
 let timer = null;
 
 let countdownTimer = null;
 
-let countdownValue = 2;
+let currentInterval = 2000;
 
-let running = false;
+let countdownValue = 0;
 
 let sentCount = 0;
 
-let publicIP = "";
+let latestData = {};
 
-let latitude = "";
-
-let longitude = "";
-
-let accuracy = "";
-
-let mapsURL = "";
-
-let altitude = "";
-
-let heading = "";
-
-let gpsSpeed = "";
-
-let batteryValue = "";
-
-let batteryCharging = "";
-
-let storageQuota = "";
-
-let storageUsed = "";
-
-let storageFree = "";
+let publicIP = "-";
 
 
-/* =====================================================
-   DEVICE
-===================================================== */
+/*******************************************************
+ * LOG
+ *******************************************************/
 
-function getDeviceInfo(){
+function addLog(
+  message,
+  type = ""
+){
 
-    const ua = navigator.userAgent || "";
-
-    let brand = "Unknown";
-
-    let model = "Unknown";
-
-    let type = "Desktop";
-
-
-    if(/Samsung/i.test(ua))
-        brand = "Samsung";
-
-    else if(/Xiaomi|Redmi|Mi /i.test(ua))
-        brand = "Xiaomi";
-
-    else if(/Huawei/i.test(ua))
-        brand = "Huawei";
-
-    else if(/HONOR/i.test(ua))
-        brand = "Honor";
-
-    else if(/OnePlus/i.test(ua))
-        brand = "OnePlus";
-
-    else if(/OPPO/i.test(ua))
-        brand = "OPPO";
-
-    else if(/vivo/i.test(ua))
-        brand = "vivo";
-
-    else if(/Realme/i.test(ua))
-        brand = "Realme";
-
-    else if(/Pixel/i.test(ua))
-        brand = "Google";
-
-    else if(/iPhone|iPad|iPod|Macintosh/i.test(ua))
-        brand = "Apple";
+  const log =
+    document.getElementById(
+      "log"
+    );
 
 
-    if(/iPad|Tablet/i.test(ua))
-        type = "Tablet";
-
-    else if(
-        /Android/i.test(ua) &&
-        /Mobile/i.test(ua)
-    )
-        type = "Mobile";
-
-    else if(/iPhone|iPod/i.test(ua))
-        type = "Mobile";
-
-    else
-        type = "Desktop";
+  const time =
+    new Date().toLocaleTimeString();
 
 
-    if(/Android/i.test(ua)){
-
-        let match =
-        ua.match(/;\s*([^;)]+?)\s+Build\//i);
-
-        if(match && match[1])
-            model = match[1].trim();
-
-    }
+  const line =
+    document.createElement(
+      "div"
+    );
 
 
-    if(/iPhone/i.test(ua))
-        model = "iPhone";
-
-    if(/iPad/i.test(ua))
-        model = "iPad";
-
-    if(/Macintosh/i.test(ua))
-        model = "Mac";
-
-    if(/Windows/i.test(ua))
-        model = "Windows PC";
-
-    if(
-        /Linux/i.test(ua) &&
-        !/Android/i.test(ua)
-    )
-        model = "Linux PC";
+  line.className =
+    type;
 
 
-    return {
-        brand,
-        model,
-        type
-    };
+  line.textContent =
+    "[" +
+    time +
+    "] " +
+    message;
+
+
+  log.prepend(
+    line
+  );
 
 }
 
 
-/* =====================================================
-   OS
-===================================================== */
+/*******************************************************
+ * SET VALUE
+ *******************************************************/
+
+function setValue(
+  id,
+  value
+){
+
+  const el =
+    document.getElementById(
+      id
+    );
+
+
+  if(el){
+
+    el.textContent =
+      value === undefined ||
+      value === null ||
+      value === ""
+        ? "-"
+        : value;
+
+  }
+
+}
+
+
+/*******************************************************
+ * DEVICE TYPE
+ *******************************************************/
+
+function getDeviceType(){
+
+  const ua =
+    navigator.userAgent
+      .toLowerCase();
+
+
+  if(
+    /mobile|android|iphone|ipad|ipod/
+      .test(ua)
+  ){
+
+    if(
+      /ipad|tablet/
+        .test(ua)
+    ){
+
+      return "Tablet";
+
+    }
+
+    return "Mobile";
+
+  }
+
+
+  return "Desktop";
+
+}
+
+
+/*******************************************************
+ * DEVICE BRAND
+ *******************************************************/
+
+function getDeviceBrand(){
+
+  const ua =
+    navigator.userAgent;
+
+
+  if(
+    /Samsung/i.test(ua)
+  )
+    return "Samsung";
+
+
+  if(
+    /SM-|GT-|SCH-/i.test(ua)
+  )
+    return "Samsung";
+
+
+  if(
+    /iPhone|iPad|iPod/i.test(ua)
+  )
+    return "Apple";
+
+
+  if(
+    /Xiaomi|Mi |Redmi|POCO/i.test(ua)
+  )
+    return "Xiaomi";
+
+
+  if(
+    /Huawei/i.test(ua)
+  )
+    return "Huawei";
+
+
+  if(
+    /HONOR/i.test(ua)
+  )
+    return "Honor";
+
+
+  if(
+    /OPPO/i.test(ua)
+  )
+    return "OPPO";
+
+
+  if(
+    /vivo/i.test(ua)
+  )
+    return "Vivo";
+
+
+  if(
+    /OnePlus/i.test(ua)
+  )
+    return "OnePlus";
+
+
+  if(
+    /Realme/i.test(ua)
+  )
+    return "Realme";
+
+
+  if(
+    /Nokia/i.test(ua)
+  )
+    return "Nokia";
+
+
+  if(
+    /Motorola/i.test(ua)
+  )
+    return "Motorola";
+
+
+  return "Unknown";
+
+}
+
+
+/*******************************************************
+ * DEVICE MODEL
+ *******************************************************/
+
+function getDeviceModel(){
+
+  const ua =
+    navigator.userAgent;
+
+
+  /*
+   * Android model
+   */
+
+  let match =
+    ua.match(
+      /Android[^;]*;\s*(?:wv;\s*)?([^;)]+?)\s+Build\//i
+    );
+
+
+  if(match){
+
+    return match[1]
+      .trim();
+
+  }
+
+
+  /*
+   * iPhone
+   */
+
+  if(
+    /iPhone/i.test(ua)
+  ){
+
+    return "iPhone";
+
+  }
+
+
+  if(
+    /iPad/i.test(ua)
+  ){
+
+    return "iPad";
+
+  }
+
+
+  if(
+    /Macintosh/i.test(ua)
+  ){
+
+    return "Mac";
+
+  }
+
+
+  if(
+    /Windows/i.test(ua)
+  ){
+
+    return "Windows PC";
+
+  }
+
+
+  return "Unknown";
+
+}
+
+
+/*******************************************************
+ * OS
+ *******************************************************/
 
 function getOS(){
 
-    const ua = navigator.userAgent || "";
+  const ua =
+    navigator.userAgent;
 
-    if(/Windows NT/i.test(ua))
-        return "Windows";
 
-    if(/Android/i.test(ua))
-        return "Android";
+  if(
+    /Windows NT/i.test(ua)
+  )
+    return "Windows";
 
-    if(/iPhone|iPad|iPod/i.test(ua))
-        return "iOS";
 
-    if(/Mac OS X/i.test(ua))
-        return "macOS";
+  if(
+    /Android/i.test(ua)
+  )
+    return "Android";
 
-    if(/Linux/i.test(ua))
-        return "Linux";
 
-    return "Unknown";
+  if(
+    /iPhone|iPad|iPod/i.test(ua)
+  )
+    return "iOS";
+
+
+  if(
+    /Mac OS X/i.test(ua)
+  )
+    return "macOS";
+
+
+  if(
+    /Linux/i.test(ua)
+  )
+    return "Linux";
+
+
+  return "Unknown";
 
 }
 
 
-/* =====================================================
-   BROWSER
-===================================================== */
+/*******************************************************
+ * BROWSER
+ *******************************************************/
 
 function getBrowser(){
 
-    const ua = navigator.userAgent || "";
-
-    if(/Edg\//i.test(ua))
-        return "Microsoft Edge";
-
-    if(/OPR\//i.test(ua))
-        return "Opera";
-
-    if(/Chrome\//i.test(ua))
-        return "Google Chrome";
-
-    if(/Firefox\//i.test(ua))
-        return "Mozilla Firefox";
-
-    if(
-        /Safari\//i.test(ua) &&
-        !/Chrome/i.test(ua)
-    )
-        return "Safari";
-
-    return "Unknown";
-
-}
+  const ua =
+    navigator.userAgent;
 
 
-/* =====================================================
-   IP
-===================================================== */
+  if(
+    /Edg\//i.test(ua)
+  )
+    return "Microsoft Edge";
 
-async function getIP(){
 
-    try{
+  if(
+    /OPR\//i.test(ua)
+  )
+    return "Opera";
 
-        const response =
-        await fetch(
-            "https://api.ipify.org?format=json",
-            {
-                cache:"no-store"
-            }
-        );
 
-        const data =
-        await response.json();
+  if(
+    /Chrome\//i.test(ua)
+  )
+    return "Chrome";
 
-        if(data.ip){
 
-            publicIP = data.ip;
+  if(
+    /Firefox\//i.test(ua)
+  )
+    return "Firefox";
 
-            setText("ip",publicIP);
 
-            setText("ipStatus",publicIP);
+  if(
+    /Safari\//i.test(ua) &&
+    !/Chrome\//i.test(ua)
+  )
+    return "Safari";
 
-        }
 
-    }
-    catch(error){
-
-        publicIP = "";
-
-        setText("ipStatus","Unavailable");
-
-    }
+  return "Unknown";
 
 }
 
 
-/* =====================================================
-   LOCATION
-===================================================== */
+/*******************************************************
+ * PUBLIC IP
+ *******************************************************/
 
-function startLocation(){
+async function getPublicIP(){
 
-    if(!navigator.geolocation){
+  try{
 
-        setText(
-            "locationStatus",
-            "Not Supported"
-        );
-
-        setText(
-            "geoSupport",
-            "No"
-        );
-
-        return;
-
-    }
-
-
-    setText(
-        "geoSupport",
-        "Yes"
-    );
-
-
-    navigator.geolocation.watchPosition(
-
-        function(position){
-
-            const c =
-            position.coords;
-
-
-            latitude =
-            c.latitude;
-
-            longitude =
-            c.longitude;
-
-            accuracy =
-            c.accuracy;
-
-
-            altitude =
-            c.altitude ??
-            "";
-
-            heading =
-            c.heading ??
-            "";
-
-            gpsSpeed =
-            c.speed ??
-            "";
-
-
-            mapsURL =
-            "https://www.google.com/maps?q="
-            + latitude
-            + ","
-            + longitude;
-
-
-            setText(
-                "latitude",
-                latitude
-            );
-
-            setText(
-                "longitude",
-                longitude
-            );
-
-            setText(
-                "accuracy",
-                accuracy + " meters"
-            );
-
-            setText(
-                "altitude",
-                altitude !== ""
-                ? altitude + " meters"
-                : "Unavailable"
-            );
-
-            setText(
-                "heading",
-                heading !== ""
-                ? heading + "°"
-                : "Unavailable"
-            );
-
-            setText(
-                "gpsSpeed",
-                gpsSpeed !== ""
-                ? gpsSpeed + " m/s"
-                : "Unavailable"
-            );
-
-
-            document.getElementById(
-                "maps"
-            ).innerHTML =
-                '<a class="map-link" target="_blank" href="'
-                + mapsURL
-                + '">Open Maps</a>';
-
-
-            setText(
-                "locationStatus",
-                latitude.toFixed(5)
-                + ", "
-                + longitude.toFixed(5)
-            );
-
-        },
-
-        function(error){
-
-            let msg =
-            "Error";
-
-            if(error.code === 1)
-                msg = "Permission Denied";
-
-            if(error.code === 2)
-                msg = "Unavailable";
-
-            if(error.code === 3)
-                msg = "Timeout";
-
-
-            setText(
-                "locationStatus",
-                msg
-            );
-
-        },
-
+    const response =
+      await fetch(
+        "https://api.ipify.org?format=json",
         {
-            enableHighAccuracy:true,
-            timeout:15000,
-            maximumAge:0
+          cache:"no-store"
         }
+      );
 
+
+    const data =
+      await response.json();
+
+
+    publicIP =
+      data.ip ||
+      "-";
+
+
+    setValue(
+      "ip",
+      publicIP
     );
+
+
+  }
+  catch(error){
+
+    publicIP =
+      "-";
+
+
+    setValue(
+      "ip",
+      "Unavailable"
+    );
+
+
+    addLog(
+      "Public IP পাওয়া যায়নি",
+      "warning"
+    );
+
+  }
 
 }
 
 
-/* =====================================================
-   BATTERY
-===================================================== */
+/*******************************************************
+ * NETWORK
+ *******************************************************/
 
-async function getBattery(){
+function getNetworkData(){
 
-    if(!navigator.getBattery){
-
-        setText(
-            "batterySupport",
-            "No"
-        );
-
-        return;
-
-    }
-
-
-    setText(
-        "batterySupport",
-        "Yes"
-    );
-
-
-    try{
-
-        const battery =
-        await navigator.getBattery();
-
-
-        function update(){
-
-            batteryValue =
-            Math.round(
-                battery.level * 100
-            ) + "%";
-
-
-            batteryCharging =
-            battery.charging
-            ? "Charging"
-            : "Not Charging";
-
-
-            setText(
-                "battery",
-                batteryValue
-            );
-
-            setText(
-                "charging",
-                batteryCharging
-            );
-
-        }
-
-
-        update();
-
-
-        battery.addEventListener(
-            "levelchange",
-            update
-        );
-
-
-        battery.addEventListener(
-            "chargingchange",
-            update
-        );
-
-    }
-    catch(error){
-
-        batteryValue = "";
-
-    }
-
-}
-
-
-/* =====================================================
-   NETWORK
-===================================================== */
-
-function getNetworkInfo(){
-
-    const c =
+  const connection =
     navigator.connection ||
     navigator.mozConnection ||
     navigator.webkitConnection;
 
 
-    if(!c){
+  if(!connection){
 
-        return {
-            type:"",
-            effective:"",
-            speed:"",
-            rtt:"",
-            saveData:""
-        };
+    return {
+
+      network:"Unavailable",
+      effectiveType:"Unavailable",
+      speed:"Unavailable",
+      rtt:"Unavailable",
+      saveData:"Unavailable"
+
+    };
+
+  }
+
+
+  return {
+
+    network:
+      connection.type ||
+      "Unavailable",
+
+    effectiveType:
+      connection.effectiveType ||
+      "Unavailable",
+
+    speed:
+      connection.downlink !== undefined
+        ? connection.downlink +
+          " Mbps"
+        : "Unavailable",
+
+    rtt:
+      connection.rtt !== undefined
+        ? connection.rtt +
+          " ms"
+        : "Unavailable",
+
+    saveData:
+      connection.saveData
+        ? "Yes"
+        : "No"
+
+  };
+
+}
+
+
+/*******************************************************
+ * LOCATION
+ *******************************************************/
+
+function getLocation(){
+
+  return new Promise(
+    function(resolve){
+
+      if(
+        !navigator.geolocation
+      ){
+
+        resolve({
+          latitude:"",
+          longitude:"",
+          accuracy:"",
+          maps:"",
+          altitude:"",
+          heading:"",
+          gpsSpeed:""
+        });
+
+        return;
+
+      }
+
+
+      navigator.geolocation.getCurrentPosition(
+
+        function(position){
+
+          const coords =
+            position.coords;
+
+
+          const latitude =
+            coords.latitude;
+
+
+          const longitude =
+            coords.longitude;
+
+
+          const maps =
+            "https://www.google.com/maps?q=" +
+            latitude +
+            "," +
+            longitude;
+
+
+          setValue(
+            "latitude",
+            latitude
+          );
+
+
+          setValue(
+            "longitude",
+            longitude
+          );
+
+
+          setValue(
+            "accuracy",
+            coords.accuracy +
+            " m"
+          );
+
+
+          setValue(
+            "altitude",
+            coords.altitude !== null
+              ? coords.altitude + " m"
+              : "Unavailable"
+          );
+
+
+          setValue(
+            "heading",
+            coords.heading !== null
+              ? coords.heading + "°"
+              : "Unavailable"
+          );
+
+
+          setValue(
+            "gpsSpeed",
+            coords.speed !== null
+              ? coords.speed + " m/s"
+              : "Unavailable"
+          );
+
+
+          const mapsElement =
+            document.getElementById(
+              "maps"
+            );
+
+
+          mapsElement.innerHTML =
+            '<a href="' +
+            maps +
+            '" target="_blank">' +
+            "Open Google Maps" +
+            "</a>";
+
+
+          resolve({
+
+            latitude:
+              latitude,
+
+            longitude:
+              longitude,
+
+            accuracy:
+              coords.accuracy,
+
+            maps:
+              maps,
+
+            altitude:
+              coords.altitude !== null
+                ? coords.altitude
+                : "",
+
+            heading:
+              coords.heading !== null
+                ? coords.heading
+                : "",
+
+            gpsSpeed:
+              coords.speed !== null
+                ? coords.speed
+                : ""
+
+          });
+
+        },
+
+        function(){
+
+          addLog(
+            "Location permission পাওয়া যায়নি",
+            "warning"
+          );
+
+
+          resolve({
+
+            latitude:"",
+            longitude:"",
+            accuracy:"",
+            maps:"",
+            altitude:"",
+            heading:"",
+            gpsSpeed:""
+
+          });
+
+        },
+
+        {
+
+          enableHighAccuracy:true,
+
+          timeout:10000,
+
+          maximumAge:5000
+
+        }
+
+      );
+
+    }
+  );
+
+}
+
+
+/*******************************************************
+ * BATTERY
+ *******************************************************/
+
+async function getBatteryData(){
+
+  if(
+    !navigator.getBattery
+  ){
+
+    return {
+
+      battery:"Unavailable",
+      charging:"Unavailable"
+
+    };
+
+  }
+
+
+  try{
+
+    const battery =
+      await navigator.getBattery();
+
+
+    const level =
+      Math.round(
+        battery.level * 100
+      );
+
+
+    return {
+
+      battery:
+        level + "%",
+
+      charging:
+        battery.charging
+          ? "Charging"
+          : "Not Charging"
+
+    };
+
+  }
+  catch(error){
+
+    return {
+
+      battery:"Unavailable",
+      charging:"Unavailable"
+
+    };
+
+  }
+
+}
+
+
+/*******************************************************
+ * STORAGE
+ *******************************************************/
+
+async function getStorageData(){
+
+  if(
+    !navigator.storage ||
+    !navigator.storage.estimate
+  ){
+
+    return {
+
+      quota:"Unavailable",
+      used:"Unavailable",
+      free:"Unavailable"
+
+    };
+
+  }
+
+
+  try{
+
+    const data =
+      await navigator.storage.estimate();
+
+
+    const quota =
+      data.quota || 0;
+
+
+    const usage =
+      data.usage || 0;
+
+
+    const free =
+      Math.max(
+        quota - usage,
+        0
+      );
+
+
+    return {
+
+      quota:
+        formatBytes(
+          quota
+        ),
+
+      used:
+        formatBytes(
+          usage
+        ),
+
+      free:
+        formatBytes(
+          free
+        )
+
+    };
+
+  }
+  catch(error){
+
+    return {
+
+      quota:"Unavailable",
+      used:"Unavailable",
+      free:"Unavailable"
+
+    };
+
+  }
+
+}
+
+
+/*******************************************************
+ * BYTES
+ *******************************************************/
+
+function formatBytes(
+  bytes
+){
+
+  if(
+    !bytes ||
+    bytes <= 0
+  ){
+
+    return "0 B";
+
+  }
+
+
+  const units = [
+    "B",
+    "KB",
+    "MB",
+    "GB",
+    "TB"
+  ];
+
+
+  const index =
+    Math.floor(
+      Math.log(bytes) /
+      Math.log(1024)
+    );
+
+
+  return (
+    bytes /
+    Math.pow(
+      1024,
+      index
+    )
+  ).toFixed(2) +
+  " " +
+  units[index];
+
+}
+
+
+/*******************************************************
+ * WEBGL
+ *******************************************************/
+
+function getWebGL(){
+
+  try{
+
+    const canvas =
+      document.createElement(
+        "canvas"
+      );
+
+
+    const gl =
+      canvas.getContext(
+        "webgl"
+      ) ||
+      canvas.getContext(
+        "experimental-webgl"
+      );
+
+
+    if(!gl){
+
+      return {
+
+        vendor:"Unavailable",
+        renderer:"Unavailable"
+
+      };
+
+    }
+
+
+    const debugInfo =
+      gl.getExtension(
+        "WEBGL_debug_renderer_info"
+      );
+
+
+    if(debugInfo){
+
+      return {
+
+        vendor:
+          gl.getParameter(
+            debugInfo.UNMASKED_VENDOR_WEBGL
+          ),
+
+        renderer:
+          gl.getParameter(
+            debugInfo.UNMASKED_RENDERER_WEBGL
+          )
+
+      };
 
     }
 
 
     return {
 
-        type:
-        c.type || "",
+      vendor:
+        gl.getParameter(
+          gl.VENDOR
+        ),
 
-        effective:
-        c.effectiveType || "",
-
-        speed:
-        c.downlink
-        ? c.downlink + " Mbps"
-        : "",
-
-        rtt:
-        c.rtt
-        ? c.rtt + " ms"
-        : "",
-
-        saveData:
-        c.saveData
-        ? "Yes"
-        : "No"
+      renderer:
+        gl.getParameter(
+          gl.RENDERER
+        )
 
     };
 
+  }
+  catch(error){
+
+    return {
+
+      vendor:"Unavailable",
+      renderer:"Unavailable"
+
+    };
+
+  }
+
 }
 
 
-/* =====================================================
-   HARDWARE
-===================================================== */
+/*******************************************************
+ * MAIN COLLECT
+ *******************************************************/
 
-function collectHardware(){
+async function collectData(){
 
-    const memory =
-    navigator.deviceMemory || "";
-
-    const cores =
-    navigator.hardwareConcurrency || "";
-
-    const touch =
-    navigator.maxTouchPoints ?? 0;
+  const network =
+    getNetworkData();
 
 
-    setText(
-        "ram",
-        memory
-        ? memory + " GB"
-        : "Unavailable"
-    );
+  const battery =
+    await getBatteryData();
 
 
-    setText(
-        "cpu",
-        cores
-        ? cores + " Cores"
-        : "Unavailable"
-    );
+  const storage =
+    await getStorageData();
 
 
-    setText(
-        "touch",
-        touch
-    );
+  const location =
+    await getLocation();
 
 
-    setText(
-        "maxTouch",
-        touch
-    );
+  const webgl =
+    getWebGL();
 
 
-    setText(
-        "screen",
-        screen.width
-        + " x "
-        + screen.height
-    );
+  const data = {
 
+    deviceModel:
+      getDeviceModel(),
 
-    setText(
-        "availableScreen",
-        screen.availWidth
-        + " x "
-        + screen.availHeight
-    );
+    deviceBrand:
+      getDeviceBrand(),
 
+    deviceType:
+      getDeviceType(),
 
-    setText(
-        "pixelRatio",
-        window.devicePixelRatio || 1
-    );
+    ip:
+      publicIP,
 
+    latitude:
+      location.latitude,
 
-    setText(
-        "colorDepth",
-        screen.colorDepth
-        + " bit"
-    );
+    longitude:
+      location.longitude,
 
+    accuracy:
+      location.accuracy,
 
-    setText(
-        "orientation",
-        screen.orientation
+    maps:
+      location.maps,
+
+    altitude:
+      location.altitude,
+
+    heading:
+      location.heading,
+
+    gpsSpeed:
+      location.gpsSpeed,
+
+    os:
+      getOS(),
+
+    browser:
+      getBrowser(),
+
+    battery:
+      battery.battery,
+
+    charging:
+      battery.charging,
+
+    online:
+      navigator.onLine
+        ? "Online"
+        : "Offline",
+
+    network:
+      network.network,
+
+    effectiveType:
+      network.effectiveType,
+
+    speed:
+      network.speed,
+
+    rtt:
+      network.rtt,
+
+    saveData:
+      network.saveData,
+
+    ram:
+      navigator.deviceMemory
+        ? navigator.deviceMemory +
+          " GB"
+        : "Unavailable",
+
+    cpu:
+      navigator.hardwareConcurrency
+        ? navigator.hardwareConcurrency +
+          " Cores"
+        : "Unavailable",
+
+    touch:
+      navigator.maxTouchPoints !== undefined
+        ? navigator.maxTouchPoints
+        : "Unavailable",
+
+    screen:
+      screen.width +
+      " x " +
+      screen.height,
+
+    availableScreen:
+      screen.availWidth +
+      " x " +
+      screen.availHeight,
+
+    pixelRatio:
+      window.devicePixelRatio ||
+      1,
+
+    orientation:
+      screen.orientation
         ? screen.orientation.type
-        : "Unavailable"
-    );
+        : "Unavailable",
 
+    colorDepth:
+      screen.colorDepth,
 
-    setText(
-        "platform",
-        navigator.platform || "Unavailable"
-    );
+    storageQuota:
+      storage.quota,
 
+    storageUsed:
+      storage.used,
 
-    setText(
-        "language",
-        navigator.language || ""
-    );
+    storageFree:
+      storage.free,
 
+    language:
+      navigator.language,
 
-    setText(
-        "timezone",
-        Intl.DateTimeFormat()
+    timezone:
+      Intl.DateTimeFormat()
         .resolvedOptions()
-        .timeZone || ""
-    );
+        .timeZone,
 
+    platform:
+      navigator.platform,
 
-    setText(
-        "userAgent",
-        navigator.userAgent || ""
-    );
-
-
-    setText(
-        "cookies",
-        navigator.cookieEnabled
+    cookies:
+      navigator.cookieEnabled
         ? "Enabled"
-        : "Disabled"
-    );
+        : "Disabled",
 
-
-    setText(
-        "pdfViewer",
-        navigator.pdfViewerEnabled !== undefined
+    pdfViewer:
+      navigator.pdfViewerEnabled !== undefined
         ? (
             navigator.pdfViewerEnabled
-            ? "Yes"
-            : "No"
-        )
-        : "Unknown"
-    );
-
-}
-
-
-/* =====================================================
-   STORAGE
-===================================================== */
-
-async function getStorageInfo(){
-
-    if(
-        !navigator.storage ||
-        !navigator.storage.estimate
-    ){
-
-        setText(
-            "storageQuota",
-            "Unavailable"
-        );
-
-        setText(
-            "storageUsed",
-            "Unavailable"
-        );
-
-        setText(
-            "storageFree",
-            "Unavailable"
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        const data =
-        await navigator.storage.estimate();
-
-
-        const quota =
-        data.quota || 0;
-
-        const usage =
-        data.usage || 0;
-
-
-        const free =
-        Math.max(
-            0,
-            quota - usage
-        );
-
-
-        storageQuota =
-        formatBytes(quota);
-
-        storageUsed =
-        formatBytes(usage);
-
-        storageFree =
-        formatBytes(free);
-
-
-        setText(
-            "storageQuota",
-            storageQuota
-        );
-
-        setText(
-            "storageUsed",
-            storageUsed
-        );
-
-        setText(
-            "storageFree",
-            storageFree
-        );
-
-    }
-    catch(error){
-
-        setText(
-            "storageQuota",
-            "Unavailable"
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   FORMAT BYTES
-===================================================== */
-
-function formatBytes(bytes){
-
-    if(!bytes)
-        return "0 MB";
-
-
-    const units =
-    ["Bytes","KB","MB","GB","TB"];
-
-
-    const i =
-    Math.floor(
-        Math.log(bytes) /
-        Math.log(1024)
-    );
-
-
-    return (
-        bytes /
-        Math.pow(1024,i)
-    ).toFixed(2)
-    + " "
-    + units[i];
-
-}
-
-
-/* =====================================================
-   WEBGL
-===================================================== */
-
-function getWebGL(){
-
-    try{
-
-        const canvas =
-        document.createElement("canvas");
-
-        const gl =
-        canvas.getContext("webgl") ||
-        canvas.getContext("experimental-webgl");
-
-
-        if(!gl){
-
-            setText(
-                "webglVendor",
-                "Unavailable"
-            );
-
-            setText(
-                "webglRenderer",
-                "Unavailable"
-            );
-
-            return;
-
-        }
-
-
-        const debugInfo =
-        gl.getExtension(
-            "WEBGL_debug_renderer_info"
-        );
-
-
-        if(debugInfo){
-
-            setText(
-                "webglVendor",
-                gl.getParameter(
-                    debugInfo.UNMASKED_VENDOR_WEBGL
-                )
-            );
-
-            setText(
-                "webglRenderer",
-                gl.getParameter(
-                    debugInfo.UNMASKED_RENDERER_WEBGL
-                )
-            );
-
-        }
-        else{
-
-            setText(
-                "webglVendor",
-                gl.getParameter(
-                    gl.VENDOR
-                )
-            );
-
-            setText(
-                "webglRenderer",
-                gl.getParameter(
-                    gl.RENDERER
-                )
-            );
-
-        }
-
-    }
-    catch(error){
-
-        setText(
-            "webglVendor",
-            "Unavailable"
-        );
-
-        setText(
-            "webglRenderer",
-            "Unavailable"
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   API SUPPORT
-===================================================== */
-
-function getAPISupport(){
-
-    setText(
-        "cameraSupport",
-        navigator.mediaDevices &&
-        navigator.mediaDevices.getUserMedia
+              ? "Yes"
+              : "No"
+          )
+        : "Unavailable",
+
+    webglVendor:
+      webgl.vendor,
+
+    webglRenderer:
+      webgl.renderer,
+
+    camera:
+      navigator.mediaDevices &&
+      navigator.mediaDevices.getUserMedia
         ? "Supported"
-        : "Not Supported"
-    );
+        : "Not Supported",
 
-
-    setText(
-        "microphoneSupport",
-        navigator.mediaDevices &&
-        navigator.mediaDevices.getUserMedia
+    microphone:
+      navigator.mediaDevices &&
+      navigator.mediaDevices.getUserMedia
         ? "Supported"
-        : "Not Supported"
+        : "Not Supported",
+
+    userAgent:
+      navigator.userAgent
+
+  };
+
+
+  latestData =
+    data;
+
+
+  /*
+   * UI update
+   */
+
+  Object.keys(data)
+    .forEach(
+      function(key){
+
+        setValue(
+          key,
+          data[key]
+        );
+
+      }
     );
 
+
+  /*
+   * Maps special case
+   */
+
+  if(
+    data.maps
+  ){
+
+    document.getElementById(
+      "maps"
+    ).innerHTML =
+      '<a href="' +
+      data.maps +
+      '" target="_blank">' +
+      "Open Google Maps" +
+      "</a>";
+
+  }
+
+
+  return data;
+
 }
 
 
-/* =====================================================
-   SET TEXT
-===================================================== */
-
-function setText(id,value){
-
-    const el =
-    document.getElementById(id);
-
-    if(el){
-
-        el.textContent =
-        value === "" ||
-        value === null ||
-        value === undefined
-        ? "--"
-        : value;
-
-    }
-
-}
-
-
-/* =====================================================
-   SEND DATA
-===================================================== */
+/*******************************************************
+ * SEND DATA
+ *******************************************************/
 
 async function sendData(){
 
-    const device =
-    getDeviceInfo();
+  try{
 
-    const network =
-    getNetworkInfo();
+    /*
+     * আগে latest data update
+     */
 
+    const data =
+      await collectData();
 
-    const form =
-    new URLSearchParams();
 
+    /*
+     * FormData না দিয়ে
+     * URLSearchParams ব্যবহার করছি।
+     *
+     * Apps Script e.parameter
+     * এর সাথে এটা সরাসরি কাজ করে।
+     */
 
-    form.append(
-        "deviceModel",
-        device.model
-    );
+    const params =
+      new URLSearchParams();
 
-    form.append(
-        "deviceBrand",
-        device.brand
-    );
 
-    form.append(
-        "deviceType",
-        device.type
-    );
+    /*
+     * action
+     */
 
-
-    form.append(
-        "ip",
-        publicIP
-    );
-
-
-    form.append(
-        "latitude",
-        latitude
-    );
-
-    form.append(
-        "longitude",
-        longitude
-    );
-
-    form.append(
-        "accuracy",
-        accuracy
-    );
-
-    form.append(
-        "maps",
-        mapsURL
-    );
-
-    form.append(
-        "altitude",
-        altitude
-    );
-
-    form.append(
-        "heading",
-        heading
-    );
-
-    form.append(
-        "gpsSpeed",
-        gpsSpeed
-    );
-
-
-    form.append(
-        "os",
-        getOS()
-    );
-
-    form.append(
-        "browser",
-        getBrowser()
-    );
-
-
-    form.append(
-        "battery",
-        batteryValue
-    );
-
-    form.append(
-        "charging",
-        batteryCharging
-    );
-
-
-    form.append(
-        "online",
-        navigator.onLine
-        ? "Online"
-        : "Offline"
-    );
-
-
-    form.append(
-        "network",
-        network.type
-    );
-
-    form.append(
-        "effectiveType",
-        network.effective
-    );
-
-    form.append(
-        "speed",
-        network.speed
-    );
-
-    form.append(
-        "rtt",
-        network.rtt
-    );
-
-    form.append(
-        "saveData",
-        network.saveData
-    );
-
-
-    form.append(
-        "ram",
-        navigator.deviceMemory
-        ? navigator.deviceMemory + " GB"
-        : ""
-    );
-
-
-    form.append(
-        "cpu",
-        navigator.hardwareConcurrency
-        ? navigator.hardwareConcurrency + " Cores"
-        : ""
-    );
-
-
-    form.append(
-        "touch",
-        navigator.maxTouchPoints || 0
-    );
-
-
-    form.append(
-        "screen",
-        screen.width
-        + " x "
-        + screen.height
-    );
-
-
-    form.append(
-        "availableScreen",
-        screen.availWidth
-        + " x "
-        + screen.availHeight
-    );
-
-
-    form.append(
-        "pixelRatio",
-        window.devicePixelRatio || 1
-    );
-
-
-    form.append(
-        "orientation",
-        screen.orientation
-        ? screen.orientation.type
-        : ""
-    );
-
-
-    form.append(
-        "colorDepth",
-        screen.colorDepth || ""
-    );
-
-
-    form.append(
-        "storageQuota",
-        storageQuota
-    );
-
-    form.append(
-        "storageUsed",
-        storageUsed
-    );
-
-    form.append(
-        "storageFree",
-        storageFree
-    );
-
-
-    form.append(
-        "language",
-        navigator.language || ""
-    );
-
-
-    form.append(
-        "timezone",
-        Intl.DateTimeFormat()
-        .resolvedOptions()
-        .timeZone || ""
-    );
-
-
-    form.append(
-        "platform",
-        navigator.platform || ""
-    );
-
-
-    form.append(
-        "cookies",
-        navigator.cookieEnabled
-        ? "Enabled"
-        : "Disabled"
-    );
-
-
-    form.append(
-        "pdfViewer",
-        navigator.pdfViewerEnabled !== undefined
-        ? (
-            navigator.pdfViewerEnabled
-            ? "Yes"
-            : "No"
-        )
-        : "Unknown"
-    );
-
-
-    form.append(
-        "webglVendor",
-        document.getElementById(
-            "webglVendor"
-        ).textContent
-    );
-
-
-    form.append(
-        "webglRenderer",
-        document.getElementById(
-            "webglRenderer"
-        ).textContent
-    );
-
-
-    form.append(
-        "camera",
-        navigator.mediaDevices &&
-        navigator.mediaDevices.getUserMedia
-        ? "Supported"
-        : "Not Supported"
-    );
-
-
-    form.append(
-        "microphone",
-        navigator.mediaDevices &&
-        navigator.mediaDevices.getUserMedia
-        ? "Supported"
-        : "Not Supported"
-    );
-
-
-    form.append(
-        "userAgent",
-        navigator.userAgent || ""
-    );
-
-
-    try{
-
-        await fetch(
-            SCRIPT_URL,
-            {
-                method:"POST",
-                mode:"no-cors",
-                headers:{
-                    "Content-Type":
-                    "application/x-www-form-urlencoded;charset=UTF-8"
-                },
-                body:
-                form.toString()
-            }
-        );
-
-
-        sentCount++;
-
-        setText(
-            "sent",
-            sentCount
-        );
-
-    }
-    catch(error){
-
-        console.log(
-            "Send Error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-function startSystem(){
-
-    if(running)
-        return;
-
-
-    running = true;
-
-
-    setText(
-        "systemStatus",
-        "RUNNING"
-    );
-
-
-    document.getElementById(
-        "systemStatus"
-    ).className =
-    "value success";
-
-
-    startSending();
-
-}
-
-
-/* =====================================================
-   START SENDING
-===================================================== */
-
-function startSending(){
-
-    clearInterval(timer);
-
-    clearInterval(countdownTimer);
-
-
-    countdownValue =
-    intervalSeconds;
-
-
-    setText(
-        "countdown",
-        formatCountdown(
-            countdownValue
-        )
-    );
-
-
-    sendData();
-
-
-    timer =
-    setInterval(
-        function(){
-
-            if(!running)
-                return;
-
-
-            sendData();
-
-
-            countdownValue =
-            intervalSeconds;
-
-        },
-        intervalSeconds * 1000
-    );
-
-
-    countdownTimer =
-    setInterval(
-        function(){
-
-            if(!running)
-                return;
-
-
-            countdownValue--;
-
-
-            if(countdownValue < 0)
-                countdownValue =
-                intervalSeconds;
-
-
-            setText(
-                "countdown",
-                formatCountdown(
-                    countdownValue
-                )
-            );
-
-        },
-        1000
-    );
-
-}
-
-
-/* =====================================================
-   STOP
-===================================================== */
-
-function stopSystem(){
-
-    running = false;
-
-
-    clearInterval(timer);
-
-    clearInterval(countdownTimer);
-
-
-    timer = null;
-
-    countdownTimer = null;
-
-
-    setText(
-        "systemStatus",
-        "STOPPED"
-    );
-
-
-    document.getElementById(
-        "systemStatus"
-    ).className =
-    "value error";
-
-
-    setText(
-        "countdown",
-        "--"
-    );
-
-}
-
-
-/* =====================================================
-   INTERVAL CHANGE
-===================================================== */
-
-document
-.getElementById("intervalSelect")
-.addEventListener(
-    "change",
-    function(){
-
-        intervalSeconds =
-        parseInt(
-            this.value
-        );
-
-
-        setText(
-            "intervalDisplay",
-            formatInterval(
-                intervalSeconds
-            )
-        );
-
-
-        if(running)
-            startSending();
-
-    }
-);
-
-
-/* =====================================================
-   FORMAT INTERVAL
-===================================================== */
-
-function formatInterval(seconds){
-
-    if(seconds === 60)
-        return "1 Minute";
-
-
-    return seconds
-    + " Second"
-    + (seconds > 1 ? "s" : "");
-
-}
-
-
-/* =====================================================
-   FORMAT COUNTDOWN
-===================================================== */
-
-function formatCountdown(seconds){
-
-    if(seconds === 60)
-        return "60 Seconds";
-
-
-    return seconds + "s";
-
-}
-
-
-/* =====================================================
-   ONLINE STATUS
-===================================================== */
-
-function updateOnline(){
-
-    setText(
-        "online",
-        navigator.onLine
-        ? "Online"
-        : "Offline"
-    );
-
-}
-
-
-window.addEventListener(
-    "online",
-    updateOnline
-);
-
-
-window.addEventListener(
-    "offline",
-    updateOnline
-);
-
-
-/* =====================================================
-   INITIALIZE
-===================================================== */
-
-async function initialize(){
-
-    const device =
-    getDeviceInfo();
-
-
-    setText(
-        "deviceModel",
-        device.model
-    );
-
-    setText(
-        "deviceBrand",
-        device.brand
-    );
-
-    setText(
-        "deviceType",
-        device.type
-    );
-
-    setText(
-        "os",
-        getOS()
-    );
-
-    setText(
-        "browser",
-        getBrowser()
-    );
-
-
-    updateOnline();
-
-    collectHardware();
-
-    getWebGL();
-
-    getAPISupport();
-
-    startLocation();
-
-    getBattery();
-
-    getStorageInfo();
-
-    getIP();
-
-
-    setText(
-        "intervalDisplay",
-        formatInterval(
-            intervalSeconds
-        )
+    params.append(
+      "action",
+      "save"
     );
 
 
     /*
-       AUTO START
-    */
+     * সব data
+     */
 
-    setTimeout(
-        function(){
+    Object.keys(data)
+      .forEach(
+        function(key){
 
-            startSystem();
+          params.append(
+            key,
+            data[key] === undefined ||
+            data[key] === null
+              ? ""
+              : String(data[key])
+          );
 
+        }
+      );
+
+
+    /*
+     * POST
+     */
+
+    await fetch(
+      API_URL,
+      {
+
+        method:"POST",
+
+        mode:"no-cors",
+
+        headers:{
+          "Content-Type":
+            "application/x-www-form-urlencoded;charset=UTF-8"
         },
-        1000
+
+        body:
+          params.toString()
+
+      }
+    );
+
+
+    /*
+     * no-cors response পড়া যায় না,
+     * কিন্তু request পাঠানো হয়েছে।
+     */
+
+    sentCount++;
+
+
+    document.getElementById(
+      "sentCount"
+    ).textContent =
+      sentCount;
+
+
+    addLog(
+      "Data sent successfully #" +
+      sentCount,
+      "success"
+    );
+
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "RUNNING";
+
+
+  }
+  catch(error){
+
+    addLog(
+      "Send Error: " +
+      error.message,
+      "error"
+    );
+
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "ERROR";
+
+  }
+
+}
+
+
+/*******************************************************
+ * TEST SEND
+ *******************************************************/
+
+async function testSend(){
+
+  addLog(
+    "Test send শুরু হচ্ছে..."
+  );
+
+
+  try{
+
+    await sendData();
+
+
+    addLog(
+      "Test request পাঠানো হয়েছে",
+      "success"
+    );
+
+  }
+  catch(error){
+
+    addLog(
+      "Test Error: " +
+      error.message,
+      "error"
+    );
+
+  }
+
+}
+
+
+/*******************************************************
+ * START
+ *******************************************************/
+
+function startCollector(){
+
+  stopCollector(
+    false
+  );
+
+
+  document.getElementById(
+    "status"
+  ).textContent =
+    "RUNNING";
+
+
+  addLog(
+    "Collector started",
+    "success"
+  );
+
+
+  /*
+   * সাথে সাথে প্রথম data পাঠাবে
+   */
+
+  sendData();
+
+
+  /*
+   * এরপর interval অনুযায়ী
+   */
+
+  timer =
+    setInterval(
+      function(){
+
+        sendData();
+
+      },
+      currentInterval
+    );
+
+
+  startCountdown();
+
+}
+
+
+/*******************************************************
+ * STOP
+ *******************************************************/
+
+function stopCollector(
+  showLog = true
+){
+
+  if(timer){
+
+    clearInterval(
+      timer
+    );
+
+    timer = null;
+
+  }
+
+
+  if(countdownTimer){
+
+    clearInterval(
+      countdownTimer
+    );
+
+    countdownTimer = null;
+
+  }
+
+
+  document.getElementById(
+    "status"
+  ).textContent =
+    "STOPPED";
+
+
+  document.getElementById(
+    "countdown"
+  ).textContent =
+    "-";
+
+
+  if(showLog){
+
+    addLog(
+      "Collector stopped",
+      "warning"
+    );
+
+  }
+
+}
+
+
+/*******************************************************
+ * COUNTDOWN
+ *******************************************************/
+
+function startCountdown(){
+
+  if(countdownTimer){
+
+    clearInterval(
+      countdownTimer
+    );
+
+  }
+
+
+  countdownValue =
+    currentInterval / 1000;
+
+
+  document.getElementById(
+    "countdown"
+  ).textContent =
+    countdownValue +
+    "s";
+
+
+  countdownTimer =
+    setInterval(
+      function(){
+
+        if(!timer){
+
+          return;
+
+        }
+
+
+        countdownValue--;
+
+
+        if(
+          countdownValue <= 0
+        ){
+
+          countdownValue =
+            currentInterval / 1000;
+
+        }
+
+
+        document.getElementById(
+          "countdown"
+        ).textContent =
+          countdownValue +
+          "s";
+
+      },
+      1000
     );
 
 }
 
 
-/* =====================================================
-   LOAD
-===================================================== */
+/*******************************************************
+ * CHANGE INTERVAL
+ *******************************************************/
+
+function changeInterval(){
+
+  currentInterval =
+    Number(
+      document.getElementById(
+        "intervalSelect"
+      ).value
+    );
+
+
+  addLog(
+    "Interval changed to " +
+    (
+      currentInterval >= 60000
+        ? "1 minute"
+        : (
+            currentInterval /
+            1000
+          ) +
+          " seconds"
+    )
+  );
+
+
+  /*
+   * যদি running থাকে,
+   * নতুন interval চালু করবে।
+   */
+
+  if(timer){
+
+    startCollector();
+
+  }
+
+}
+
+
+/*******************************************************
+ * INITIALIZE
+ *******************************************************/
+
+async function initialize(){
+
+  addLog(
+    "Initializing..."
+  );
+
+
+  /*
+   * API ping test
+   */
+
+  try{
+
+    /*
+     * Browser থেকে সরাসরি GET করলে
+     * Apps Script online কিনা দেখা যাবে।
+     */
+
+    const pingURL =
+      API_URL +
+      "?action=ping&t=" +
+      Date.now();
+
+
+    fetch(
+      pingURL,
+      {
+        method:"GET",
+        cache:"no-store"
+      }
+    )
+    .then(
+      function(){
+
+        addLog(
+          "Apps Script API reachable",
+          "success"
+        );
+
+      }
+    )
+    .catch(
+      function(){
+
+        addLog(
+          "API ping failed",
+          "warning"
+        );
+
+      }
+    );
+
+  }
+  catch(error){
+
+    addLog(
+      "API test error",
+      "warning"
+    );
+
+  }
+
+
+  /*
+   * IP
+   */
+
+  await getPublicIP();
+
+
+  /*
+   * Initial data
+   */
+
+  await collectData();
+
+
+  /*
+   * Auto start
+   */
+
+  setTimeout(
+    function(){
+
+      startCollector();
+
+    },
+    1000
+  );
+
+}
+
+
+/*******************************************************
+ * ONLINE / OFFLINE
+ *******************************************************/
 
 window.addEventListener(
-    "load",
-    initialize
+  "online",
+  function(){
+
+    setValue(
+      "online",
+      "Online"
+    );
+
+    addLog(
+      "Internet Online",
+      "success"
+    );
+
+  }
 );
 
 
-/* =====================================================
-   ORIENTATION UPDATE
-===================================================== */
+window.addEventListener(
+  "offline",
+  function(){
 
-if(screen.orientation){
-
-    screen.orientation.addEventListener(
-        "change",
-        function(){
-
-            setText(
-                "orientation",
-                screen.orientation.type
-            );
-
-        }
+    setValue(
+      "online",
+      "Offline"
     );
 
-}
+    addLog(
+      "Internet Offline",
+      "warning"
+    );
+
+  }
+);
+
+
+/*******************************************************
+ * RUN
+ *******************************************************/
+
+initialize();
 
 </script>
 
